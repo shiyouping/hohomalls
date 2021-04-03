@@ -1,0 +1,7 @@
+plugins {
+    id 'hohomalls.java-conventions'
+}
+
+dependencies {
+    implementation project(':hohomalls-core')
+}

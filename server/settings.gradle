@@ -1,1 +1,6 @@
-rootProject.name = 'hohomalls-service'
+rootProject.name = 'hohomalls-server'
+include 'hohomalls-core'
+include 'hohomalls-mongo'
+include 'hohomalls-security'
+include 'hohomalls-app'
+
