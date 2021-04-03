@@ -1,5 +1,5 @@
 plugins {
-    id 'hohomalls.java-conventions'
+    id 'hohomalls'
 }
 
 dependencies {

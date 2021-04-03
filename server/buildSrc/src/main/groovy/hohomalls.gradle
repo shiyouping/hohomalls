@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+group = 'com.hohomalls'
+version = '0.1.0-SNAPSHOT'
+
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    annotationProcessor processors['mapstruct-processor']
+    compileOnly libraries['lombok']
+    implementation libraries['guava']
+    implementation libraries['mapstruct']
+    testImplementation testLibraries['junit-jupiter']
+    testRuntimeOnly testLibraries['junit-jupiter-engine']
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
