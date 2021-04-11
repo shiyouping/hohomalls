@@ -1,11 +1,11 @@
 plugins {
-    id 'hohomalls'
+    id "org.springframework.boot"
 }
 
 dependencies {
     implementation project(':hohomalls-mongo')
-    implementation project(':hohomalls-security')
-
+    implementation project(':hohomalls-web')
+    
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

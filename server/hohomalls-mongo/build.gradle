@@ -1,7 +1,3 @@
-plugins {
-    id 'hohomalls'
-}
-
 dependencies {
     implementation project(':hohomalls-core')
 }
