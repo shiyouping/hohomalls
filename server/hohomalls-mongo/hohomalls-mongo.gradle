@@ -1,0 +1,6 @@
+dependencies {
+    api project(':hohomalls-core')
+    api group: 'javax.validation', name: 'validation-api'
+    api group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive'
+    testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
+}

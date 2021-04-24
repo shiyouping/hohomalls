@@ -8,16 +8,19 @@ buildscript {
     ext {
         guavaVersion = '30.1.1-jre'
         mapstructVersion = '1.4.2.Final'
+        checkerFrameworkVersion = '3.12.0'
 
-        lombokPluginVersion = '6.0.0-m2'
+        lombokPluginVersion = '5.3.3.3'
         springBootPluginVersion = '2.4.3'
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
+        checkerFrameworkPluginVersion = '0.5.19'
     }
 
     dependencies {
         classpath "io.freefair.gradle:lombok-plugin:$lombokPluginVersion"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
         classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
+        classpath "org.checkerframework:checkerframework-gradle-plugin:$checkerFrameworkPluginVersion"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
     }
 }
 
@@ -27,10 +30,16 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
+    if (it.name == 'hohomalls-app') {
+        apply plugin: 'java'
+    } else {
+        apply plugin: 'java-library'
+    }
+
     apply plugin: 'maven-publish'
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.checkerframework'
 
     java.sourceCompatibility = JavaVersion.VERSION_11
     java.targetCompatibility = JavaVersion.VERSION_11
@@ -50,6 +59,8 @@ subprojects {
             }
 
             dependency group: 'com.google.guava', name: 'guava', version: guavaVersion
+            dependency group: 'org.checkerframework', name: 'checker', version: checkerFrameworkVersion
+            dependency group: 'org.checkerframework', name: 'checker-qual', version: checkerFrameworkVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'
@@ -62,7 +73,10 @@ subprojects {
         annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor'
         implementation group: 'com.google.guava', name: 'guava'
         implementation group: 'org.mapstruct', name: 'mapstruct'
-        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+        implementation group: 'org.checkerframework', name: 'checker'
+        implementation group: 'org.checkerframework', name: 'checker-qual'
+        testImplementation group: 'io.projectreactor', name: 'reactor-test'
+        testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     }
 
     test {

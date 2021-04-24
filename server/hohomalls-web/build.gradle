@@ -1,4 +1,0 @@
-dependencies {
-    implementation project(':hohomalls-core')
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-}

@@ -1,5 +1,11 @@
 rootProject.name = 'hohomalls-server'
+
 include ':hohomalls-core'
 include ':hohomalls-mongo'
 include ':hohomalls-web'
 include ':hohomalls-app'
+
+rootProject.children.each {
+    // Use the project name as build.gradle
+    it.buildFileName = it.name + '.gradle'
+}

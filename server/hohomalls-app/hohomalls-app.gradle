@@ -1,0 +1,9 @@
+plugins {
+    id "org.springframework.boot"
+}
+
+dependencies {
+    implementation project(':hohomalls-mongo')
+    implementation project(':hohomalls-web')
+}
+
