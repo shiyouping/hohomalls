@@ -1,8 +1,8 @@
-package com.hohomalls.app.service.impl;
+package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
-import com.hohomalls.app.service.UserService;
+import com.hohomalls.core.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -70,13 +70,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NonNull Mono<User> saveOrUpdateOne(@NonNull User user) {
+  public @NonNull Mono<User> save(@NonNull User user) {
     log.info("Saving or updating a user={}", user);
 
     // noinspection ConstantConditions
     if (user == null) {
       return Mono.error(new IllegalArgumentException("user is null"));
     }
+
+    user.setStatus(User.UserStatus.ACTIVE);
+    user.setCreatedDateTime(DateTimeUtil.now());
+    user.setUpdatedDateTime(DateTimeUtil.now());
 
     return this.userRepository.save(user);
   }

@@ -27,5 +27,5 @@ public interface UserService {
   Mono<User> findOneByNickname(@Nullable String nickname);
 
   @NonNull
-  Mono<User> saveOrUpdateOne(@NonNull User user);
+  Mono<User> save(@NonNull User user);
 }
