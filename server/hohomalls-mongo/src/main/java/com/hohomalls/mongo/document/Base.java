@@ -1,9 +1,11 @@
 package com.hohomalls.mongo.document;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 /**
  * The parent class of all mongo documents.
@@ -12,8 +14,10 @@ import java.time.OffsetDateTime;
  * @since 24/4/2021
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class Base {
   @Id private String id;
-  private OffsetDateTime createdDateTime;
-  private OffsetDateTime updatedDateTime;
+  private Instant createdDateTime;
+  private Instant updatedDateTime;
 }

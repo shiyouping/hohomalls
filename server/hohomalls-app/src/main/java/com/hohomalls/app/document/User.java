@@ -1,9 +1,7 @@
 package com.hohomalls.app.document;
 
 import com.hohomalls.mongo.document.Base;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,6 +16,8 @@ import java.util.List;
 @Data
 @Builder
 @Document("users")
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class User extends Base {
 

@@ -2,8 +2,15 @@ plugins {
     id "org.springframework.boot"
 }
 
+configurations {
+    annotationProcessor.extendsFrom implementation
+}
+
 dependencies {
+    annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', classifier: 'general'
     implementation project(':hohomalls-mongo')
     implementation project(':hohomalls-web')
+    testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
 }
+
 

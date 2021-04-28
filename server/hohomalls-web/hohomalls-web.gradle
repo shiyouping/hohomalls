@@ -1,3 +1,7 @@
+plugins {
+    id 'java-library'
+}
+
 dependencies {
     api project(':hohomalls-core')
     api group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'

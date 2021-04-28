@@ -2,9 +2,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     ext {
@@ -31,12 +29,7 @@ allprojects {
 }
 
 subprojects {
-    if (it.name == 'hohomalls-app') {
-        apply plugin: 'java'
-    } else {
-        apply plugin: 'java-library'
-    }
-
+    apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'maven-publish'

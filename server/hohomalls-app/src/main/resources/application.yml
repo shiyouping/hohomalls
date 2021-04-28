@@ -1,0 +1,10 @@
+debug: true
+
+spring.data.mongodb:
+  host: localhost
+  port: 27017
+  database: hohomalls
+  auto-index-creation: true
+  authentication-database: admin
+  username: root
+  password: P@55w0rd

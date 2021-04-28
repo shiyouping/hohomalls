@@ -2,7 +2,6 @@ package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
-import com.hohomalls.core.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -12,14 +11,16 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Instant;
+
 /**
  * The UserService implementation.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
  */
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -71,16 +72,17 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public @NonNull Mono<User> save(@NonNull User user) {
-    log.info("Saving or updating a user={}", user);
+    log.info("Saving a user={}", user);
 
     // noinspection ConstantConditions
     if (user == null) {
       return Mono.error(new IllegalArgumentException("user is null"));
     }
 
+    Instant now = Instant.now();
+    user.setCreatedDateTime(now);
+    user.setUpdatedDateTime(now);
     user.setStatus(User.UserStatus.ACTIVE);
-    user.setCreatedDateTime(DateTimeUtil.now());
-    user.setUpdatedDateTime(DateTimeUtil.now());
 
     return this.userRepository.save(user);
   }
