@@ -4,5 +4,6 @@ plugins {
 
 dependencies {
     api project(':hohomalls-core')
-    api group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    api group: 'com.graphql-java-kickstart', name: 'graphql-kickstart-spring-boot-starter-webflux'
+    api group: 'com.graphql-java-kickstart', name: 'graphql-kickstart-spring-boot-starter-tools'
 }

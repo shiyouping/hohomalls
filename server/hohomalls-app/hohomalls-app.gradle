@@ -10,6 +10,7 @@ dependencies {
     annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', classifier: 'general'
     implementation project(':hohomalls-mongo')
     implementation project(':hohomalls-web')
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
 }
 
