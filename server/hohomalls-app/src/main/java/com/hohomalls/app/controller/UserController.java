@@ -1,6 +1,6 @@
 package com.hohomalls.app.controller;
 
-import com.hohomalls.app.document.User;
+import com.hohomalls.app.document.UserDoc;
 import com.hohomalls.app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping
-  public @ResponseBody Mono<User> addKayak(@RequestBody User user) {
-    return userService.save(user);
+  public @ResponseBody Mono<UserDoc> addKayak(@RequestBody UserDoc userDoc) {
+    return this.userService.save(userDoc);
   }
 }

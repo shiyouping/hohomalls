@@ -1,7 +1,7 @@
 package com.hohomalls.app.document;
 
 import com.hohomalls.app.enumeration.UserStatus;
-import com.hohomalls.mongo.document.Base;
+import com.hohomalls.mongo.document.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 /**
- * The User document.
+ * The UserDoc document.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class User extends Base {
+public class UserDoc extends BaseDoc {
 
   @Indexed(unique = true)
   private String email;

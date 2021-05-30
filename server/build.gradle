@@ -15,12 +15,14 @@ buildscript {
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
         lombokPluginVersion = '5.3.3.3'
         springBootPluginVersion = '2.4.3'
+        dgsCodegenPluginVersion = '4.6.4'
     }
 
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
         classpath "io.freefair.gradle:lombok-plugin:$lombokPluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
+        classpath "com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:$dgsCodegenPluginVersion"
     }
 }
 

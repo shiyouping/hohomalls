@@ -1,6 +1,6 @@
 package com.hohomalls.app.repository;
 
-import com.hohomalls.app.document.User;
+import com.hohomalls.app.document.UserDoc;
 import com.hohomalls.mongo.repository.BaseRepository;
 
 /**
@@ -9,4 +9,4 @@ import com.hohomalls.mongo.repository.BaseRepository;
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
  */
-public interface UserRepository extends BaseRepository<User> {}
+public interface UserRepository extends BaseRepository<UserDoc> {}

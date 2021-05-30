@@ -1,21 +1,21 @@
 package com.hohomalls.app.document;
 
-import com.hohomalls.mongo.document.Base;
+import com.hohomalls.mongo.document.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * The item document.
+ * The order document.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
  */
 @Data
 @Builder
-@Document("items")
+@Document("orders")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Item extends Base {
+public class OrderDoc extends BaseDoc {
   private String dummyField;
 }

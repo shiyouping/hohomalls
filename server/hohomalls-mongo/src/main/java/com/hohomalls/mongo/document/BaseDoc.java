@@ -16,7 +16,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Base {
+public abstract class BaseDoc {
   @Id private String id;
   private Instant createdAt;
   private Instant updatedAt;
