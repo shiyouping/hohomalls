@@ -1,11 +1,12 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.User;
+import com.hohomalls.app.enumeration.UserStatus;
 import com.hohomalls.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   @Override
-  public @NonNull Flux<User> findAllByMobile(@Nullable String mobile) {
+  public @NotNull Flux<User> findAllByMobile(@Nullable String mobile) {
     log.info("Finding users by mobile={}", mobile);
 
     if (mobile == null) {
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NonNull Mono<User> findOneByEmail(@Nullable String email) {
+  public @NotNull Mono<User> findOneByEmail(@Nullable String email) {
     log.info("Finding a user by email={}", email);
 
     if (email == null) {
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NonNull Mono<User> findOneById(@Nullable String id) {
+  public @NotNull Mono<User> findOneById(@Nullable String id) {
     log.info("Finding a user by id={}", id);
 
     if (id == null) {
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NonNull Mono<User> findOneByNickname(@Nullable String nickname) {
+  public @NotNull Mono<User> findOneByNickname(@Nullable String nickname) {
     log.info("Finding a user by nickname={}", nickname);
 
     if (nickname == null) {
@@ -71,18 +72,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NonNull Mono<User> save(@NonNull User user) {
+  public @NotNull Mono<User> save(@NotNull User user) {
     log.info("Saving a user={}", user);
 
-    // noinspection ConstantConditions
     if (user == null) {
       return Mono.error(new IllegalArgumentException("user is null"));
     }
 
     Instant now = Instant.now();
-    user.setCreatedDateTime(now);
-    user.setUpdatedDateTime(now);
-    user.setStatus(User.UserStatus.ACTIVE);
+    user.setCreatedAt(now);
+    user.setUpdatedAt(now);
+    user.setStatus(UserStatus.ACTIVE);
 
     return this.userRepository.save(user);
   }

@@ -5,10 +5,11 @@ buildscript {
 
     ext {
         // Dependency versions
+        graphqlDgsVersion = '4.1.0'
         guavaVersion = '30.1.1-jre'
-        mapstructVersion = '1.4.2.Final'
+        jetbrainsAnnotationVersion = '21.0.1'
         jooqVersion = '0.9.14'
-        graphqlKickstartVersion = '11.0.0'
+        mapstructVersion = '1.4.2.Final'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
@@ -52,12 +53,8 @@ subprojects {
             }
 
             dependency group: 'com.google.guava', name: 'guava', version: guavaVersion
+            dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'org.jooq', name: 'jool', version: jooqVersion
-
-            dependencySet(group: 'com.graphql-java-kickstart', version: graphqlKickstartVersion) {
-                entry 'graphql-kickstart-spring-boot-starter-webflux'
-                entry 'graphql-kickstart-spring-boot-starter-tools'
-            }
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'
@@ -68,9 +65,13 @@ subprojects {
 
     dependencies {
         annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor'
+
+        implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$graphqlDgsVersion"))
+
         implementation group: 'com.google.guava', name: 'guava'
-        implementation group: 'org.mapstruct', name: 'mapstruct'
+        implementation group: 'org.jetbrains', name: 'annotations'
         implementation group: 'org.jooq', name: 'jool'
+        implementation group: 'org.mapstruct', name: 'mapstruct'
 
         testImplementation group: 'io.projectreactor', name: 'reactor-test'
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

@@ -18,6 +18,6 @@ import java.time.Instant;
 @NoArgsConstructor
 public abstract class Base {
   @Id private String id;
-  private Instant createdDateTime;
-  private Instant updatedDateTime;
+  private Instant createdAt;
+  private Instant updatedAt;
 }

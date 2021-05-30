@@ -1,4 +1,4 @@
-package com.hohomalls.core.dto;
+package com.hohomalls.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseDto implements Serializable {
+public abstract class BaseModel implements Serializable {
   private static final long serialVersionUID = -1187682743392836578L;
-  private String id;
+  private String createdAt;
+  private String updatedAt;
 }

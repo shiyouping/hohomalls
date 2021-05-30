@@ -1,0 +1,26 @@
+type Query {
+    findOneUser: User
+}
+
+type User {
+    email: ID!
+    mobile: String
+    nickname: String!
+    status: UserStatus!
+    addresses: [Address!]
+}
+
+type Address {
+    postCode: String
+    country: String!
+    city: String!
+    street: String!
+    contact: String
+    addressee: String!
+}
+
+enum UserStatus {
+    ACTIVE
+    INACTIVE
+    TERMINATED
+}

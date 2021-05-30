@@ -1,5 +1,6 @@
 package com.hohomalls.app.document;
 
+import com.hohomalls.app.enumeration.UserStatus;
 import com.hohomalls.mongo.document.Base;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -33,16 +34,9 @@ public class User extends Base {
 
   private List<Address> addresses;
 
-  /** User status. */
-  public enum UserStatus {
-    ACTIVE,
-    INACTIVE,
-    TERMINATED
-  }
-
   /** The embedded document. */
   @Data
-  public static class Address {
+  private static class Address {
     private String postCode;
     private String country;
     private String city;

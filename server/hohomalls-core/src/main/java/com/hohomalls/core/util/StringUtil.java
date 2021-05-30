@@ -1,6 +1,6 @@
 package com.hohomalls.core.util;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public interface StringUtil {
 
-  @NonNull
+  @NotNull
   static String getUniqueId() {
     return UUID.randomUUID().toString().replace("-", "");
   }
