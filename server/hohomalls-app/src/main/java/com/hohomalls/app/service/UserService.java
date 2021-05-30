@@ -1,8 +1,8 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.UserDoc;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -14,18 +14,18 @@ import reactor.core.publisher.Mono;
  */
 public interface UserService {
 
-  @NonNull
+  @NotNull
   Flux<UserDoc> findAllByMobile(@Nullable String mobile);
 
-  @NonNull
+  @NotNull
   Mono<UserDoc> findOneByEmail(@Nullable String email);
 
-  @NonNull
+  @NotNull
   Mono<UserDoc> findOneById(@Nullable String id);
 
-  @NonNull
+  @NotNull
   Mono<UserDoc> findOneByNickname(@Nullable String nickname);
 
-  @NonNull
-  Mono<UserDoc> save(@NonNull UserDoc userDoc);
+  @NotNull
+  Mono<UserDoc> save(@NotNull UserDoc userDoc);
 }
