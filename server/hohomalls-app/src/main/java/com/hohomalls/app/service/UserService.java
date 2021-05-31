@@ -1,6 +1,6 @@
 package com.hohomalls.app.service;
 
-import com.hohomalls.app.document.UserDoc;
+import com.hohomalls.app.document.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
@@ -15,17 +15,17 @@ import reactor.core.publisher.Mono;
 public interface UserService {
 
   @NotNull
-  Flux<UserDoc> findAllByMobile(@Nullable String mobile);
+  Flux<User> findAllByMobile(@Nullable String mobile);
 
   @NotNull
-  Mono<UserDoc> findOneByEmail(@Nullable String email);
+  Mono<User> findOneByEmail(@Nullable String email);
 
   @NotNull
-  Mono<UserDoc> findOneById(@Nullable String id);
+  Mono<User> findOneById(@Nullable String id);
 
   @NotNull
-  Mono<UserDoc> findOneByNickname(@Nullable String nickname);
+  Mono<User> findOneByNickname(@Nullable String nickname);
 
   @NotNull
-  Mono<UserDoc> save(@NotNull UserDoc userDoc);
+  Mono<User> save(@NotNull User user);
 }

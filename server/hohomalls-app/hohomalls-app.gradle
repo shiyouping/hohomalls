@@ -3,12 +3,7 @@ plugins {
     id 'com.netflix.dgs.codegen'
 }
 
-configurations {
-    annotationProcessor.extendsFrom implementation
-}
-
 dependencies {
-    annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', classifier: 'general'
     implementation project(':hohomalls-mongo')
     implementation project(':hohomalls-web')
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'

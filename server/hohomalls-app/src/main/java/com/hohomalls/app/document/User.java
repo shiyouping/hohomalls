@@ -1,6 +1,5 @@
 package com.hohomalls.app.document;
 
-import com.hohomalls.app.enumeration.UserStatus;
 import com.hohomalls.mongo.document.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -9,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 /**
- * The UserDoc document.
+ * The User document.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
@@ -20,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class UserDoc extends BaseDoc {
+public class User extends BaseDoc {
 
   @Indexed(unique = true)
   private String email;
@@ -34,9 +33,16 @@ public class UserDoc extends BaseDoc {
 
   private List<Address> addresses;
 
+  /** The user status. */
+  public enum UserStatus {
+    ACTIVE,
+    INACTIVE,
+    TERMINATED
+  }
+
   /** The embedded document. */
   @Data
-  private static class Address {
+  public static class Address {
     private String postCode;
     private String country;
     private String city;

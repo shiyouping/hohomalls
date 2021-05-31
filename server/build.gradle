@@ -75,8 +75,17 @@ subprojects {
         implementation group: 'org.jooq', name: 'jool'
         implementation group: 'org.mapstruct', name: 'mapstruct'
 
+        testAnnotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor'
+
         testImplementation group: 'io.projectreactor', name: 'reactor-test'
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    }
+
+    compileJava {
+        options.compilerArgs += [
+                '-Amapstruct.defaultComponentModel=spring',
+                '-Amapstruct.defaultInjectionStrategy=constructor'
+        ]
     }
 
     test {

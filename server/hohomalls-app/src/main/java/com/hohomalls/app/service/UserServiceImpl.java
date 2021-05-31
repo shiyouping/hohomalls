@@ -1,7 +1,6 @@
 package com.hohomalls.app.service;
 
-import com.hohomalls.app.document.UserDoc;
-import com.hohomalls.app.enumeration.UserStatus;
+import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
+
+import static com.hohomalls.app.document.User.UserStatus.ACTIVE;
 
 /**
  * The UserService implementation.
@@ -28,29 +29,29 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   @Override
-  public @NotNull Flux<UserDoc> findAllByMobile(@Nullable String mobile) {
+  public @NotNull Flux<User> findAllByMobile(@Nullable String mobile) {
     log.info("Finding users by mobile={}", mobile);
 
     if (mobile == null) {
       return Flux.empty();
     }
 
-    return this.userRepository.findAll(Example.of(UserDoc.builder().mobile(mobile).build()));
+    return this.userRepository.findAll(Example.of(User.builder().mobile(mobile).build()));
   }
 
   @Override
-  public @NotNull Mono<UserDoc> findOneByEmail(@Nullable String email) {
+  public @NotNull Mono<User> findOneByEmail(@Nullable String email) {
     log.info("Finding a user by email={}", email);
 
     if (email == null) {
       return Mono.empty();
     }
 
-    return this.userRepository.findOne(Example.of(UserDoc.builder().email(email).build()));
+    return this.userRepository.findOne(Example.of(User.builder().email(email).build()));
   }
 
   @Override
-  public @NotNull Mono<UserDoc> findOneById(@Nullable String id) {
+  public @NotNull Mono<User> findOneById(@Nullable String id) {
     log.info("Finding a user by id={}", id);
 
     if (id == null) {
@@ -61,29 +62,29 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NotNull Mono<UserDoc> findOneByNickname(@Nullable String nickname) {
+  public @NotNull Mono<User> findOneByNickname(@Nullable String nickname) {
     log.info("Finding a user by nickname={}", nickname);
 
     if (nickname == null) {
       return Mono.empty();
     }
 
-    return this.userRepository.findOne(Example.of(UserDoc.builder().nickname(nickname).build()));
+    return this.userRepository.findOne(Example.of(User.builder().nickname(nickname).build()));
   }
 
   @Override
-  public @NotNull Mono<UserDoc> save(@NotNull UserDoc userDoc) {
-    log.info("Saving a userDoc={}", userDoc);
+  public @NotNull Mono<User> save(@NotNull User user) {
+    log.info("Saving a user={}", user);
 
-    if (userDoc == null) {
-      return Mono.error(new IllegalArgumentException("userDoc is null"));
+    if (user == null) {
+      return Mono.error(new IllegalArgumentException("user is null"));
     }
 
     Instant now = Instant.now();
-    userDoc.setCreatedAt(now);
-    userDoc.setUpdatedAt(now);
-    userDoc.setStatus(UserStatus.ACTIVE);
+    user.setCreatedAt(now);
+    user.setUpdatedAt(now);
+    user.setStatus(ACTIVE);
 
-    return this.userRepository.save(userDoc);
+    return this.userRepository.save(user);
   }
 }

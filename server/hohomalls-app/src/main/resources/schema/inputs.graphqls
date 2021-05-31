@@ -1,26 +1,15 @@
-type Query {
-    findOneUser: User
-}
-
-type User {
+input CreateUserModel {
     email: ID!
     mobile: String
     nickname: String!
-    status: UserStatus!
-    addresses: [Address!]
+    addresses: [CreateAddressModel!]
 }
 
-type Address {
+input CreateAddressModel {
     postCode: String
     country: String!
     city: String!
     street: String!
     contact: String
     addressee: String!
-}
-
-enum UserStatus {
-    ACTIVE
-    INACTIVE
-    TERMINATED
 }

@@ -5,17 +5,17 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * The payment document.
+ * The order document.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
  */
 @Data
 @Builder
-@Document("payments")
+@Document("orders")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class PaymentDoc extends BaseDoc {
+public class Order extends BaseDoc {
   private String dummyField;
 }
