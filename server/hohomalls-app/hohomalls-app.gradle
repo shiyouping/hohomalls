@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation project(':hohomalls-mongo')
     implementation project(':hohomalls-web')
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    runtimeOnly group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
 }
 

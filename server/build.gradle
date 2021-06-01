@@ -6,7 +6,6 @@ buildscript {
     ext {
         // Dependency versions
         graphqlDgsVersion = '4.1.0'
-        guavaVersion = '30.1.1-jre'
         jetbrainsAnnotationVersion = '21.0.1'
         jooqVersion = '0.9.14'
         mapstructVersion = '1.4.2.Final'
@@ -49,12 +48,16 @@ subprojects {
     }
 
     dependencyManagement {
+        // Three ways to manage dependency version numbers:
+        // 1. By using versions from SpringBootPlugin.BOM_COORDINATES in the imports block
+        // 2. By defining versions in the ext block
+        // 3. By using the platform of netflix dgs in the dependencies block
         dependencies {
             imports {
+                // Import dependency version numbers
                 mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
             }
 
-            dependency group: 'com.google.guava', name: 'guava', version: guavaVersion
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'org.jooq', name: 'jool', version: jooqVersion
 
@@ -67,16 +70,12 @@ subprojects {
 
     dependencies {
         annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor'
-
-        implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$graphqlDgsVersion"))
-
         implementation group: 'com.google.guava', name: 'guava'
         implementation group: 'org.jetbrains', name: 'annotations'
         implementation group: 'org.jooq', name: 'jool'
         implementation group: 'org.mapstruct', name: 'mapstruct'
-
+        implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$graphqlDgsVersion"))
         testAnnotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor'
-
         testImplementation group: 'io.projectreactor', name: 'reactor-test'
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     }
