@@ -5,8 +5,10 @@ buildscript {
 
     ext {
         // Dependency versions
+        apacheValidatorVersion = '1.7'
         graphqlDgsVersion = '4.1.0'
         jetbrainsAnnotationVersion = '21.0.1'
+        jjwtVersion = '0.11.2'
         jooqVersion = '0.9.14'
         mapstructVersion = '1.4.2.Final'
 
@@ -58,12 +60,19 @@ subprojects {
                 mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
             }
 
+            dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'org.jooq', name: 'jool', version: jooqVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'
                 entry 'mapstruct-processor'
+            }
+
+            dependencySet(group: 'io.jsonwebtoken', version: jjwtVersion) {
+                entry 'jjwt-api'
+                entry 'jjwt-impl'
+                entry 'jjwt-jackson'
             }
         }
     }

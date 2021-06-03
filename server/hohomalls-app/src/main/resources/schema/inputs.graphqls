@@ -2,6 +2,7 @@ input CreateUserModel {
     email: ID!
     mobile: String
     nickname: String!
+    password: String!
     addresses: [CreateAddressModel!]
 }
 

@@ -33,6 +33,9 @@ public class User extends BaseDoc {
 
   private List<Address> addresses;
 
+  /** A hashed password. */
+  private String password;
+
   /** The user status. */
   public enum UserStatus {
     ACTIVE,

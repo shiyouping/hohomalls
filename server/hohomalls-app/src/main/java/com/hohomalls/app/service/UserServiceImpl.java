@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Example;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,6 +28,7 @@ import static com.hohomalls.app.document.User.UserStatus.ACTIVE;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public @NotNull Flux<User> findAllByMobile(@Nullable String mobile) {
@@ -84,6 +86,7 @@ public class UserServiceImpl implements UserService {
     user.setCreatedAt(now);
     user.setUpdatedAt(now);
     user.setStatus(ACTIVE);
+    user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
     return this.userRepository.save(user);
   }
