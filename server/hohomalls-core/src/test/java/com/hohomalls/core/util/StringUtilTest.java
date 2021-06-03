@@ -12,6 +12,6 @@ public class StringUtilTest {
 
   @Test
   public void testGetUniqueId() {
-    assertThat(StringUtil.getUniqueId()).doesNotContain("-");
+    assertThat(StringUtil.getUniqueId()).as("check unique id").doesNotContain("-");
   }
 }
