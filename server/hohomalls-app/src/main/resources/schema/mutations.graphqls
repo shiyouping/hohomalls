@@ -1,3 +1,6 @@
 type Mutation {
-    createUser(user: CreateUserModel): UserModel
+    # Sign up a user and get an access token in jws
+    signUp(user: CreateUserModel): String!
+    # Sign in a user and get an access token in jws
+    signIn(credentials: CredentialsModel): String!
 }

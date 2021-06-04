@@ -1,6 +1,8 @@
 input CreateUserModel {
+    # A unique email
     email: ID!
     mobile: String
+    # A unique nickname
     nickname: String!
     password: String!
     addresses: [CreateAddressModel!]
@@ -13,4 +15,9 @@ input CreateAddressModel {
     street: String!
     contact: String
     addressee: String!
+}
+
+input CredentialsModel {
+    email: ID!
+    password: String!
 }

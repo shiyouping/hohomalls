@@ -18,8 +18,8 @@ public interface FutureUtil {
 
   /** Convert a future to another future. */
   @NotNull
-  static <D, M> CompletableFuture<M> from(
-      @NotNull CompletableFuture<D> future, @NotNull Function<D, M> mapper) {
+  static <A, B> CompletableFuture<B> from(
+      @NotNull CompletableFuture<A> future, @NotNull Function<A, B> mapper) {
     checkNotNull(future, "future cannot be null");
     checkNotNull(mapper, "mapper cannot be null");
     return future.thenApply(mapper);
@@ -27,7 +27,7 @@ public interface FutureUtil {
 
   /** Convert a mono to a future. */
   @NotNull
-  static <D, M> CompletableFuture<M> from(@NotNull Mono<D> mono, @NotNull Function<D, M> mapper) {
+  static <A, B> CompletableFuture<B> from(@NotNull Mono<A> mono, @NotNull Function<A, B> mapper) {
     checkNotNull(mono, "mono cannot be null");
     checkNotNull(mapper, "mapper cannot be null");
     return from(mono.toFuture(), mapper);

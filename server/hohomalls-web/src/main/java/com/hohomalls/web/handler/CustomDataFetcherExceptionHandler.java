@@ -1,6 +1,5 @@
 package com.hohomalls.web.handler;
 
-import com.hohomalls.core.util.StringUtil;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import com.netflix.graphql.types.errors.TypedGraphQLError;
@@ -13,6 +12,8 @@ import graphql.execution.ResultPath;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 /**
  * Handles exceptions from data fetchers. Any RuntimeException is translated to a GraphQLError of
@@ -33,7 +34,7 @@ public class CustomDataFetcherExceptionHandler implements DataFetcherExceptionHa
 
     Throwable exception = handlerParameters.getException();
     ResultPath path = handlerParameters.getPath();
-    String errorId = StringUtil.getUniqueId();
+    String errorId = UUID.randomUUID().toString();
 
     log.error(
         String.format(

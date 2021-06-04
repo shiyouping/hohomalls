@@ -7,11 +7,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -22,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author ricky.shiyouping@gmail.com
  * @since 3/6/2021
  */
-final class TokenUtil {
+public final class TokenUtil {
 
   private static final String subject = "access-token";
   private static final String issuer = "www.hohomalls.com";
@@ -30,10 +32,11 @@ final class TokenUtil {
 
   private TokenUtil() {}
 
+  /** Generate a RSA JWS. */
   @NotNull
-  static String generate(@NotNull Key privateKey, @NotNull String email, @NotNull Long hours) {
+  public static String generate(
+      @NotNull Key privateKey, @Nullable Map<String, Object> claims, @NotNull Long hours) {
     checkNotNull(privateKey, "privateKey cannot be null");
-    checkNotNull(email, "email cannot be null");
     checkNotNull(hours, "hours cannot be null");
 
     return Jwts.builder()
@@ -41,13 +44,15 @@ final class TokenUtil {
         .setIssuer(issuer)
         .setId(UUID.randomUUID().toString())
         .setExpiration(Date.from(Instant.now().plus(hours, ChronoUnit.HOURS)))
-        .claim(TokenUtil.email, email)
-        .signWith(privateKey, SignatureAlgorithm.RS512)
+        .addClaims(claims)
+        .signWith(privateKey, SignatureAlgorithm.RS256)
         .compact();
   }
 
+  /** Parse and validate the JWS. */
   @NotNull
-  static String parse(@NotNull Key publicKey, @NotNull String jws, @NotNull Long hours) {
+  public static Jws<Claims> parse(
+      @NotNull Key publicKey, @NotNull String jws, @NotNull Long hours) {
     checkNotNull(publicKey, "publicKey cannot be null");
     checkNotNull(jws, "jws cannot be null");
     checkNotNull(hours, "hours cannot be null");
@@ -69,6 +74,6 @@ final class TokenUtil {
       throw new InvalidTokenException();
     }
 
-    return email;
+    return claimsJws;
   }
 }
