@@ -13,6 +13,7 @@ import org.mapstruct.Mapping;
  */
 @Mapper
 public interface UserMapper {
+
   @Mapping(target = "status", constant = "ACTIVE")
   User toDoc(CreateUserModel createUserModel);
 }

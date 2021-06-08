@@ -1,6 +1,7 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.property.TokenProperties;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -9,21 +10,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TokenServiceImplTest {
 
+  private static String jws;
+
   @Test
+  @Order(1)
   void testGenerate() {
     TokenProperties properties = getProperties();
     TokenService service = new TokenServiceImpl(properties);
     Optional<String> jws = service.generate("ricky@gmail.com", "ricky");
     assertThat(jws.isPresent()).isTrue();
+    TokenServiceImplTest.jws = jws.get();
   }
 
   @Test
+  @Order(2)
   void testParseEmail() {
     TokenProperties properties = getProperties();
     TokenService service = new TokenServiceImpl(properties);
-    Optional<String> email =
-        service.parseEmail(
-            "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJpc3MiOiJ3d3cuaG9ob21hbGxzLmNvbSIsImp0aSI6IjEzZjY5MjNkLWJlYjYtNDM4ZC04MTkxLTdjYjY5MThkYzY2MiIsImV4cCI6MTYyMjkwMzU0MSwibmlja25hbWUiOiJyaWNreSIsImVtYWlsIjoicmlja3lAZ21haWwuY29tIn0.ZbQgwvdDTLfh30EgVGA2TFLBnRkalGXUT52WmRETV3ocwvoO9bhz6rvXTGXPwLrVmDhTbM-aWwKIMv8ybGyDcTMcQbiZe_pcfpxGPWLvz2UBhI8gEoj94qkCuAtAxaLjNj_tWjpO20fYfzJ1Eb9lB1aVuIxMmr76j7A19UsJYQa9zoXkVa3eeY7GGpPE0rRAB4VE_hEn8yLTe4vQzg-g35vzVhlQyr7HS-K2xbuYKZwzL5NzyfQqtkep1NaubWgUkyKc1J3vb7VnRsEcdWgHUEVD0Moi7nKGxOuSF083aazE5_usM-rhr_iwk5tL6baNe84xIBDuyscxyRZ9Wv4M2w");
+    Optional<String> email = service.parseEmail(jws);
     assertThat(email.isPresent()).isTrue();
     assertThat(email.get()).isEqualTo("ricky@gmail.com");
   }
