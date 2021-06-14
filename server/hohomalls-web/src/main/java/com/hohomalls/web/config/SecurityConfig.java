@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-import static com.hohomalls.core.constant.SpringProfile.LOCAL;
-import static com.hohomalls.core.constant.SpringProfile.PROD;
+import static com.hohomalls.core.constant.ConfigProfile.LOCAL;
+import static com.hohomalls.core.constant.ConfigProfile.PROD;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
