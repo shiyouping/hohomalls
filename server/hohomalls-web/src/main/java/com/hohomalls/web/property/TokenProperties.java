@@ -1,4 +1,4 @@
-package com.hohomalls.app.property;
+package com.hohomalls.web.property;
 
 import com.hohomalls.core.constant.Properties;
 import lombok.Data;

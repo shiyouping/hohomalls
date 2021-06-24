@@ -5,7 +5,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +27,6 @@ public final class TokenUtil {
 
   private static final String subject = "access-token";
   private static final String issuer = "www.hohomalls.com";
-  private static final String email = "email";
 
   private TokenUtil() {}
 
@@ -61,11 +59,7 @@ public final class TokenUtil {
         Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(jws);
 
     Claims body = claimsJws.getBody();
-    String email = body.get(TokenUtil.email, String.class);
-
-    if (!subject.equals(body.getSubject())
-        || !issuer.equals(body.getIssuer())
-        || !EmailValidator.getInstance().isValid(email)) {
+    if (!subject.equals(body.getSubject()) || !issuer.equals(body.getIssuer())) {
       throw new InvalidTokenException();
     }
 

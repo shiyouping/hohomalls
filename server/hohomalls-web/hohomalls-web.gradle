@@ -7,4 +7,5 @@ dependencies {
     api group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-extended-scalars'
     api group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-webflux-starter'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    api group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 }

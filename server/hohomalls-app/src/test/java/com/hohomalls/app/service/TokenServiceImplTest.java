@@ -1,6 +1,8 @@
 package com.hohomalls.app.service;
 
-import com.hohomalls.app.property.TokenProperties;
+import com.hohomalls.web.property.TokenProperties;
+import com.hohomalls.web.service.TokenService;
+import com.hohomalls.web.service.TokenServiceImpl;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +29,7 @@ class TokenServiceImplTest {
   void testParseEmail() {
     TokenProperties properties = getProperties();
     TokenService service = new TokenServiceImpl(properties);
-    Optional<String> email = service.parseEmail(jws);
+    Optional<String> email = service.getEmail(jws);
     assertThat(email.isPresent()).isTrue();
     assertThat(email.get()).isEqualTo("ricky@gmail.com");
   }

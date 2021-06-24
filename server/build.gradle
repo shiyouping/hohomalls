@@ -11,6 +11,7 @@ buildscript {
         jjwtVersion = '0.11.2'
         jooqVersion = '0.9.14'
         mapstructVersion = '1.4.2.Final'
+        reactorVersion = '3.4.3'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
@@ -63,6 +64,7 @@ subprojects {
             dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'org.jooq', name: 'jool', version: jooqVersion
+            dependency group: 'io.projectreactor', name: 'reactor-tools', version: reactorVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'

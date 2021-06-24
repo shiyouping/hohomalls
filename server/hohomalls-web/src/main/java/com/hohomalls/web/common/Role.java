@@ -7,7 +7,7 @@ package com.hohomalls.web.common;
  * @since 9/6/2021
  */
 public enum Role {
-  SELLER,
-  BUYER,
-  VISITOR
+  ROLE_SELLER,
+  ROLE_BUYER,
+  ROLE_VISITOR
 }
