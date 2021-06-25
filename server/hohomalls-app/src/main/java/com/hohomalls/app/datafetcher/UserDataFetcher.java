@@ -44,7 +44,7 @@ public class UserDataFetcher {
               }
 
               return this.tokenService
-                  .generate(user.getEmail(), user.getNickname())
+                  .getToken(user.getEmail(), user.getNickname())
                   .orElseThrow(RuntimeException::new);
             });
   }
@@ -57,7 +57,7 @@ public class UserDataFetcher {
         .thenApply(
             user ->
                 this.tokenService
-                    .generate(user.getEmail(), user.getNickname())
+                    .getToken(user.getEmail(), user.getNickname())
                     .orElseThrow(RuntimeException::new));
   }
 }

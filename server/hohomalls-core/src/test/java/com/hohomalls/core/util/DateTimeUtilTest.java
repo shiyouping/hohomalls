@@ -11,6 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DateTimeUtilTest {
   @Test
   public void testNow() {
-    assertThat(DateTimeUtil.now().getOffset().getId()).as("check date time").isEqualTo("Z");
+    assertThat(DateTimeUtil.now().getOffset().getId()).as("date time").isEqualTo("Z");
   }
 }

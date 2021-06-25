@@ -3,10 +3,9 @@ plugins {
 }
 
 dependencies {
+    api group: 'io.jsonwebtoken', name: 'jjwt-api'
     api group: 'io.projectreactor', name: 'reactor-core'
     api group: 'io.projectreactor', name: 'reactor-tools'
-    api group: 'io.jsonwebtoken', name: 'jjwt-api'
-    api group: 'commons-validator', name: 'commons-validator'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
 }

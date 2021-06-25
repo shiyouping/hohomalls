@@ -11,4 +11,5 @@ public interface Common {
   String EMAIL = "email";
   String ROLES = "roles";
   String NICKNAME = "nickname";
+  String SUBJECT = "sub";
 }
