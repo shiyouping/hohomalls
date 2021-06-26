@@ -28,22 +28,23 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
   @Override
   public Mono<Authentication> authenticate(Authentication auth) {
-    var jwsToken = auth.getCredentials().toString();
-    var emailOptional = this.tokenService.getEmail(jwsToken);
-    var roleList = this.tokenService.getRoles(jwsToken);
+    var token = auth.getCredentials().toString();
+    var emailOptional = this.tokenService.getEmail(token);
+    var roles = this.tokenService.getRoles(token);
 
-    if (emailOptional.isEmpty() || roleList.isEmpty()) {
-      throw new InvalidTokenException("No email or roles");
-    }
-
-    return Mono.just(emailOptional.get())
+    return Mono.justOrEmpty(emailOptional)
         .map(
-            email ->
-                new UsernamePasswordAuthenticationToken(
-                    email,
-                    null,
-                    roleList.stream()
-                        .map(role -> new SimpleGrantedAuthority(role.name()))
-                        .collect(Collectors.toList())));
+            email -> {
+              if (roles.isEmpty()) {
+                throw new InvalidTokenException("No roles found");
+              }
+
+              return new UsernamePasswordAuthenticationToken(
+                  email,
+                  null,
+                  roles.stream()
+                      .map(role -> new SimpleGrantedAuthority(role.name()))
+                      .collect(Collectors.toList()));
+            });
   }
 }
