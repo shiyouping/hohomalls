@@ -6,7 +6,7 @@ buildscript {
     ext {
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.1.0'
+        graphqlDgsVersion = '4.3.1'
         jetbrainsAnnotationVersion = '21.0.1'
         jjwtVersion = '0.11.2'
         jooqVersion = '0.9.14'
@@ -16,8 +16,8 @@ buildscript {
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
         lombokPluginVersion = '5.3.3.3'
-        springBootPluginVersion = '2.4.3'
-        dgsCodegenPluginVersion = '4.6.4'
+        springBootPluginVersion = '2.5.2'
+        dgsCodegenPluginVersion = '4.6.7'
     }
 
     dependencies {
