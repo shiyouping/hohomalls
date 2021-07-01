@@ -4,6 +4,8 @@ import com.hohomalls.app.graphql.types.CreateUserModel;
 import com.hohomalls.app.graphql.types.CredentialsModel;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
+import com.hohomalls.web.common.Authorization;
+import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.TokenService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
@@ -11,9 +13,9 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.concurrent.CompletableFuture;
+import reactor.core.publisher.Mono;
 
 /**
  * The class of UserDataFetcher.
@@ -31,12 +33,10 @@ public class UserDataFetcher {
   private final PasswordEncoder passwordEncoder;
 
   @DgsQuery
-  public CompletableFuture<String> signIn(
-      @InputArgument("credentials") CredentialsModel credentialsModel) {
+  public Mono<String> signIn(@InputArgument("credentials") CredentialsModel credentialsModel) {
     return this.userService
         .findOneByEmail(credentialsModel.getEmail())
-        .toFuture()
-        .thenApply(
+        .map(
             user -> {
               if (!this.passwordEncoder.matches(
                   credentialsModel.getPassword(), user.getPassword())) {
@@ -50,14 +50,14 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  public CompletableFuture<String> signUp(@InputArgument("user") CreateUserModel createUserModel) {
+  @PreAuthorize(Authorization.PUBLIC)
+  public Mono<String> signUp(@InputArgument("user") CreateUserModel createUserModel) {
     return this.userService
         .save(this.userMapper.toDoc(createUserModel))
-        .toFuture()
-        .thenApply(
+        .map(
             user ->
                 this.tokenService
-                    .getToken(user.getEmail(), user.getNickname())
+                    .getToken(user.getEmail(), user.getNickname(), Role.ROLE_BUYER)
                     .orElseThrow(RuntimeException::new));
   }
 }
