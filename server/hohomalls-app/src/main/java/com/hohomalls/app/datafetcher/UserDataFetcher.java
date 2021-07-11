@@ -4,7 +4,7 @@ import com.hohomalls.app.graphql.types.CreateUserModel;
 import com.hohomalls.app.graphql.types.CredentialsModel;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
-import com.hohomalls.web.common.Authorization;
+import com.hohomalls.web.common.Auth;
 import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.TokenService;
 import com.netflix.graphql.dgs.DgsComponent;
@@ -50,7 +50,7 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @PreAuthorize(Authorization.PUBLIC)
+  @PreAuthorize(Auth.ANONYMOUS)
   public Mono<String> signUp(@InputArgument("user") CreateUserModel createUserModel) {
     return this.userService
         .save(this.userMapper.toDoc(createUserModel))

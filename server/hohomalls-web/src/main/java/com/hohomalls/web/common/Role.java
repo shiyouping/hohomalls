@@ -9,5 +9,5 @@ package com.hohomalls.web.common;
 public enum Role {
   ROLE_SELLER,
   ROLE_BUYER,
-  ROLE_VISITOR
+  ROLE_ANONYMOUS
 }

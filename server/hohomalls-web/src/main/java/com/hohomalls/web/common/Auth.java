@@ -1,13 +1,13 @@
 package com.hohomalls.web.common;
 
 /**
- * The interface of Authorization.
+ * The interface of Auth.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 1/7/2021
  */
-public interface Authorization {
+public interface Auth {
   String SELLER = "hasRole('ROLE_SELLER')";
   String BUYER = "hasRole('ROLE_BUYER')";
-  String PUBLIC = "permitAll";
+  String ANONYMOUS = "hasRole('ROLE_ANONYMOUS')";
 }
