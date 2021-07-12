@@ -9,10 +9,9 @@ import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.TokenService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Mono;
@@ -32,7 +31,12 @@ public class UserDataFetcher {
   private final TokenService tokenService;
   private final PasswordEncoder passwordEncoder;
 
-  @DgsQuery
+  /**
+   * DGS framework has a bug so non-anonymous roles do not work for the time being.<br>
+   * See details at https://github.com/Netflix/dgs-framework/issues/458
+   */
+  @DgsMutation
+  @PreAuthorize(Auth.ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsModel credentialsModel) {
     return this.userService
         .findOneByEmail(credentialsModel.getEmail())
@@ -40,7 +44,7 @@ public class UserDataFetcher {
             user -> {
               if (!this.passwordEncoder.matches(
                   credentialsModel.getPassword(), user.getPassword())) {
-                throw new AccessDeniedException("Invalid email or password");
+                throw new DgsBadRequestException("Invalid email or password");
               }
 
               return this.tokenService

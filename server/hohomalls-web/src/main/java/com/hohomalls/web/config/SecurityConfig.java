@@ -1,6 +1,7 @@
 package com.hohomalls.web.config;
 
 import com.hohomalls.web.filter.AuthenticationFilter;
+import com.hohomalls.web.security.AuthorizationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
   private final AuthenticationFilter authenticationFilter;
+  private final AuthorizationManager authorizationManager;
 
   /** The security configurations for local env. */
   @Bean
@@ -61,7 +63,7 @@ public class SecurityConfig {
         .disable()
         .authorizeExchange()
         .anyExchange()
-        .authenticated()
+        .access(this.authorizationManager)
         .and()
         .addFilterAt(this.authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
   }

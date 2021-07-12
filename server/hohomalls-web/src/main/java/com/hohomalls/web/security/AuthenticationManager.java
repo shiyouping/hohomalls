@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
- * Check if the Authentication parsed from JwtTokenConverter is still valid.
+ * Check if the Authentication parsed from AuthenticationConverter is still valid.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 12/7/2021

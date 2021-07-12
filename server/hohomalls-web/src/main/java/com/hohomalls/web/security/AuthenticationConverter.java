@@ -28,7 +28,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtTokenConverter implements ServerAuthenticationConverter {
+public class AuthenticationConverter implements ServerAuthenticationConverter {
 
   private static final String AUTH_PREFIX = "Bearer";
   private static final String ANONYMOUS = "ANONYMOUS";
