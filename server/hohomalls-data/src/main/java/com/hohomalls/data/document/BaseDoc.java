@@ -1,4 +1,4 @@
-package com.hohomalls.mongo.document;
+package com.hohomalls.data.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import java.time.Instant;
 
 /**
- * The parent class of all mongo documents.
+ * The parent class of all data documents.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021

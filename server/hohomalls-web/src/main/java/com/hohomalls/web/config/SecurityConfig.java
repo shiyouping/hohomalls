@@ -1,20 +1,15 @@
 package com.hohomalls.web.config;
 
+import com.hohomalls.web.filter.AuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.context.ServerSecurityContextRepository;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 import static com.hohomalls.core.constant.ConfigProfiles.LOCAL;
 import static com.hohomalls.core.constant.ConfigProfiles.PROD;
@@ -32,8 +27,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
-  private final ReactiveAuthenticationManager authenticationManager;
-  private final ServerSecurityContextRepository securityContextRepository;
+  private final AuthenticationFilter authenticationFilter;
 
   /** The security configurations for local env. */
   @Bean
@@ -59,27 +53,16 @@ public class SecurityConfig {
   }
 
   private ServerHttpSecurity commonSecurity(ServerHttpSecurity http) {
-    return http.exceptionHandling()
-        .authenticationEntryPoint(this::entryPoint)
-        .accessDeniedHandler(this::handler)
-        .and()
-        .formLogin()
+    return http.formLogin()
         .disable()
         .httpBasic()
         .disable()
-        .authenticationManager(this.authenticationManager)
-        .securityContextRepository(this.securityContextRepository)
+        .logout()
+        .disable()
         .authorizeExchange()
         .anyExchange()
         .authenticated()
-        .and();
-  }
-
-  private Mono<Void> entryPoint(ServerWebExchange exchange, AuthenticationException ex) {
-    return Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED));
-  }
-
-  private Mono<Void> handler(ServerWebExchange exchange, AccessDeniedException denied) {
-    return Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN));
+        .and()
+        .addFilterAt(this.authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
   }
 }

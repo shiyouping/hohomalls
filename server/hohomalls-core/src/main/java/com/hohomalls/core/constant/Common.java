@@ -7,7 +7,7 @@ package com.hohomalls.core.constant;
  * @since 24/6/2021
  */
 public interface Common {
-  String DELIMITER = ",";
+  String COMMA = ",";
   String EMAIL = "email";
   String ROLES = "roles";
   String NICKNAME = "nickname";

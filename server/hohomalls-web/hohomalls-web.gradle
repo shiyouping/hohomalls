@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api project(':hohomalls-core')
+    api project(':hohomalls-data')
     api group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-extended-scalars'
     api group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-webflux-starter'
     api group: 'commons-validator', name: 'commons-validator'

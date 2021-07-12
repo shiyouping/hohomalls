@@ -9,4 +9,4 @@ spring:
 com:
   hohomalls:
     token:
-      lifespan: 24
+      lifespan: 240

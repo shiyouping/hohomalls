@@ -1,6 +1,6 @@
 package com.hohomalls.app.document;
 
-import com.hohomalls.mongo.document.BaseDoc;
+import com.hohomalls.data.document.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

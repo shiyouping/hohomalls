@@ -65,7 +65,7 @@ public class TokenServiceImpl implements TokenService {
       throw new InvalidTokenException("Invalid role");
     }
 
-    return Arrays.stream(roles.split(DELIMITER)).map(Role::valueOf).collect(Collectors.toList());
+    return Arrays.stream(roles.split(COMMA)).map(Role::valueOf).collect(Collectors.toList());
   }
 
   @Override
@@ -81,7 +81,7 @@ public class TokenServiceImpl implements TokenService {
 
     var roleList =
         Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
-    var roleString = String.join(DELIMITER, roleList);
+    var roleString = String.join(COMMA, roleList);
     var expiration = Date.from(Instant.now().plus(this.properties.getLifespan(), ChronoUnit.HOURS));
     Map<String, Object> claims =
         Map.of(Common.SUBJECT, SUBJECT, EMAIL, email, NICKNAME, nickname, ROLES, roleString);

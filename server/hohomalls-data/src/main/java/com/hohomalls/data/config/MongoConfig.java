@@ -1,4 +1,4 @@
-package com.hohomalls.mongo.config;
+package com.hohomalls.data.config;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
@@ -36,7 +36,6 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
   }
 
   @Override
-  @SuppressWarnings("NullableProblems")
   protected String getDatabaseName() {
     return this.mongoProperties.getDatabase();
   }
