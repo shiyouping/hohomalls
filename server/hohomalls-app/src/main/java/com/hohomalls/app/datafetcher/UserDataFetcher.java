@@ -36,6 +36,7 @@ public class UserDataFetcher {
    * See details at https://github.com/Netflix/dgs-framework/issues/458
    */
   @DgsMutation
+  // @PreAuthorize(Auth.BUYER)
   @PreAuthorize(Auth.ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsModel credentialsModel) {
     return this.userService
