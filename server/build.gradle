@@ -6,7 +6,7 @@ buildscript {
     ext {
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.3.2'
+        graphqlDgsVersion = '4.4.0'
         jetbrainsAnnotationVersion = '21.0.1'
         jjwtVersion = '0.11.2'
         jooqVersion = '0.9.14'
