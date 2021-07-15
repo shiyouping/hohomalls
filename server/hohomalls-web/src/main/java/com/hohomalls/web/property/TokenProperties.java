@@ -1,6 +1,5 @@
 package com.hohomalls.web.property;
 
-import com.hohomalls.core.constant.Properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+
+import static com.hohomalls.core.constant.Global.PROPERTY_PREFIX;
 
 /**
  * The class of TokenProperties.
@@ -18,7 +19,7 @@ import javax.validation.constraints.Positive;
 @Data
 @Validated
 @Configuration
-@ConfigurationProperties(prefix = Properties.PREFIX + "token")
+@ConfigurationProperties(prefix = PROPERTY_PREFIX + "token")
 public class TokenProperties {
 
   @NotBlank private String privateKey;

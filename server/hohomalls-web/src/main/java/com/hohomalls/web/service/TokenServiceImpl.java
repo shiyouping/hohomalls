@@ -1,6 +1,6 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.core.constant.Common;
+import com.hohomalls.core.constant.Global;
 import com.hohomalls.core.exception.InvalidTokenException;
 import com.hohomalls.core.util.JwtUtil;
 import com.hohomalls.core.util.KeyUtil;
@@ -21,7 +21,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.hohomalls.core.constant.Common.*;
+import static com.hohomalls.core.constant.Global.*;
 
 /**
  * The class of TokenServiceImpl.
@@ -84,7 +84,7 @@ public class TokenServiceImpl implements TokenService {
     var roleString = String.join(COMMA, roleList);
     var expiration = Date.from(Instant.now().plus(this.properties.getLifespan(), ChronoUnit.HOURS));
     Map<String, Object> claims =
-        Map.of(Common.SUBJECT, SUBJECT, EMAIL, email, NICKNAME, nickname, ROLES, roleString);
+        Map.of(Global.SUBJECT, SUBJECT, EMAIL, email, NICKNAME, nickname, ROLES, roleString);
     return Optional.of(JwtUtil.generate(privateKey, claims, expiration));
   }
 

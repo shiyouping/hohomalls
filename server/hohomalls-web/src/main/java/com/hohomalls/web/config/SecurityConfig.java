@@ -12,8 +12,8 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-import static com.hohomalls.core.constant.ConfigProfiles.LOCAL;
-import static com.hohomalls.core.constant.ConfigProfiles.PROD;
+import static com.hohomalls.core.constant.Global.PROFILE_LOCAL;
+import static com.hohomalls.core.constant.Global.PROFILE_PROD;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
@@ -33,7 +33,7 @@ public class SecurityConfig {
 
   /** The security configurations for local env. */
   @Bean
-  @Profile(LOCAL)
+  @Profile(PROFILE_LOCAL)
   public SecurityWebFilterChain localFilterChain(ServerHttpSecurity http) {
     return commonSecurity(http)
         // Disable HTTP Security Response Headers. See details at:
@@ -49,7 +49,7 @@ public class SecurityConfig {
 
   /** The security configurations for production env. */
   @Bean
-  @Profile(PROD)
+  @Profile(PROFILE_PROD)
   public SecurityWebFilterChain productionFilterChain(ServerHttpSecurity http) {
     return commonSecurity(http).redirectToHttps(withDefaults()).build();
   }

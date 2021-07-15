@@ -1,6 +1,6 @@
 package com.hohomalls.web.util;
 
-import com.hohomalls.core.constant.Common;
+import com.hohomalls.core.constant.Global;
 import com.hohomalls.web.common.Role;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +30,6 @@ public interface AuthorityUtil {
     }
 
     return AuthorityUtils.commaSeparatedStringToAuthorityList(
-        roles.stream().map(Role::name).collect(Collectors.joining(Common.COMMA)));
+        roles.stream().map(Role::name).collect(Collectors.joining(Global.COMMA)));
   }
 }

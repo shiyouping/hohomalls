@@ -1,6 +1,5 @@
 package com.hohomalls;
 
-import com.hohomalls.core.constant.ConfigProfiles;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +9,8 @@ import reactor.core.publisher.Hooks;
 import reactor.tools.agent.ReactorDebugAgent;
 
 import java.util.Arrays;
+
+import static com.hohomalls.core.constant.Global.PROFILE_PROD;
 
 /**
  * The main entry of this application.
@@ -34,7 +35,7 @@ public class Application {
             event -> {
               var isProduction =
                   Arrays.stream(event.getEnvironment().getActiveProfiles())
-                      .anyMatch(ConfigProfiles.PROD::equalsIgnoreCase);
+                      .anyMatch(PROFILE_PROD::equalsIgnoreCase);
 
               final var debugInfo = "***** Activate Reactor's Global Debug *****";
 

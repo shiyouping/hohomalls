@@ -3,10 +3,13 @@ package com.hohomalls.data.config;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+
+import static com.hohomalls.core.constant.Global.BASE_PACKAGE;
 
 /**
  * MongoDB configurations.
@@ -16,7 +19,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  */
 @Configuration
 @RequiredArgsConstructor
-@EnableReactiveMongoRepositories(basePackages = "com.hohomalls")
+@EnableReactiveMongoRepositories(basePackages = BASE_PACKAGE)
 public class MongoConfig extends AbstractReactiveMongoConfiguration {
 
   private final MongoProperties mongoProperties;
@@ -36,7 +39,7 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
   }
 
   @Override
-  protected String getDatabaseName() {
+  protected @NotNull String getDatabaseName() {
     return this.mongoProperties.getDatabase();
   }
 }

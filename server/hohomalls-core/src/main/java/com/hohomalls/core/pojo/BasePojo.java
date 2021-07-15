@@ -1,23 +1,23 @@
-package com.hohomalls.data.document;
+package com.hohomalls.core.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
 
 /**
- * The parent class of all data documents.
+ * The class of BasePojo.
  *
  * @author ricky.shiyouping@gmail.com
- * @since 24/4/2021
+ * @since 16/7/2021
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseDoc {
-  @Id private String id;
+public abstract class BasePojo {
+
+  private String id;
   private Instant createdAt;
   private Instant updatedAt;
 }

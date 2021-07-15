@@ -1,6 +1,6 @@
 package com.hohomalls.app.document;
 
-import com.hohomalls.data.document.BaseDoc;
+import com.hohomalls.data.pojo.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 /**
- * The User document.
+ * The User pojo.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
@@ -43,7 +43,7 @@ public class User extends BaseDoc {
     TERMINATED
   }
 
-  /** The embedded document. */
+  /** The embedded pojo. */
   @Data
   public static class Address {
     private String postCode;

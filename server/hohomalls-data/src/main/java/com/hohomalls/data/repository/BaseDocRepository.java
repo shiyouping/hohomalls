@@ -10,4 +10,4 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @since 24/4/2021
  */
 @NoRepositoryBean
-public interface BaseRepository<D> extends ReactiveMongoRepository<D, String> {}
+public interface BaseDocRepository<D> extends ReactiveMongoRepository<D, String> {}

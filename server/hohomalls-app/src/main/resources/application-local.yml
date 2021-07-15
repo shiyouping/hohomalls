@@ -1,6 +1,8 @@
 debug: false
 
 spring:
+  redis:
+    host: localhost
   data:
     mongodb:
       host: localhost

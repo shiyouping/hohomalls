@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
- * The service of user document.
+ * The service of user pojo.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
