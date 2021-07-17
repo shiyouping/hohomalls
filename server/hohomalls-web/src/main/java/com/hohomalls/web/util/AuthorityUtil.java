@@ -1,6 +1,6 @@
 package com.hohomalls.web.util;
 
-import com.hohomalls.core.constant.Global;
+import com.hohomalls.core.common.Global;
 import com.hohomalls.web.common.Role;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.hohomalls.core.constant;
+package com.hohomalls.core.common;
 
 /**
  * The interface of Global.
@@ -16,7 +16,7 @@ public interface Global {
   String SUBJECT = "sub";
 
   String BASE_PACKAGE = "com.hohomalls";
-  String PROPERTY_PREFIX = "com.hohomalls";
+  String PROPERTY_PREFIX = "com.hohomalls.";
 
   String PROFILE_LOCAL = "local";
   String PROFILE_PROD = "prod";

@@ -1,13 +1,13 @@
-type UserModel {
+type UserDto {
     email: ID!
     mobile: String
     nickname: String!
     status: UserStatus!
     token: String!
-    addresses: [AddressModel!]
+    addresses: [AddressDto!]
 }
 
-type AddressModel {
+type AddressDto {
     postCode: String
     country: String!
     city: String!

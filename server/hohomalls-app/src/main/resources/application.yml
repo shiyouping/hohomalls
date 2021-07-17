@@ -7,8 +7,3 @@ spring:
       database: hohomalls
       auto-index-creation: true
       authentication-database: admin
-
-com:
-  hohomalls:
-    token:
-      lifespan: 240

@@ -1,6 +1,7 @@
 package com.hohomalls.app.document;
 
 import com.hohomalls.data.pojo.BaseDoc;
+import com.hohomalls.web.common.Role;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,10 +25,12 @@ public class User extends BaseDoc {
   @Indexed(unique = true)
   private String email;
 
-  private String mobile;
-
   @Indexed(unique = true)
   private String nickname;
+
+  private Role role;
+
+  private String mobile;
 
   private UserStatus status;
 

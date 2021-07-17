@@ -1,6 +1,9 @@
+scalar Void
+
 type Mutation {
     # Sign up a user and get an access token in jws
-    signUp(user: CreateUserModel): String!
+    signUp(user: CreateUserDto): String!
     # Sign in a user and get an access token in jws
-    signIn(credentials: CredentialsModel): String!
+    signIn(credentials: CredentialsDto): String!
+    signOut: Void
 }

@@ -15,6 +15,7 @@ com:
     token:
       public-key: // FIXME
       private-key: // FIXME
+      lifespan: 240
 
 dgs:
   graphql:

@@ -1,14 +1,15 @@
-input CreateUserModel {
-    # A unique email
-    email: ID!
-    mobile: String
+input CreateUserDto {
     # A unique nickname
     nickname: String!
+    # A unique email
+    email: ID!
     password: String!
-    addresses: [CreateAddressModel!]
+    role: Role!
+    mobile: String
+    addresses: [CreateAddressDto!]
 }
 
-input CreateAddressModel {
+input CreateAddressDto {
     postCode: String
     country: String!
     city: String!
@@ -17,7 +18,12 @@ input CreateAddressModel {
     addressee: String!
 }
 
-input CredentialsModel {
+input CredentialsDto {
     email: ID!
     password: String!
+}
+
+enum Role {
+    ROLE_SELLER
+    ROLE_BUYER
 }

@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
-import static com.hohomalls.core.constant.Global.PROPERTY_PREFIX;
+import static com.hohomalls.core.common.Global.PROPERTY_PREFIX;
 
 /**
  * The class of TokenProperties.

@@ -10,7 +10,7 @@ import reactor.tools.agent.ReactorDebugAgent;
 
 import java.util.Arrays;
 
-import static com.hohomalls.core.constant.Global.PROFILE_PROD;
+import static com.hohomalls.core.common.Global.PROFILE_PROD;
 
 /**
  * The main entry of this application.

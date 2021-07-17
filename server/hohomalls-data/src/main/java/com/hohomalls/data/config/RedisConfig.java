@@ -1,21 +1,30 @@
 package com.hohomalls.data.config;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.ReactiveRedisConnection;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
-import static com.hohomalls.core.constant.Global.BASE_PACKAGE;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.hohomalls.core.common.Global.BASE_PACKAGE;
 
 /**
  * The class of RedisConfig.
+ *
+ * <p>1. For primitive and simple types, e.g. String, Integer, Operation APIs of RedisTemplate are
+ * preferred.
+ *
+ * <p>2. For other advanced operations, Command APIs of ReactiveRedisConnection are preferred
  *
  * @author ricky.shiyouping@gmail.com
  * @since 15/7/2021
@@ -28,7 +37,16 @@ public class RedisConfig {
   private final RedisProperties redisProperties;
 
   @Bean
-  public ReactiveRedisConnectionFactory lettuceConnectionFactory() {
+  @NotNull
+  public ReactiveRedisConnection reactiveRedisConnection(
+      @NotNull ReactiveRedisConnectionFactory redisConnectionFactory) {
+    checkNotNull(redisConnectionFactory, "redisConnectionFactory cannot be null");
+    return redisConnectionFactory.getReactiveConnection();
+  }
+
+  @Bean
+  @NotNull
+  public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
     var clientConfig =
         this.redisProperties.isSsl()
             ? LettuceClientConfiguration.builder().useSsl().build()
@@ -44,9 +62,11 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-    RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
-    template.setConnectionFactory(redisConnectionFactory);
-    return template;
+  @NotNull
+  public ReactiveRedisTemplate<?, ?> reactiveRedisTemplate(
+      @NotNull ReactiveRedisConnectionFactory redisConnectionFactory) {
+    checkNotNull(redisConnectionFactory, "redisConnectionFactory cannot be null");
+    return new ReactiveRedisTemplate<>(
+        redisConnectionFactory, RedisSerializationContext.fromSerializer(RedisSerializer.json()));
   }
 }

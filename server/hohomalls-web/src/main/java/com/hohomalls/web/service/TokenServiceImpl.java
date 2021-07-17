@@ -1,6 +1,6 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.core.constant.Global;
+import com.hohomalls.core.common.Global;
 import com.hohomalls.core.exception.InvalidTokenException;
 import com.hohomalls.core.util.JwtUtil;
 import com.hohomalls.core.util.KeyUtil;
@@ -21,7 +21,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.hohomalls.core.constant.Global.*;
+import static com.hohomalls.core.common.Global.*;
 
 /**
  * The class of TokenServiceImpl.
