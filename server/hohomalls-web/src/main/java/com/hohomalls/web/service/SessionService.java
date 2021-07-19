@@ -16,5 +16,8 @@ public interface SessionService {
   Mono<Boolean> delete(@Nullable String session);
 
   @NotNull
+  Mono<Boolean> has(@Nullable String session);
+
+  @NotNull
   Mono<String> save(@Nullable String session);
 }

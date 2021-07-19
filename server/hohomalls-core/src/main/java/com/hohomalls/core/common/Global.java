@@ -20,4 +20,7 @@ public interface Global {
 
   String PROFILE_LOCAL = "local";
   String PROFILE_PROD = "prod";
+
+  String AUTH_PREFIX = "Bearer";
+  String ANONYMOUS = "ANONYMOUS";
 }

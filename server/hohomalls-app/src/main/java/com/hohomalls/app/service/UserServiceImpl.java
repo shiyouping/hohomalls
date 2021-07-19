@@ -1,7 +1,7 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.User;
-import com.hohomalls.app.repository.UserDocRepository;
+import com.hohomalls.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,7 @@ import static com.hohomalls.app.document.User.UserStatus.ACTIVE;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private final UserDocRepository userRepository;
+  private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Override

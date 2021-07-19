@@ -24,5 +24,6 @@ public class TokenProperties {
 
   @NotBlank private String privateKey;
   @NotBlank private String publicKey;
+  /** Hours, by default 7 days. */
   @Positive private Long lifespan = 24L * 7;
 }

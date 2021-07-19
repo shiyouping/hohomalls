@@ -7,14 +7,15 @@ import com.hohomalls.app.service.UserService;
 import com.hohomalls.web.common.Auth;
 import com.hohomalls.web.service.SessionService;
 import com.hohomalls.web.service.TokenService;
+import com.hohomalls.web.util.HttpHeaderUtil;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestHeader;
 import reactor.core.publisher.Mono;
 
 /**
@@ -60,15 +61,15 @@ public class UserDataFetcher {
    * See details at https://github.com/Netflix/dgs-framework/issues/458
    */
   @DgsMutation
-  @PreAuthorize(Auth.ANONYMOUS) // FIXME
-  public Mono<Void> signOut() {
-    return ReactiveSecurityContextHolder.getContext()
-        .switchIfEmpty(Mono.error(new DgsBadRequestException()))
-        .flatMap(
-            context -> {
-              this.sessionService.delete(context.getAuthentication().getCredentials().toString());
-              return Mono.empty();
-            });
+  // FIXME change the auth role
+  @PreAuthorize(Auth.ANONYMOUS)
+  public Mono<Void> signOut(@RequestHeader String authorization) {
+    var token = HttpHeaderUtil.getAuth(authorization);
+    if (token.isEmpty()) {
+      return Mono.error(new DgsBadRequestException("Invalid auth"));
+    }
+
+    return this.sessionService.delete(token.get()).then();
   }
 
   @DgsMutation
@@ -84,9 +85,7 @@ public class UserDataFetcher {
                 return Mono.error(new RuntimeException("Failed to generate JWT"));
               }
 
-              var session = token.get();
-              this.sessionService.save(session);
-              return Mono.just(session);
+              return this.sessionService.save(token.get());
             });
   }
 }

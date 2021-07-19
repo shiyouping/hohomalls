@@ -1,16 +1,15 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.data.common.RedisKey;
-import lombok.extern.slf4j.Slf4j;
+import com.hohomalls.core.util.DateTimeUtil;
+import com.hohomalls.web.property.TokenProperties;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.data.redis.core.ReactiveSetOperations;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.time.Duration;
 
 /**
  * The class of SessionServiceImpl.
@@ -18,25 +17,29 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author ricky.shiyouping@gmail.com
  * @since 17/7/2021
  */
-@Slf4j
 @Service
+@RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
 
-  private final ReactiveSetOperations<String, String> setOps;
-
-  @Autowired
-  public SessionServiceImpl(@NotNull ReactiveRedisTemplate<String, String> redisTemplate) {
-    checkNotNull(redisTemplate);
-    this.setOps = redisTemplate.opsForSet();
-  }
+  private final TokenProperties tokenProperties;
+  private final ReactiveRedisTemplate<String, String> redisTemplate;
 
   @Override
   public @NotNull Mono<Boolean> delete(@Nullable String session) {
     if (session == null) {
-      return Mono.empty();
+      return Mono.just(false);
     }
 
-    return this.setOps.delete(session);
+    return this.redisTemplate.delete(session).map(value -> value > 0);
+  }
+
+  @Override
+  public @NotNull Mono<Boolean> has(@Nullable String session) {
+    if (session == null) {
+      return Mono.just(false);
+    }
+
+    return this.redisTemplate.hasKey(session);
   }
 
   @Override
@@ -45,6 +48,12 @@ public class SessionServiceImpl implements SessionService {
       return Mono.empty();
     }
 
-    return this.setOps.add(RedisKey.SESSION, session).map(value -> session);
+    // The key is the jwt token
+    // The value is date and time in string
+    // The system supports multilogin
+    return this.redisTemplate
+        .opsForValue()
+        .set(session, DateTimeUtil.present(), Duration.ofHours(this.tokenProperties.getLifespan()))
+        .map(value -> session);
   }
 }

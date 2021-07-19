@@ -9,4 +9,4 @@ import com.hohomalls.data.repository.BaseDocRepository;
  * @author ricky.shiyouping@gmail.com
  * @since 24/4/2021
  */
-public interface UserDocRepository extends BaseDocRepository<User> {}
+public interface UserRepository extends BaseDocRepository<User> {}

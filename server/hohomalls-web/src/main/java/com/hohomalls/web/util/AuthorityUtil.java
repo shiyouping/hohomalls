@@ -3,6 +3,7 @@ package com.hohomalls.web.util;
 import com.hohomalls.core.common.Global;
 import com.hohomalls.web.common.Role;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.util.CollectionUtils;
@@ -24,7 +25,7 @@ public interface AuthorityUtil {
   }
 
   @NotNull
-  static List<GrantedAuthority> getAuthorityList(List<Role> roles) {
+  static List<GrantedAuthority> getAuthorityList(@Nullable List<Role> roles) {
     if (CollectionUtils.isEmpty(roles)) {
       return List.of();
     }

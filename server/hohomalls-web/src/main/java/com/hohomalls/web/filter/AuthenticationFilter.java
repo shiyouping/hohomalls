@@ -7,6 +7,7 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
+import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -38,6 +39,8 @@ public class AuthenticationFilter implements WebFilter {
 
     this.authenticationWebFilter = new AuthenticationWebFilter(authenticationManager);
     this.authenticationWebFilter.setServerAuthenticationConverter(authenticationConverter);
+    this.authenticationWebFilter.setSecurityContextRepository(
+        new WebSessionServerSecurityContextRepository());
     this.authenticationWebFilter.setAuthenticationFailureHandler(
         new ServerAuthenticationEntryPointFailureHandler(authenticationEntryPoint));
   }

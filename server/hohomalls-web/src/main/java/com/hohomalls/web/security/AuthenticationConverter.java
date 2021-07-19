@@ -3,6 +3,7 @@ package com.hohomalls.web.security;
 import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.TokenService;
 import com.hohomalls.web.util.AuthorityUtil;
+import com.hohomalls.web.util.HttpHeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -12,12 +13,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.hohomalls.core.common.Global.ANONYMOUS;
 
 /**
  * Converts JWT token to an Authentication.
@@ -30,9 +32,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationConverter implements ServerAuthenticationConverter {
 
-  private static final String AUTH_PREFIX = "Bearer";
-  private static final String ANONYMOUS = "ANONYMOUS";
-
   private final TokenService tokenService;
 
   @Override
@@ -41,15 +40,15 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
         () -> {
           var request = exchange.getRequest();
           var header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+          var token = HttpHeaderUtil.getAuth(header);
 
-          if (StringUtils.hasText(header)) {
-            var token = header.substring(AUTH_PREFIX.length()).trim();
+          if (token.isPresent()) {
             List<Role> roles;
             Optional<String> email;
 
             try {
-              roles = this.tokenService.getRoles(token);
-              email = this.tokenService.getEmail(token);
+              roles = this.tokenService.getRoles(token.get());
+              email = this.tokenService.getEmail(token.get());
             } catch (Throwable ex) {
               throw new BadCredentialsException("Invalid jwt token");
             }
@@ -59,7 +58,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
             }
 
             return new UsernamePasswordAuthenticationToken(
-                email.get(), token, AuthorityUtil.getAuthorityList(roles));
+                email.get(), token.get(), AuthorityUtil.getAuthorityList(roles));
           }
 
           return new AnonymousAuthenticationToken(
