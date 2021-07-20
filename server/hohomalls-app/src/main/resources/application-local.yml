@@ -1,4 +1,8 @@
+# See docs at https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 debug: false
+
+server:
+  port: 8080
 
 spring:
   redis:
@@ -10,6 +14,12 @@ spring:
       username: root
       password: P@55w0rd
 
+# See docs at https://netflix.github.io/dgs/configuration/
+dgs:
+  graphql:
+    graphiql:
+      enabled: true
+
 com:
   hohomalls:
     token:
@@ -18,7 +28,3 @@ com:
       lifespan: 2400
 
 
-dgs:
-  graphql:
-    graphiql:
-      enabled: true

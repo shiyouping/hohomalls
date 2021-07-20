@@ -1,3 +1,7 @@
+# See docs at https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
+server:
+  max-http-header-size: 64KB
+
 spring:
   redis:
     port: 6379

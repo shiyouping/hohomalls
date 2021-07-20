@@ -1,3 +1,7 @@
+# See docs at https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
+server:
+  port: 8080
+
 spring:
   redis:
     host: // FIXME
@@ -10,14 +14,15 @@ spring:
       username: // FIXME
       password: // FIXME
 
+# See docs at https://netflix.github.io/dgs/configuration/
+dgs:
+  graphql:
+    graphiql:
+      enabled: false
+
 com:
   hohomalls:
     token:
       public-key: // FIXME
       private-key: // FIXME
       lifespan: 240
-
-dgs:
-  graphql:
-    graphiql:
-      enabled: false
