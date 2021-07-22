@@ -1,5 +1,6 @@
 package com.hohomalls.web.handler;
 
+import com.hohomalls.web.common.HttpError;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import com.netflix.graphql.dgs.exceptions.DgsInvalidInputArgumentException;
@@ -27,39 +28,37 @@ import java.util.UUID;
  */
 @Slf4j
 @Component
-public class CustomDataFetcherExceptionHandler implements DataFetcherExceptionHandler {
+public class GraphQLExceptionHandler implements DataFetcherExceptionHandler {
 
   @Override
   public DataFetcherExceptionHandlerResult onException(
       DataFetcherExceptionHandlerParameters handlerParameters) {
-
-    Throwable exception = handlerParameters.getException();
-    ResultPath path = handlerParameters.getPath();
-    String errorId = UUID.randomUUID().toString();
-
-    log.error(
-        String.format(
-            "Exception(id: %s) while executing data fetcher for %s: %s",
-            errorId, path, exception.getMessage()),
-        exception);
-
+    var exception = handlerParameters.getException();
+    var path = handlerParameters.getPath();
     GraphQLError error;
 
     if (exception instanceof AccessDeniedException) {
-      error = getGraphqlError(TypedGraphQLError.newPermissionDeniedBuilder(), path, errorId);
+      error = getGraphqlError(TypedGraphQLError.newPermissionDeniedBuilder(), path, exception);
     } else if (exception instanceof DgsEntityNotFoundException) {
-      error = getGraphqlError(TypedGraphQLError.newNotFoundBuilder(), path, errorId);
+      error = getGraphqlError(TypedGraphQLError.newNotFoundBuilder(), path, exception);
     } else if (exception instanceof DgsBadRequestException
         || exception instanceof DgsInvalidInputArgumentException) {
-      error = getGraphqlError(TypedGraphQLError.newBadRequestBuilder(), path, errorId);
+      error = getGraphqlError(TypedGraphQLError.newBadRequestBuilder(), path, exception);
     } else {
-      error = getGraphqlError(TypedGraphQLError.newInternalErrorBuilder(), path, errorId);
+      error = getGraphqlError(TypedGraphQLError.newInternalErrorBuilder(), path, exception);
     }
 
     return DataFetcherExceptionHandlerResult.newResult().error(error).build();
   }
 
-  private GraphQLError getGraphqlError(Builder builder, ResultPath path, String errorId) {
-    return builder.message("errorId: %s", errorId).path(path).build();
+  private GraphQLError getGraphqlError(Builder builder, ResultPath path, Throwable exception) {
+    var errorId = UUID.randomUUID().toString();
+    log.error(
+        String.format(
+            "Failed to execute data fetcher for %s: %s. ErrorId=%s",
+            path, exception.getMessage(), errorId),
+        exception);
+
+    return builder.message(errorId).path(path).origin(HttpError.Origin.WEB.name()).build();
   }
 }
