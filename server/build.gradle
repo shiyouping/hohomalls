@@ -11,13 +11,13 @@ buildscript {
         jjwtVersion = '0.11.2'
         jooqVersion = '0.9.14'
         mapstructVersion = '1.4.2.Final'
-        reactorVersion = '3.4.3'
+        reactorVersion = '3.4.8'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
         lombokPluginVersion = '5.3.3.3'
-        springBootPluginVersion = '2.5.2'
-        dgsCodegenPluginVersion = '4.6.7'
+        springBootPluginVersion = '2.5.3'
+        dgsCodegenPluginVersion = '5.0.3'
     }
 
     dependencies {
@@ -68,6 +68,7 @@ subprojects {
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'org.jooq', name: 'jool', version: jooqVersion
             dependency group: 'io.projectreactor', name: 'reactor-tools', version: reactorVersion
+            dependency group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-platform-dependencies', version: graphqlDgsVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'
@@ -88,7 +89,7 @@ subprojects {
         implementation group: 'org.jetbrains', name: 'annotations'
         implementation group: 'org.jooq', name: 'jool'
         implementation group: 'org.mapstruct', name: 'mapstruct'
-        implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$graphqlDgsVersion"))
+        implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies"))
         testAnnotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor'
         testImplementation group: 'io.projectreactor', name: 'reactor-test'
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
@@ -108,14 +109,6 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                from(components.java)
-            }
-        }
-    }
-
     checkstyle {
         maxErrors = 0
         maxWarnings = 0
@@ -129,6 +122,14 @@ subprojects {
             dependsOn compileTestJava
             // Excludes auto generated graphql and mapstruct classes
             excludes = ['**/graphql/**', '**/mapper/*Impl*']
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from(components.java)
+            }
         }
     }
 }
