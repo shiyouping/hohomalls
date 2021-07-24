@@ -40,6 +40,7 @@ subprojects {
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'maven-publish'
     apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
 
     java.sourceCompatibility = JavaVersion.VERSION_11
     java.targetCompatibility = JavaVersion.VERSION_11
@@ -102,6 +103,9 @@ subprojects {
 
     test {
         useJUnitPlatform()
+
+        // report is always generated after tests run
+        finalizedBy jacocoTestReport
     }
 
     publishing {
@@ -120,10 +124,12 @@ subprojects {
         showViolations = true
         // Skip test cases
         sourceSets = [project.sourceSets.main]
-        // Get rid of the gradle warning from the plugin itself
-        checkstyleMain.dependsOn(compileTestJava)
-        // Excludes auto generated graphql and mapstruct classes
-        checkstyleMain.excludes = ['**/graphql/**', '**/mapper/*Impl*']
+        checkstyleMain {
+            // Get rid of the gradle warning from the plugin itself
+            dependsOn compileTestJava
+            // Excludes auto generated graphql and mapstruct classes
+            excludes = ['**/graphql/**', '**/mapper/*Impl*']
+        }
     }
 }
 

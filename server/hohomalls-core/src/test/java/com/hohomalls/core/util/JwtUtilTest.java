@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.security.KeyPair;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * The class of JwtUtilTest.
@@ -31,18 +31,16 @@ public class JwtUtilTest {
   @Test
   @Order(1)
   public void testGenerate() {
-    var expiration = new Date(System.currentTimeMillis() + 10000);
+    var expiration = Date.from(Instant.parse("2050-01-01T00:00:00.00Z"));
     Map<String, Object> claims = Map.of("email", email);
 
-    assertThatNullPointerException()
-        .as("NullPointerException")
-        .isThrownBy(() -> JwtUtil.generate(null, claims, expiration))
-        .withMessageContaining("privateKey cannot be null");
+    assertThatExceptionOfType(RuntimeException.class)
+        .as("IllegalArgument")
+        .isThrownBy(() -> JwtUtil.generate(null, claims, expiration));
 
-    assertThatNullPointerException()
-        .as("NullPointerException")
-        .isThrownBy(() -> JwtUtil.generate(keyPair.getPrivate(), claims, null))
-        .withMessageContaining("expiration cannot be null");
+    assertThatExceptionOfType(RuntimeException.class)
+        .as("IllegalArgument")
+        .isThrownBy(() -> JwtUtil.generate(keyPair.getPrivate(), claims, null));
 
     token = JwtUtil.generate(keyPair.getPrivate(), claims, expiration);
     var jws = Jwts.parserBuilder().setSigningKey(keyPair.getPublic()).build().parseClaimsJws(token);
@@ -50,9 +48,7 @@ public class JwtUtilTest {
     assertThat(jws.getHeader().getAlgorithm()).as("jws algorithm").isEqualTo("RS256");
     assertThat(jws.getBody().getIssuer()).as("jws issuer").isEqualTo("www.hohomalls.com");
     assertThat(jws.getBody().getId()).as("jws id").isNotNull();
-    assertThat(jws.getBody().getExpiration().getSeconds())
-        .as("jws expiration")
-        .isEqualTo(expiration.getSeconds());
+    assertThat(jws.getBody().getExpiration()).as("jws expiration").isEqualTo(expiration);
     assertThat(jws.getBody().get("email")).as("jws email").isEqualTo(email);
   }
 
