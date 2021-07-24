@@ -38,6 +38,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'maven-publish'
+    apply plugin: 'checkstyle'
 
     java.sourceCompatibility = JavaVersion.VERSION_11
     java.targetCompatibility = JavaVersion.VERSION_11
@@ -109,5 +110,15 @@ subprojects {
             }
         }
     }
+
+    checkstyle {
+        maxErrors = 0
+        maxWarnings = 0
+        toolVersion = '8.44'
+        ignoreFailures = false
+        showViolations = false
+        checkstyleMain.excludes = ['**/graphql/types/**', '**/graphql/client/**', '**/*MapperImpl*']
+    }
 }
+
 
