@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 @Slf4j
 @Component
-public class GraphQLExceptionHandler implements DataFetcherExceptionHandler {
+public class GraphqlExceptionHandler implements DataFetcherExceptionHandler {
 
   @Override
   public DataFetcherExceptionHandlerResult onException(

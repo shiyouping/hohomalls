@@ -34,6 +34,7 @@ allprojects {
 }
 
 subprojects {
+    // Plugin order matters
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
@@ -116,8 +117,13 @@ subprojects {
         maxWarnings = 0
         toolVersion = '8.44'
         ignoreFailures = false
-        showViolations = false
-        checkstyleMain.excludes = ['**/graphql/types/**', '**/graphql/client/**', '**/*MapperImpl*']
+        showViolations = true
+        // Skip test cases
+        sourceSets = [project.sourceSets.main]
+        // Get rid of the gradle warning from the plugin itself
+        checkstyleMain.dependsOn(compileTestJava)
+        // Excludes auto generated graphql and mapstruct classes
+        checkstyleMain.excludes = ['**/graphql/**', '**/mapper/*Impl*']
     }
 }
 
