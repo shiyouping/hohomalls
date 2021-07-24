@@ -18,6 +18,10 @@ buildscript {
         lombokPluginVersion = '5.3.3.3'
         springBootPluginVersion = '2.5.3'
         dgsCodegenPluginVersion = '5.0.3'
+
+        // Configuration versions
+        checkstyleToolVersion = '8.44'
+        jacocoToolVersion = '0.8.7'
     }
 
     dependencies {
@@ -109,12 +113,53 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
+    jacoco {
+        toolVersion = jacocoToolVersion
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    // FIXME Update the ratio
+                    minimum = 0.1
+                }
+            }
+        }
+    }
+
+    jacocoTestReport {
+        // tests are required to run before generating the report
+        dependsOn test
+
+        reports {
+            xml.required = false
+            csv.required = false
+        }
+
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: ['com/hohomalls/**/config/*',
+                                            'com/hohomalls/**/scalar/*',
+                                            'com/hohomalls/**/pojo/*',
+                                            'com/hohomalls/**/document/*',
+                                            'com/hohomalls/**/mapper/*',
+                                            'com/hohomalls/**/property/*'])
+            }))
+        }
+    }
+
+    // Run coverage verification during the build (and fail when appropriate)
+    check.dependsOn jacocoTestCoverageVerification
+
     checkstyle {
         maxErrors = 0
         maxWarnings = 0
-        toolVersion = '8.44'
         ignoreFailures = false
         showViolations = true
+        toolVersion = checkstyleToolVersion
         // Skip test cases
         sourceSets = [project.sourceSets.main]
         checkstyleMain {
