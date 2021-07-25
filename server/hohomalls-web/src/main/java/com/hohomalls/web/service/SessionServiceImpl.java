@@ -1,15 +1,17 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.core.util.DateTimeUtil;
 import com.hohomalls.web.property.TokenProperties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The class of SessionServiceImpl.
@@ -22,7 +24,7 @@ import java.time.Duration;
 public class SessionServiceImpl implements SessionService {
 
   private final TokenProperties tokenProperties;
-  private final ReactiveRedisTemplate<String, String> redisTemplate;
+  private final ReactiveRedisTemplate<String, Authentication> redisTemplate;
 
   @Override
   public @NotNull Mono<Boolean> delete(@Nullable String session) {
@@ -43,17 +45,18 @@ public class SessionServiceImpl implements SessionService {
   }
 
   @Override
-  public @NotNull Mono<String> save(@Nullable String session) {
+  public @NotNull Mono<String> save(
+      @Nullable String session, @NotNull Authentication authentication) {
     if (session == null) {
       return Mono.empty();
     }
 
-    // The key is the jwt token
-    // The value is date and time in string
-    // The system supports multilogin
+    checkNotNull(authentication, "authentication cannot be null");
+
+    // Supports multilogin
     return this.redisTemplate
         .opsForValue()
-        .set(session, DateTimeUtil.present(), Duration.ofHours(this.tokenProperties.getLifespan()))
+        .set(session, authentication, Duration.ofHours(this.tokenProperties.getLifespan()))
         .map(value -> session);
   }
 }

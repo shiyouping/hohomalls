@@ -2,6 +2,7 @@ package com.hohomalls.web.service;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.security.core.Authentication;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,5 +20,5 @@ public interface SessionService {
   Mono<Boolean> has(@Nullable String session);
 
   @NotNull
-  Mono<String> save(@Nullable String session);
+  Mono<String> save(@Nullable String session, @NotNull Authentication authentication);
 }
