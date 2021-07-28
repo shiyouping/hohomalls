@@ -15,6 +15,6 @@ generateJava {
     // See GraphQL configurations at:
     // https://netflix.github.io/dgs/generating-code-from-schema/
     packageName = 'com.hohomalls.app.graphql'
-    generateClient = true
+    generateClient = false
     generateBoxedTypes = true
 }

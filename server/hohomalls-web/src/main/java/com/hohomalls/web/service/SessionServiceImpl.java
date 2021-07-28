@@ -36,6 +36,15 @@ public class SessionServiceImpl implements SessionService {
   }
 
   @Override
+  public @NotNull Mono<Authentication> getAuthentication(@Nullable String session) {
+    if (session == null) {
+      return Mono.empty();
+    }
+
+    return this.redisTemplate.opsForValue().get(session);
+  }
+
+  @Override
   public @NotNull Mono<Boolean> has(@Nullable String session) {
     if (session == null) {
       return Mono.just(false);

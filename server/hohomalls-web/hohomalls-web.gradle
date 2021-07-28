@@ -7,6 +7,7 @@ dependencies {
     api group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-extended-scalars'
     api group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-webflux-starter'
     api group: 'commons-validator', name: 'commons-validator'
+    api group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'

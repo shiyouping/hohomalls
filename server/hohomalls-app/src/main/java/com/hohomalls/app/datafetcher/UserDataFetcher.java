@@ -5,7 +5,8 @@ import com.hohomalls.app.graphql.types.CreateUserDto;
 import com.hohomalls.app.graphql.types.CredentialsDto;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
-import com.hohomalls.web.common.Auth;
+import com.hohomalls.web.aop.HasAnyRoles;
+import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.SessionService;
 import com.hohomalls.web.service.TokenService;
 import com.hohomalls.web.util.AuthorityUtil;
@@ -16,7 +17,6 @@ import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,7 +44,7 @@ public class UserDataFetcher {
   private final PasswordEncoder passwordEncoder;
 
   @DgsMutation
-  @PreAuthorize(Auth.ANONYMOUS)
+  @HasAnyRoles(Role.ROLE_ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsDto credentialsDto) {
     return this.userService
         .findOneByEmail(credentialsDto.getEmail())
@@ -59,13 +59,8 @@ public class UserDataFetcher {
             });
   }
 
-  /**
-   * DGS framework has a bug so non-anonymous roles do not work for the time being.<br>
-   * See details at https://github.com/Netflix/dgs-framework/issues/458
-   */
   @DgsMutation
-  // FIXME change the auth role
-  @PreAuthorize(Auth.ANONYMOUS)
+  @HasAnyRoles({Role.ROLE_BUYER, Role.ROLE_SELLER})
   public Mono<Void> signOut(@RequestHeader String authorization) {
     var token = HttpHeaderUtil.getAuth(authorization);
     if (token.isEmpty()) {
@@ -76,7 +71,7 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @PreAuthorize(Auth.ANONYMOUS)
+  @HasAnyRoles(Role.ROLE_ANONYMOUS)
   public Mono<String> signUp(@InputArgument("user") CreateUserDto createUserDto) {
     return this.userService.save(this.userMapper.toDoc(createUserDto)).flatMap(this::createSession);
   }
