@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api project(':hohomalls-core')
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-validation'

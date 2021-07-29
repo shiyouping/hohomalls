@@ -103,7 +103,7 @@ public class RoleAspect {
       }
 
       if (!match) {
-        throw new AccessDeniedException("Invalid JWT token");
+        throw new AccessDeniedException("No authorization");
       }
     }
   }

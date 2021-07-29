@@ -1,5 +1,6 @@
 package com.hohomalls.data.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -12,8 +13,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceClientConfigurat
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.hohomalls.core.common.Global.BASE_PACKAGE;
@@ -64,9 +65,13 @@ public class RedisConfig {
   @Bean
   @NotNull
   public ReactiveRedisTemplate<?, ?> reactiveRedisTemplate(
-      @NotNull ReactiveRedisConnectionFactory redisConnectionFactory) {
+      @NotNull ReactiveRedisConnectionFactory redisConnectionFactory,
+      @NotNull ObjectMapper mapper) {
     checkNotNull(redisConnectionFactory, "redisConnectionFactory cannot be null");
+    checkNotNull(mapper, "mapper cannot be null");
+
     return new ReactiveRedisTemplate<>(
-        redisConnectionFactory, RedisSerializationContext.fromSerializer(RedisSerializer.json()));
+        redisConnectionFactory,
+        RedisSerializationContext.fromSerializer(new GenericJackson2JsonRedisSerializer(mapper)));
   }
 }
