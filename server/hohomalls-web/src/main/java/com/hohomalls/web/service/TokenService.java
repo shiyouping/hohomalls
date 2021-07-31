@@ -24,4 +24,8 @@ public interface TokenService {
   @NotNull
   Optional<String> getToken(
       @Nullable String email, @Nullable String nickname, @Nullable Role... roles);
+
+  @NotNull
+  Optional<String> getToken(
+      @Nullable String email, @Nullable String nickname, @Nullable List<Role> roles);
 }

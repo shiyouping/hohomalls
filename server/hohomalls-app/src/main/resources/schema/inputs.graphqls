@@ -4,7 +4,7 @@ input CreateUserDto {
     # A unique email
     email: ID!
     password: String!
-    role: Role!
+    roles: [Role]!
     mobile: String
     addresses: [CreateAddressDto!]
 }

@@ -2,6 +2,7 @@ package com.hohomalls.web.service;
 
 import com.hohomalls.core.common.Global;
 import com.hohomalls.core.exception.InvalidTokenException;
+import com.hohomalls.core.util.ArrayUtil;
 import com.hohomalls.core.util.JwtUtil;
 import com.hohomalls.core.util.KeyUtil;
 import com.hohomalls.web.common.Role;
@@ -86,6 +87,12 @@ public class TokenServiceImpl implements TokenService {
     Map<String, Object> claims =
         Map.of(Global.SUBJECT, SUBJECT, EMAIL, email, NICKNAME, nickname, ROLES, roleString);
     return Optional.of(JwtUtil.generate(privateKey, claims, expiration));
+  }
+
+  @Override
+  public @NotNull Optional<String> getToken(
+      @Nullable String email, @Nullable String nickname, @Nullable List<Role> roles) {
+    return this.getToken(email, nickname, ArrayUtil.fromList(roles));
   }
 
   private Optional<Jws<Claims>> getJwsClaims(@Nullable String token) {

@@ -13,11 +13,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Aspect: An aspect is a class that implements enterprise application concerns that cut across
@@ -62,6 +64,7 @@ public class RoleAspect {
           + "@annotation(com.netflix.graphql.dgs.DgsMutation) || "
           + "@annotation(com.netflix.graphql.dgs.DgsSubscription)")
   public void checkRoles(JoinPoint joinPoint) {
+
     var method = ((MethodSignature) joinPoint.getSignature()).getMethod();
     var hasAnyRoles = method.getAnnotation(HasAnyRoles.class);
     var hasAllRoles = method.getAnnotation(HasAllRoles.class);
@@ -77,34 +80,48 @@ public class RoleAspect {
     }
 
     if (hasAnyRoles != null) {
-      var roles = Arrays.asList(hasAnyRoles.value());
-      if (roles.isEmpty()) {
-        throw new InvalidDgsConfigurationException("No roles found in HasAnyRoles annotation");
-      }
+      checkHasAnyRoles(joinPoint, method, hasAnyRoles);
+      return;
+    }
 
-      if (roles.contains(Role.ROLE_ANONYMOUS)) {
-        return;
-      }
+    checkHasAllRoles(joinPoint, method, Objects.requireNonNull(hasAllRoles));
+  }
 
-      var token = getAuthToken(joinPoint.getArgs(), method);
-      boolean match;
+  private void checkHasAllRoles(JoinPoint joinPoint, Method method, HasAllRoles hasAllRoles) {
+    var roles = Arrays.asList(hasAllRoles.value());
+    if (roles.isEmpty()) {
+      throw new InvalidDgsConfigurationException("No roles found in hasAllRoles annotation");
+    }
 
-      try {
-        var auth = this.sessionService.getAuthentication(token).toFuture().get();
-        match =
-            roles.stream()
-                .anyMatch(
-                    role ->
-                        auth.getAuthorities().stream()
-                            .anyMatch(authority -> authority.getAuthority().equals(role.name())));
-      } catch (Exception e) {
-        log.error("Failed to get session from the database");
-        throw new InternalServerException(e);
-      }
+    var auth = getAuth(joinPoint.getArgs(), method);
+    if (!roles.stream().allMatch(role -> this.hasRole(auth, role))) {
+      throw new AccessDeniedException("No authorization");
+    }
+  }
 
-      if (!match) {
-        throw new AccessDeniedException("No authorization");
-      }
+  private void checkHasAnyRoles(JoinPoint joinPoint, Method method, HasAnyRoles hasAnyRoles) {
+    var roles = Arrays.asList(hasAnyRoles.value());
+    if (roles.isEmpty()) {
+      throw new InvalidDgsConfigurationException("No roles found in HasAnyRoles annotation");
+    }
+
+    if (roles.contains(Role.ROLE_ANONYMOUS)) {
+      return;
+    }
+
+    var auth = getAuth(joinPoint.getArgs(), method);
+    if (roles.stream().noneMatch(role -> this.hasRole(auth, role))) {
+      throw new AccessDeniedException("No authorization");
+    }
+  }
+
+  private Authentication getAuth(Object[] args, Method method) {
+    try {
+      var token = getAuthToken(args, method);
+      return this.sessionService.getAuthentication(token).toFuture().get();
+    } catch (Exception e) {
+      log.error("Failed to get session from the database");
+      throw new InternalServerException(e);
     }
   }
 
@@ -124,5 +141,10 @@ public class RoleAspect {
     }
 
     throw exception;
+  }
+
+  private boolean hasRole(Authentication authentication, Role role) {
+    return authentication.getAuthorities().stream()
+        .anyMatch(authority -> authority.getAuthority().equals(role.name()));
   }
 }

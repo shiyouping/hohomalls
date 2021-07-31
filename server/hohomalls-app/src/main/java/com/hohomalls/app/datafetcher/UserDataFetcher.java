@@ -3,10 +3,10 @@ package com.hohomalls.app.datafetcher;
 import com.hohomalls.app.document.User;
 import com.hohomalls.app.graphql.types.CreateUserDto;
 import com.hohomalls.app.graphql.types.CredentialsDto;
+import com.hohomalls.app.graphql.types.Role;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
 import com.hohomalls.web.aop.HasAnyRoles;
-import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.SessionService;
 import com.hohomalls.web.service.TokenService;
 import com.hohomalls.web.util.AuthorityUtil;
@@ -23,9 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestHeader;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.hohomalls.web.common.Role.*;
 
 /**
  * The class of UserDataFetcher.
@@ -44,7 +43,7 @@ public class UserDataFetcher {
   private final PasswordEncoder passwordEncoder;
 
   @DgsMutation
-  @HasAnyRoles(Role.ROLE_ANONYMOUS)
+  @HasAnyRoles(ROLE_ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsDto credentialsDto) {
     return this.userService
         .findOneByEmail(credentialsDto.getEmail())
@@ -60,7 +59,7 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @HasAnyRoles({Role.ROLE_BUYER, Role.ROLE_SELLER})
+  @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
   public Mono<Void> signOut(@RequestHeader String authorization) {
     var token = HttpHeaderUtil.getAuth(authorization);
     if (token.isEmpty()) {
@@ -71,8 +70,14 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @HasAnyRoles(Role.ROLE_ANONYMOUS)
+  @HasAnyRoles(ROLE_ANONYMOUS)
   public Mono<String> signUp(@InputArgument("user") CreateUserDto createUserDto) {
+    var roles = createUserDto.getRoles();
+    if (!roles.contains(Role.ROLE_BUYER)) {
+      // Every new user has the buyer role
+      roles.add(Role.ROLE_BUYER);
+    }
+
     return this.userService.save(this.userMapper.toDoc(createUserDto)).flatMap(this::createSession);
   }
 
@@ -80,14 +85,14 @@ public class UserDataFetcher {
   private Mono<String> createSession(@NotNull User user) {
     checkNotNull(user, "user cannot be null");
 
-    var token = this.tokenService.getToken(user.getEmail(), user.getNickname(), user.getRole());
+    var token = this.tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
     if (token.isEmpty()) {
       return Mono.error(new RuntimeException("Failed to generate JWT"));
     }
 
     Authentication authentication =
         new UsernamePasswordAuthenticationToken(
-            user.getEmail(), token.get(), AuthorityUtil.getAuthorityList(List.of(user.getRole())));
+            user.getEmail(), token.get(), AuthorityUtil.getAuthorityList(user.getRoles()));
     return this.sessionService.save(token.get(), authentication);
   }
 }

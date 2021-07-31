@@ -28,7 +28,7 @@ public class User extends BaseDoc {
   @Indexed(unique = true)
   private String nickname;
 
-  private Role role;
+  private List<Role> roles;
 
   private String mobile;
 
