@@ -1,4 +1,6 @@
 FROM redis:6.2.5-alpine3.14
-COPY docker/redis/redis.conf /usr/local/etc/redis/redis.conf
-CMD [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
-VOLUME ["/hohomalls-redis"]
+RUN mkdir /opt/redis
+WORKDIR /opt/redis
+COPY docker/redis/redis.conf ./redis.conf
+VOLUME /hohomalls-redis
+CMD redis-server ./redis.conf
