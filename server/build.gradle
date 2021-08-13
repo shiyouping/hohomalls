@@ -185,12 +185,12 @@ subprojects {
         // The rule set file version is 6.36.0.
         // The IDE PMD plugin should use these rule sets as well.
         // Download from https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/category/java
-        ruleSetFiles "$rootDir/config/pmd/java/bestpractices.xml",
-                "$rootDir/config/pmd/java/design.xml",
-                "$rootDir/config/pmd/java/errorprone.xml",
-                "$rootDir/config/pmd/java/multithreading.xml",
-                "$rootDir/config/pmd/java/performance.xml",
-                "$rootDir/config/pmd/java/security.xml"
+        ruleSetFiles "$rootDir/config/pmd/bestpractices.xml",
+                "$rootDir/config/pmd/design.xml",
+                "$rootDir/config/pmd/errorprone.xml",
+                "$rootDir/config/pmd/multithreading.xml",
+                "$rootDir/config/pmd/performance.xml",
+                "$rootDir/config/pmd/security.xml"
         ruleSets = []
 
         pmdMain {
