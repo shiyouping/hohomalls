@@ -6,7 +6,7 @@ buildscript {
     ext {
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.5.0'
+        graphqlDgsVersion = '4.5.1'
         jetbrainsAnnotationVersion = '21.0.1'
         jjwtVersion = '0.11.2'
         mapstructVersion = '1.4.2.Final'
@@ -21,6 +21,19 @@ buildscript {
         // Configuration versions
         checkstyleToolVersion = '8.44'
         jacocoToolVersion = '0.8.7'
+
+        // Checkstyle and PMD excluded classes
+        generatedClasses = ['**/graphql/**',
+                            '**/mapper/*Impl*']
+
+        // Jacoco excluded files of coverage report
+        excludedCoverageReport = ['com/hohomalls/**/config/*',
+                                  'com/hohomalls/**/scalar/*',
+                                  'com/hohomalls/**/pojo/*',
+                                  'com/hohomalls/**/document/*',
+                                  'com/hohomalls/**/mapper/*',
+                                  'com/hohomalls/**/property/*',
+                                  'com/hohomalls/**/graphql/*']
     }
 
     dependencies {
@@ -41,9 +54,10 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
-    apply plugin: 'maven-publish'
-    apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
+    apply plugin: 'pmd'
+    apply plugin: 'checkstyle'
+    apply plugin: 'maven-publish'
 
     java.sourceCompatibility = JavaVersion.VERSION_11
     java.targetCompatibility = JavaVersion.VERSION_11
@@ -138,12 +152,7 @@ subprojects {
 
         afterEvaluate {
             classDirectories.setFrom(files(classDirectories.files.collect {
-                fileTree(dir: it, exclude: ['com/hohomalls/**/config/*',
-                                            'com/hohomalls/**/scalar/*',
-                                            'com/hohomalls/**/pojo/*',
-                                            'com/hohomalls/**/document/*',
-                                            'com/hohomalls/**/mapper/*',
-                                            'com/hohomalls/**/property/*'])
+                fileTree(dir: it, exclude: excludedCoverageReport)
             }))
         }
     }
@@ -162,8 +171,31 @@ subprojects {
         checkstyleMain {
             // Get rid of the gradle warning from the plugin itself
             dependsOn compileTestJava
-            // Excludes auto generated graphql and mapstruct classes
-            excludes = ['**/graphql/**', '**/mapper/*Impl*']
+            excludes = generatedClasses
+        }
+    }
+
+    pmd {
+        consoleOutput = false
+        ignoreFailures = false
+        incrementalAnalysis = false
+        toolVersion = "6.36.0"
+        // Skip test cases
+        sourceSets = [project.sourceSets.main]
+        // The rule set file version is 6.36.0.
+        // The IDE PMD plugin should use these rule sets as well.
+        // Download from https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/category/java
+        ruleSetFiles "$rootDir/config/pmd/java/bestpractices.xml",
+                "$rootDir/config/pmd/java/design.xml",
+                "$rootDir/config/pmd/java/errorprone.xml",
+                "$rootDir/config/pmd/java/multithreading.xml",
+                "$rootDir/config/pmd/java/performance.xml",
+                "$rootDir/config/pmd/java/security.xml"
+        ruleSets = []
+
+        pmdMain {
+            dependsOn compileTestJava
+            excludes = generatedClasses
         }
     }
 

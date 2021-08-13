@@ -20,7 +20,9 @@ import static com.hohomalls.core.common.Global.PROFILE_PROD;
  */
 @Slf4j
 @SpringBootApplication
-public class Application {
+public final class Application {
+
+  private Application() {}
 
   /** The entry of this application. */
   public static void main(String[] args) {
