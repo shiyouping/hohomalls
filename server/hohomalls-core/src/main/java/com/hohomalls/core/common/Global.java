@@ -6,21 +6,20 @@ package com.hohomalls.core.common;
  * @author ricky.shiyouping@gmail.com
  * @since 24/6/2021
  */
-public interface Global {
-  String COMMA = ",";
+public final class Global {
 
+  public static final String COMMA = ",";
   // JWT related
-  String EMAIL = "email";
-  String ROLES = "roles";
-  String NICKNAME = "nickname";
-  String SUBJECT = "sub";
+  public static final String EMAIL = "email";
+  public static final String ROLES = "roles";
+  public static final String NICKNAME = "nickname";
+  public static final String SUBJECT = "sub";
+  public static final String BASE_PACKAGE = "com.hohomalls";
+  public static final String PROPERTY_PREFIX = "com.hohomalls.";
+  public static final String PROFILE_LOCAL = "local";
+  public static final String PROFILE_PROD = "prod";
+  public static final String AUTH_PREFIX = "Bearer";
+  public static final String ANONYMOUS = "ANONYMOUS";
 
-  String BASE_PACKAGE = "com.hohomalls";
-  String PROPERTY_PREFIX = "com.hohomalls.";
-
-  String PROFILE_LOCAL = "local";
-  String PROFILE_PROD = "prod";
-
-  String AUTH_PREFIX = "Bearer";
-  String ANONYMOUS = "ANONYMOUS";
+  private Global() {}
 }

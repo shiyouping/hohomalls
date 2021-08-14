@@ -6,6 +6,9 @@ package com.hohomalls.data.common;
  * @author ricky.shiyouping@gmail.com
  * @since 17/7/2021
  */
-public interface RedisKey {
-  String SESSION = "session";
+public final class RedisKey {
+
+  public static final String SESSION = "session";
+
+  private RedisKey() {}
 }

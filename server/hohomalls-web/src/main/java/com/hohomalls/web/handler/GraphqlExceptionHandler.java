@@ -53,11 +53,14 @@ public class GraphqlExceptionHandler implements DataFetcherExceptionHandler {
 
   private GraphQLError getGraphqlError(Builder builder, ResultPath path, Throwable exception) {
     var errorId = UUID.randomUUID().toString();
-    log.error(
-        String.format(
-            "Failed to execute data fetcher for %s: %s. ErrorId=%s",
-            path, exception.getMessage(), errorId),
-        exception);
+
+    if (log.isErrorEnabled()) {
+      log.error(
+          String.format(
+              "Failed to execute data fetcher for %s: %s. ErrorId=%s",
+              path, exception.getMessage(), errorId),
+          exception);
+    }
 
     return builder.message(errorId).path(path).origin(HttpError.Origin.WEB.name()).build();
   }

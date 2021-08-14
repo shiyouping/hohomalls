@@ -22,8 +22,12 @@ public class ArrayUtilTest {
 
   @Test
   public void testIsEmpty() {
-    assertThat(ArrayUtil.isEmpty(null)).isTrue();
-    assertThat(ArrayUtil.isEmpty(new String[0])).isTrue();
-    assertThat(ArrayUtil.isEmpty(new String[] {"ssss"})).isFalse();
+    assertThat(ArrayUtil.isEmpty()).isTrue();
+
+    var array = new String[0];
+    assertThat(ArrayUtil.isEmpty(array)).isTrue();
+
+    assertThat(ArrayUtil.isEmpty("hello")).isFalse();
+    assertThat(ArrayUtil.isEmpty("hello", "world")).isFalse();
   }
 }

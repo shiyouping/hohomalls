@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Component
 public class AuthenticationFilter implements WebFilter {
 
-  private final AuthenticationWebFilter authenticationWebFilter;
+  private final AuthenticationWebFilter authenticationWebFilter; // NOPMD
 
   @Autowired
   public AuthenticationFilter(

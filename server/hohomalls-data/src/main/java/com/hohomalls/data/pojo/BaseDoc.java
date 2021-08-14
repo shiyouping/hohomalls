@@ -12,4 +12,4 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class BaseDoc extends BasePojo {}
+public class BaseDoc extends BasePojo {}

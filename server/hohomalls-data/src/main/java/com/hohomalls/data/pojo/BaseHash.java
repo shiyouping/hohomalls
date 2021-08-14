@@ -14,6 +14,6 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class BaseHash extends BasePojo implements Serializable {
+public class BaseHash extends BasePojo implements Serializable {
   private static final long serialVersionUID = 4251929247232799479L;
 }

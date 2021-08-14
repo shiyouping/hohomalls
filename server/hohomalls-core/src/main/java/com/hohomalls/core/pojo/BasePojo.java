@@ -15,7 +15,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BasePojo {
+public class BasePojo {
 
   private String id;
   private Instant createdAt;

@@ -1,10 +1,13 @@
 package com.hohomalls.core.util;
 
+import com.hohomalls.core.exception.KeyException;
 import io.jsonwebtoken.io.Decoders;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.Key;
 import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -27,8 +30,8 @@ public interface KeyUtil {
       PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Decoders.BASE64.decode(keyString));
       KeyFactory factory = KeyFactory.getInstance("RSA");
       return factory.generatePrivate(keySpec);
-    } catch (Exception ex) {
-      throw new RuntimeException("Failed to get the private key");
+    } catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
+      throw new KeyException("Failed to get the private key", ex);
     }
   }
 
@@ -41,8 +44,8 @@ public interface KeyUtil {
       X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Decoders.BASE64.decode(keyString));
       KeyFactory factory = KeyFactory.getInstance("RSA");
       return factory.generatePublic(keySpec);
-    } catch (Exception ex) {
-      throw new RuntimeException("Failed to get the public key");
+    } catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
+      throw new KeyException("Failed to get the public key", ex);
     }
   }
 }

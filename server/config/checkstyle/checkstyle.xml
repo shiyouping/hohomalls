@@ -4,7 +4,7 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <!--
-    This configuration is compatible with Intellij Checkstyle Plugin v8.44. The custom parts were commented out.
+    This configuration is compatible with Checkstyle Intellij Plugin v8.44. The custom parts were commented out.
     Checkstyle configuration that checks the Google coding conventions from Google Java Style
     that can be found at https://google.github.io/styleguide/javaguide.html
 

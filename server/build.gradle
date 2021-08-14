@@ -18,8 +18,10 @@ buildscript {
         springBootPluginVersion = '2.5.3'
         dgsCodegenPluginVersion = '5.0.3'
 
-        // Configuration versions
+        // The Checkstyle IDE plugin should support the version defined here
         checkstyleToolVersion = '8.44'
+        // The PMD IDE plugin should support the version defined here
+        pmdToolVersion = '6.36.0'
         jacocoToolVersion = '0.8.7'
 
         // Checkstyle and PMD excluded classes
@@ -161,6 +163,8 @@ subprojects {
     check.dependsOn jacocoTestCoverageVerification
 
     checkstyle {
+        // The Checkstyle IDE plugin should use the some rule
+        // files stored in config/checkstyle/checkstyle.xml
         maxErrors = 0
         maxWarnings = 0
         ignoreFailures = false
@@ -179,23 +183,18 @@ subprojects {
         consoleOutput = false
         ignoreFailures = false
         incrementalAnalysis = false
-        toolVersion = "6.36.0"
-        // Skip test cases
+        toolVersion = pmdToolVersion
+        // Skip test cases, which was also defined in the rule set file
         sourceSets = [project.sourceSets.main]
-        // The rule set file version is 6.36.0.
-        // The IDE PMD plugin should use these rule sets as well.
-        // Download from https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/category/java
-        ruleSetFiles "$rootDir/config/pmd/bestpractices.xml",
-                "$rootDir/config/pmd/design.xml",
-                "$rootDir/config/pmd/errorprone.xml",
-                "$rootDir/config/pmd/multithreading.xml",
-                "$rootDir/config/pmd/performance.xml",
-                "$rootDir/config/pmd/security.xml"
+        // The PMD IDE plugin should use these rule sets as well.
+        ruleSetFiles "$rootDir/config/pmd/java.xml"
+        // Disable built-in rule sets
         ruleSets = []
 
         pmdMain {
             dependsOn compileTestJava
-            excludes = generatedClasses
+            // Excluded rules are defined in the rule set file
+            // excludes = generatedClasses
         }
     }
 

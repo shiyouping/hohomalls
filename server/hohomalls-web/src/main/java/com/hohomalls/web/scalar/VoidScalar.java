@@ -2,9 +2,6 @@ package com.hohomalls.web.scalar;
 
 import com.netflix.graphql.dgs.DgsScalar;
 import graphql.schema.Coercing;
-import graphql.schema.CoercingParseLiteralException;
-import graphql.schema.CoercingParseValueException;
-import graphql.schema.CoercingSerializeException;
 
 /**
  * The class of VoidScalar.
@@ -16,17 +13,17 @@ import graphql.schema.CoercingSerializeException;
 public class VoidScalar implements Coercing<Void, Void> {
 
   @Override
-  public Void parseLiteral(Object input) throws CoercingParseLiteralException {
+  public Void parseLiteral(Object input) {
     return null;
   }
 
   @Override
-  public Void parseValue(Object input) throws CoercingParseValueException {
+  public Void parseValue(Object input) {
     return null;
   }
 
   @Override
-  public Void serialize(Object dataFetcherResult) throws CoercingSerializeException {
+  public Void serialize(Object dataFetcherResult) {
     return null;
   }
 }

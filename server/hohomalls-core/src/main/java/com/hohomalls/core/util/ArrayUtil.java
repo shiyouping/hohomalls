@@ -14,6 +14,7 @@ import java.util.List;
 public interface ArrayUtil {
 
   @Nullable
+  @SuppressWarnings("unchecked")
   static <T> T[] fromList(@Nullable List<T> list) {
     if (list == null || list.isEmpty()) {
       return null;
@@ -23,7 +24,8 @@ public interface ArrayUtil {
     return list.toArray(array);
   }
 
-  static <T> boolean isEmpty(@Nullable T[] array) {
+  @SafeVarargs
+  static <T> boolean isEmpty(@Nullable T... array) {
     return array == null || array.length == 0;
   }
 }

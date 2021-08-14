@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Aspect: An aspect is a class that implements enterprise application concerns that cut across
@@ -119,9 +120,9 @@ public class RoleAspect {
     try {
       var token = getAuthToken(args, method);
       return this.sessionService.getAuthentication(token).toFuture().get();
-    } catch (Exception e) {
+    } catch (InterruptedException | ExecutionException ex) {
       log.error("Failed to get session from the database");
-      throw new InternalServerException(e);
+      throw new InternalServerException(ex);
     }
   }
 
