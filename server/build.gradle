@@ -1,9 +1,12 @@
 buildscript {
     repositories {
+        mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
     }
 
     ext {
+        defaultEncoding = 'UTF-8'
+
         // Dependency versions
         apacheValidatorVersion = '1.7'
         graphqlDgsVersion = '4.5.1'
@@ -17,6 +20,7 @@ buildscript {
         lombokPluginVersion = '5.3.3.3'
         springBootPluginVersion = '2.5.3'
         dgsCodegenPluginVersion = '5.0.3'
+        cpdPluginVersion = '3.2'
 
         // The Checkstyle IDE plugin should support the version defined here
         checkstyleToolVersion = '8.44'
@@ -43,6 +47,7 @@ buildscript {
         classpath "io.freefair.gradle:lombok-plugin:$lombokPluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
         classpath "com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:$dgsCodegenPluginVersion"
+        classpath "de.aaschmid:gradle-cpd-plugin:$cpdPluginVersion"
     }
 }
 
@@ -58,14 +63,15 @@ subprojects {
     apply plugin: 'io.freefair.lombok'
     apply plugin: 'jacoco'
     apply plugin: 'pmd'
+    apply plugin: 'cpd'
     apply plugin: 'checkstyle'
     apply plugin: 'maven-publish'
 
     java.sourceCompatibility = JavaVersion.VERSION_11
     java.targetCompatibility = JavaVersion.VERSION_11
 
-    compileJava.options.encoding = 'UTF-8'
-    compileTestJava.options.encoding = 'UTF-8'
+    compileJava.options.encoding = defaultEncoding
+    compileTestJava.options.encoding = defaultEncoding
 
     repositories {
         mavenCentral()
@@ -196,6 +202,18 @@ subprojects {
             // Excluded rules are defined in the rule set file
             // excludes = generatedClasses
         }
+    }
+
+    cpd {
+        // CPD is part of PMD
+        toolVersion = pmdToolVersion
+    }
+
+    cpdCheck {
+        dependsOn compileJava, compileTestJava
+        minimumTokenCount = 200
+        encoding = defaultEncoding
+        source = sourceSets.main.allJava
     }
 
     publishing {

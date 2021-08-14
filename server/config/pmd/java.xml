@@ -3113,30 +3113,6 @@ public boolean bar(int a, int b) {
         </example>
     </rule>
 
-    <rule name="LoosePackageCoupling"
-          language="java"
-          since="5.0"
-          message="Use of ''{0}'' outside of package hierarchy ''{1}'' is not recommended; use recommended classes instead"
-          class="net.sourceforge.pmd.lang.java.rule.design.LoosePackageCouplingRule"
-          externalInfoUrl="${pmd.website.baseurl}/pmd_rules_java_design.html#loosepackagecoupling">
-        <description>
-            Avoid using classes from the configured package hierarchy outside of the package hierarchy,
-            except when using one of the configured allowed classes.
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-package some.package;
-
-import some.other.package.subpackage.subsubpackage.DontUseThisClass;
-
-public class Bar {
-    DontUseThisClass boo = new DontUseThisClass();
-}
-]]>
-        </example>
-    </rule>
-
     <rule name="ModifiedCyclomaticComplexity"
           language="java"
           since="5.1.2"
@@ -5360,8 +5336,6 @@ public class GCCall {
         </example>
     </rule>
 
-    <rule name="DoNotCallSystemExit" ref="category/java/errorprone.xml/DoNotTerminateVM" deprecated="true"/>
-
     <rule name="DoNotExtendJavaLangThrowable"
           language="java"
           since="6.0.0"
@@ -6210,10 +6184,6 @@ Class c = String.class;
 ]]>
         </example>
     </rule>
-
-    <rule name="InvalidSlf4jMessageFormat"
-          ref="category/java/errorprone.xml/InvalidLogMessageFormat"
-          deprecated="true"/>
 
     <rule name="InvalidLogMessageFormat"
           language="java"
