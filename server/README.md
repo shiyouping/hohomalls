@@ -3,10 +3,14 @@
 Server applications are built on top of Spring WebFlux and GraphQL to provide a non-blocking and robust running
 environment.
 
-## Shell Scripts
-
-All shell scripts must be executed in the context of the root directory of this project. For example:
+## Docker Commands
 
 ````bash
-docker/redis/build.sh
+cd hohomalls/server
+
+# Create and start containers
+docker-compose -f docker/docker-compose.yml up -d
+
+# Stop and remove resources
+docker-compose -f docker/docker-compose.yml down
 ````

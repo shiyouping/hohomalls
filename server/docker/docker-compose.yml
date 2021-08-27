@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  redis:
+    container_name: hohomalls-redis
+    image: redis:6.2.5-alpine3.14
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - $PWD/docker/redis:/data
+      - $PWD/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
