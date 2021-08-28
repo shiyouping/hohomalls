@@ -7,5 +7,15 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - $PWD/docker/redis:/data
       - $PWD/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - $PWD/docker/redis/data:/data
+
+  mongo:
+    container_name: hohomalls-mongo
+    image: mongo:4.4
+    command: --config /etc/mongo/mongod.conf
+    ports:
+      - "27017:27017"
+    volumes:
+      - $PWD/docker/mongo/mongod.conf:/etc/mongo/mongod.conf
+      - $PWD/docker/mongo/data:/data
