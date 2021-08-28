@@ -17,5 +17,5 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - $PWD/docker/mongo/mongod.conf:/etc/mongo/mongod.conf
-      - $PWD/docker/mongo/data:/data
+      - $PWD/docker/mongo:/etc/mongo
+      - $PWD/docker/mongo/data:/data/db
