@@ -1,7 +1,6 @@
 # See docs at https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 logging:
-  file:
-    path: /Users/ricky/Development/workspace/hohomalls/server/docker/hohomalls/data/logs
+  path: /data/logs
   logback:
     rollingpolicy:
       clean-history-on-start: false
