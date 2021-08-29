@@ -20,9 +20,7 @@ import static com.hohomalls.core.common.Global.PROFILE_PROD;
  */
 @Slf4j
 @SpringBootApplication
-public final class Application {
-
-  private Application() {}
+public class Application { // NOPMD
 
   /** The entry of this application. */
   public static void main(String[] args) {

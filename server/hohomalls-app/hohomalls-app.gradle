@@ -18,3 +18,9 @@ generateJava {
     generateClient = false
     generateBoxedTypes = true
 }
+
+bootBuildImage {
+    // See Packaging OCI images at
+    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#build-image.customization
+    environment = ["BP_JVM_TYPE" : "JDK"]
+}
