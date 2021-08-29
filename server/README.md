@@ -3,7 +3,21 @@
 Server applications are built on top of Spring WebFlux and GraphQL to provide a non-blocking and robust running
 environment.
 
-## Docker Commands
+## Prerequisites
+
+To build and run the server application, make sure you have at least [JDK 11](http://openjdk.java.net/)
+and [Docker](https://www.docker.com/products/docker-desktop) installed.
+
+## Build the server
+
+Git clone or download the source code, and then execute the following commands:
+
+````bash
+cd hohomalls/server
+./gradlew clean bootBuildImage
+````
+
+## Start and stop the server
 
 ````bash
 cd hohomalls/server
