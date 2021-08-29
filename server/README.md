@@ -14,8 +14,7 @@ Git clone or download the source code, and then execute the following commands:
 
 ````bash
 cd hohomalls/server
-./gradlew clean build
-./gradlew bootBuildImage
+./gradlew clean build bootBuildImage
 ````
 
 ## Set database confidential

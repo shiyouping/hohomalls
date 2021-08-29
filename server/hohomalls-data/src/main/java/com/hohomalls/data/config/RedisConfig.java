@@ -2,6 +2,7 @@ package com.hohomalls.data.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,7 @@ import static com.hohomalls.core.common.Global.BASE_PACKAGE;
  * @author ricky.shiyouping@gmail.com
  * @since 15/7/2021
  */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableRedisRepositories(basePackages = BASE_PACKAGE)
@@ -58,6 +60,11 @@ public class RedisConfig {
             this.redisProperties.getHost(), this.redisProperties.getPort());
     redisConfig.setUsername(this.redisProperties.getUsername());
     redisConfig.setPassword(this.redisProperties.getPassword());
+
+    log.info(
+        "Redis host = {}, port = {}",
+        this.redisProperties.getHost(),
+        this.redisProperties.getPort()); // NOPMD
 
     return new LettuceConnectionFactory(redisConfig, clientConfig);
   }
