@@ -16,7 +16,7 @@ public final class Global {
   public static final String SUBJECT = "sub";
   public static final String BASE_PACKAGE = "com.hohomalls";
   public static final String PROPERTY_PREFIX = "com.hohomalls.";
-  public static final String PROFILE_LOCAL = "local";
+  public static final String PROFILE_NON_PROD = "!prod";
   public static final String PROFILE_PROD = "prod";
   public static final String AUTH_PREFIX = "Bearer";
   public static final String ANONYMOUS = "ANONYMOUS";

@@ -14,7 +14,7 @@ Git clone or download the source code, and then execute the following commands:
 
 ````bash
 cd hohomalls/server
-./gradlew clean build bootBuildImage
+./gradlew clean bootBuildImage
 ````
 
 ## Set database confidential
@@ -36,6 +36,3 @@ docker-compose -f docker/docker-compose.yml down
 ````
 
 ## TODO
-
-- Since using a JDK at runtime has security implications, remove `BP_JVM_TYPE` to remove Reactor debug support on
-  production.

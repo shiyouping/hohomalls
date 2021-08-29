@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
 import reactor.core.publisher.Hooks;
-import reactor.tools.agent.ReactorDebugAgent;
 
 import java.util.Arrays;
 
@@ -36,17 +35,10 @@ public class Application { // NOPMD
               var isProduction =
                   Arrays.stream(event.getEnvironment().getActiveProfiles())
                       .anyMatch(PROFILE_PROD::equalsIgnoreCase);
-
-              final var debugInfo = "***** Activate Reactor's Global Debug *****";
-
-              if (isProduction) {
-                ReactorDebugAgent.init();
-                log.info(debugInfo);
-                return;
+              if (!isProduction) {
+                Hooks.onOperatorDebug();
+                log.info("***** Activate Reactor's Global Debug *****");
               }
-
-              Hooks.onOperatorDebug();
-              log.info(debugInfo);
             });
   }
 }

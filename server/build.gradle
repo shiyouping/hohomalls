@@ -13,7 +13,6 @@ buildscript {
         jetbrainsAnnotationVersion = '21.0.1'
         jjwtVersion = '0.11.2'
         mapstructVersion = '1.4.2.Final'
-        reactorVersion = '3.4.8'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
@@ -88,7 +87,6 @@ subprojects {
 
             dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
-            dependency group: 'io.projectreactor', name: 'reactor-tools', version: reactorVersion
             dependency group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-platform-dependencies', version: graphqlDgsVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
