@@ -23,8 +23,11 @@ services:
   hohomalls:
     container_name: hohomalls-app
     image: hohomalls-app:1.0.0-SNAPSHOT
-    command: --spring.profiles.active=prod
+    command: --spring.profiles.active=stage
     ports:
       - "8080:8080"
     volumes:
       - $PWD/docker/hohomalls/data:/data
+    depends_on:
+      - mongo
+      - redis
