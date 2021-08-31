@@ -1,8 +1,5 @@
 ### Custom files
-docker/redis/*
-!docker/redis/redis.conf
-docker/mongo/*
-!docker/mongo/mongod.conf
+data
 
 ### VisualStudioCode template
 .vscode/*

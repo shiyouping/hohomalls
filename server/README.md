@@ -29,10 +29,10 @@ cd hohomalls/server
 cd hohomalls/server
 
 # Create and start containers
-docker-compose -f docker/docker-compose.yml up -d
+docker-compose -f docker/compose-local.yml up -d
 
 # Stop and remove resources
-docker-compose -f docker/docker-compose.yml down
+docker-compose -f docker/compose-local.yml down
 ````
 
 ## TODO

@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  redis:
+    container_name: hohomalls-redis
+    image: redis:6.2.5-alpine3.14
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - /data/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - /data/redis/data:/data
+
+  mongo:
+    container_name: hohomalls-mongo
+    image: mongo:4.4
+    command: --config /etc/mongo/mongod.conf
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data/mongo:/etc/mongo
+      - /data/mongo/data:/data/db
+
+  hohomalls:
+    container_name: hohomalls-app
+    image: hohomalls-app:1.0.0-SNAPSHOT
+    command: --spring.profiles.active=stage
+    ports:
+      - "8080:8080"
+    volumes:
+      - /data/hohomalls:/data
+    depends_on:
+      - mongo
+      - redis
