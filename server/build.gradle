@@ -9,7 +9,7 @@ buildscript {
 
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.6.0'
+        graphqlDgsVersion = '4.7.3'
         jetbrainsAnnotationVersion = '21.0.1'
         jjwtVersion = '0.11.2'
         mapstructVersion = '1.4.2.Final'
@@ -17,8 +17,8 @@ buildscript {
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
         lombokPluginVersion = '5.3.3.3'
-        springBootPluginVersion = '2.5.3'
-        dgsCodegenPluginVersion = '5.0.3'
+        springBootPluginVersion = '2.5.4'
+        dgsCodegenPluginVersion = '5.0.6'
 
         // The Checkstyle IDE plugin should support the version defined here
         checkstyleToolVersion = '8.44'
@@ -167,7 +167,7 @@ subprojects {
         // The Checkstyle IDE plugin should use the some rule
         // files stored in config/checkstyle/checkstyle.xml
         maxErrors = 0
-        maxWarnings = 0
+        maxWarnings = 10
         ignoreFailures = false
         showViolations = true
         toolVersion = checkstyleToolVersion
@@ -181,6 +181,7 @@ subprojects {
     }
 
     pmd {
+        maxFailures = 10
         consoleOutput = false
         ignoreFailures = false
         incrementalAnalysis = false

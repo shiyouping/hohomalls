@@ -49,7 +49,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
             try {
               roles = this.tokenService.getRoles(token.get());
               email = this.tokenService.getEmail(token.get());
-            } catch (Exception ex) { // NOPMD
+            } catch (Exception ex) {
               throw new BadCredentialsException("Invalid jwt token", ex);
             }
 
