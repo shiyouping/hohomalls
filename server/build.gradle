@@ -9,7 +9,7 @@ buildscript {
 
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.7.3'
+        graphqlDgsVersion = '4.7.6'
         jetbrainsAnnotationVersion = '21.0.1'
         jjwtVersion = '0.11.2'
         mapstructVersion = '1.4.2.Final'
