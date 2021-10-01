@@ -19,11 +19,14 @@ services:
     volumes:
       - /data/mongo:/etc/mongo
       - /data/mongo/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: # Injected via Docker Secrets
+      MONGO_INITDB_ROOT_PASSWORD: # Injected via Docker Secrets
 
   hohomalls:
     container_name: hohomalls-app
     image: hohomalls-app:1.0.0-SNAPSHOT
-    command: --spring.profiles.active=stage
+    command: --spring.profiles.active=prod
     ports:
       - "8080:8080"
     volumes:

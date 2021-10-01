@@ -19,6 +19,9 @@ services:
     volumes:
       - /data/mongo:/etc/mongo
       - /data/mongo/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: # Injected via Docker Secrets
+      MONGO_INITDB_ROOT_PASSWORD: # Injected via Docker Secrets
 
   hohomalls:
     container_name: hohomalls-app
