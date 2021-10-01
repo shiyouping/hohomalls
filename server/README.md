@@ -17,7 +17,9 @@ To build and run the server application, make sure you have at least [JDK 11](ht
 Add the following adresses to the hosts file:
 
 ````
-127.0.0.1 hohomalls 127.0.0.1 hohomalls-mongo 127.0.0.1 hohomalls-redis
+127.0.0.1 hohomalls 
+127.0.0.1 hohomalls-mongo 
+127.0.0.1 hohomalls-redis
 ````
 
 #### Configure MongoDB
@@ -41,7 +43,8 @@ Add the following adresses to the hosts file:
 Make sure port 8080 is available and then execute:
 
 ````bash 
-cd hohomalls/server ./gradlew bootRun --args='--spring.profiles.active=local'
+cd hohomalls/server 
+./gradlew bootRun --args='--spring.profiles.active=local'
 ````
 
 ### 2.2. On Docker
