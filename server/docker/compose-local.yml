@@ -3,7 +3,7 @@ services:
   redis:
     container_name: hohomalls-redis
     image: redis:6.2.5-alpine3.14
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --requirepass P@55w0rd
     ports:
       - "6379:6379"
     volumes:
@@ -40,11 +40,12 @@ services:
   hohomalls:
     container_name: hohomalls-app
     image: hohomalls-app:1.0.0-SNAPSHOT
-    command: --spring.profiles.active=local
     ports:
       - "8080:8080"
     volumes:
       - $PWD/data/hohomalls:/data
+    environment:
+      SPRING_PROFILES_ACTIVE: local
     depends_on:
       - mongo
       - redis

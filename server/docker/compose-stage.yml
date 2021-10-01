@@ -3,7 +3,7 @@ services:
   redis:
     container_name: hohomalls-redis
     image: redis:6.2.5-alpine3.14
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --requirepass ${} # Injected via Docker Secrets
     ports:
       - "6379:6379"
     volumes:
@@ -26,11 +26,17 @@ services:
   hohomalls:
     container_name: hohomalls-app
     image: hohomalls-app:1.0.0-SNAPSHOT
-    command: --spring.profiles.active=prod
     ports:
       - "8080:8080"
     volumes:
       - /data/hohomalls:/data
+    environment:
+      SPRING_PROFILES_ACTIVE: stage
+      SPRING_REDIS_PASSWORD: # Injected via Docker Secrets
+      SPRING_DATA_MONGODB_USERNAME: # Injected via Docker Secrets
+      SPRING_DATA_MONGODB_PASSWORD: # Injected via Docker Secrets
+      COM_HOHOMALLS_TOKEN_PUBLIC-KEY: # Injected via Docker Secrets
+      COM_HOHOMALLS_TOKEN_PRIVATE-KEY: # Injected via Docker Secrets
     depends_on:
       - mongo
       - redis

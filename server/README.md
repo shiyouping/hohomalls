@@ -8,9 +8,11 @@ and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running
 
 To build and run the server application, make sure you have at least [JDK 11](http://openjdk.java.net/) installed.
 
-## 2. How to run
+## 2. How to run on local mode
 
 There are three ways to run the server application.
+
+Notice that the credentials used on local mode are `root`(username) and `P@55w0rd`(password).
 
 ### 2.1. On local machine
 
@@ -81,3 +83,15 @@ cd hohomalls/server
     cd hohomalls/server
     ./gradlew clean bootBuildImage
     ````
+
+## 3. Non-local configurations
+
+The following environment variables have to be set for production and staging deployment:
+
+````
+SPRING_REDIS_PASSWORD=actual_value_1;
+SPRING_DATA_MONGODB_USERNAME=actual_value_2;
+SPRING_DATA_MONGODB_PASSWORD=actual_value_3;
+COM_HOHOMALLS_TOKEN_PUBLIC-KEY=actual_value_4;
+COM_HOHOMALLS_TOKEN_PRIVATE-KEY=actual_value_5;
+````
