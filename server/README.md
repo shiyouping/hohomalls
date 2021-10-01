@@ -10,9 +10,11 @@ To build and run the server application, make sure you have at least [JDK 11](ht
 
 ## 2. How to run
 
+There are three ways to run the server application.
+
 ### 2.1. On local machine
 
-#### Update hosts file
+#### 2.1.1. Update hosts file
 
 Add the following adresses to the hosts file:
 
@@ -22,7 +24,7 @@ Add the following adresses to the hosts file:
 127.0.0.1 hohomalls-redis
 ````
 
-#### Configure MongoDB
+#### 2.1.2. Configure MongoDB
 
 - Install [MongoDB v4.4.x](https://www.mongodb.com/try/download)
 - Run MongoDB on port `27017`
@@ -33,14 +35,19 @@ Add the following adresses to the hosts file:
     Auth database: admin
     ````
 
-#### Configure Redis
+#### 2.1.3. Configure Redis
 
 - Install [Redis v6.2.x](https://redis.io/download).
 - Run Redis on port `6379`
+- [Enable access control](https://stackink.com/how-to-set-password-for-redis-server/) with:
+    ````
+    # Update redis.conf
+    requirepass P@55w0rd
+    ````
 
-#### Start the app
+#### 2.1.4. Start the app
 
-Make sure port 8080 is available and then execute:
+Make sure port `8080` is available and then execute:
 
 ````bash 
 cd hohomalls/server 
