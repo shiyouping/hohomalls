@@ -6,6 +6,8 @@ spring:
     mongodb:
       username: root
       password: P@55w0rd
+  redis:
+    password: P@55w0rd
 
 # See docs at https://netflix.github.io/dgs/configuration/
 dgs:

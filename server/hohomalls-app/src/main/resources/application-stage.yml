@@ -5,7 +5,6 @@ logging:
 
 spring:
   redis:
-    username: # Injected via environment variables
     password: # Injected via environment variables
   data:
     mongodb:
