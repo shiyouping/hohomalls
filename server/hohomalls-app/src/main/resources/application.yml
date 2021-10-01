@@ -1,13 +1,21 @@
 # See docs at https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 server:
+  port: 8080
   max-http-header-size: 64KB
 
 spring:
   redis:
+    host: hohomalls
     port: 6379
   data:
     mongodb:
+      host: hohomalls
       port: 27017
       database: hohomalls
       auto-index-creation: true
       authentication-database: admin
+
+com:
+  hohomalls:
+    token:
+      lifespan: 240
