@@ -3,7 +3,7 @@ services:
   redis:
     container_name: hohomalls-redis
     image: redis:6.2.5-alpine3.14
-    command: redis-server --appendonly yes --requirepass ${} # Injected via Docker Secrets
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
     volumes:
@@ -22,8 +22,8 @@ services:
       - /data/mongo:/etc/mongo
       - /data/mongo/data:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: # Injected via Docker Secrets
-      MONGO_INITDB_ROOT_PASSWORD: # Injected via Docker Secrets
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     networks:
       - backend
 
@@ -36,11 +36,11 @@ services:
       - /data/hohomalls:/data
     environment:
       SPRING_PROFILES_ACTIVE: stage
-      SPRING_REDIS_PASSWORD: # Injected via Docker Secrets
-      SPRING_DATA_MONGODB_USERNAME: # Injected via Docker Secrets
-      SPRING_DATA_MONGODB_PASSWORD: # Injected via Docker Secrets
-      COM_HOHOMALLS_TOKEN_PUBLIC-KEY: # Injected via Docker Secrets
-      COM_HOHOMALLS_TOKEN_PRIVATE-KEY: # Injected via Docker Secrets
+      SPRING_REDIS_PASSWORD: ${REDIS_PASSWORD}
+      SPRING_DATA_MONGODB_USERNAME: ${MONGODB_USERNAME}
+      SPRING_DATA_MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      COM_HOHOMALLS_TOKEN_PUBLIC-KEY: ${TOKEN_PUBLIC_KEY}
+      COM_HOHOMALLS_TOKEN_PRIVATE-KEY: ${TOKEN_PRIVATE_KEY}
     depends_on:
       - mongo
       - redis
@@ -48,7 +48,5 @@ services:
       - backend
 
 networks:
-  frontend:
-    name: hohomalls-frontend
   backend:
     name: hohomalls-backend
