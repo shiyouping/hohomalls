@@ -9,6 +9,8 @@ services:
     volumes:
       - /data/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - /data/redis/data:/data
+    networks:
+      - backend
 
   mongo:
     container_name: hohomalls-mongo
@@ -22,6 +24,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: # Injected via Docker Secrets
       MONGO_INITDB_ROOT_PASSWORD: # Injected via Docker Secrets
+    networks:
+      - backend
 
   hohomalls:
     container_name: hohomalls-app
@@ -40,3 +44,11 @@ services:
     depends_on:
       - mongo
       - redis
+    networks:
+      - backend
+
+networks:
+  frontend:
+    name: hohomalls-frontend
+  backend:
+    name: hohomalls-backend
