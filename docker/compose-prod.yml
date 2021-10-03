@@ -7,8 +7,8 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - /data/redis/redis.conf:/usr/local/etc/redis/redis.conf
-      - /data/redis/data:/data
+      - /opt/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - /opt/redis/data:/data
     networks:
       - backend
 
@@ -19,8 +19,8 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - /data/mongo:/etc/mongo
-      - /data/mongo/data:/data/db
+      - /opt/mongo:/etc/mongo
+      - /opt/mongo/data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
@@ -33,7 +33,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /data/hohomalls:/data
+      - /opt/hohomalls:/data
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_REDIS_PASSWORD: ${REDIS_PASSWORD}

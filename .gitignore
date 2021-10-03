@@ -1,7 +1,14 @@
 ### Custom files
 data
-/docker/.env.stage
-/docker/.env.prod
+.gradle
+.idea
+bin
+build
+.settings
+.git
+.classpath
+.project
+.env.*
 
 ### VisualStudioCode template
 .vscode/*
