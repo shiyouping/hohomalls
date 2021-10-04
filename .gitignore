@@ -9,6 +9,8 @@ build
 .classpath
 .project
 .env.*
+k8s/prod/secret.yml
+k8s/stage/secret.yml
 
 ### VisualStudioCode template
 .vscode/*

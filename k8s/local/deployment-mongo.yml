@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: hohomalls-local
+  name: hohomalls-mongo
+spec:
+  selector:
+    matchLabels:
+      app: hohomalls-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hohomalls-mongo
+    spec:
+      containers:
+      - name: hohomalls-mongo
+        image: mongo:4.4
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 27017
