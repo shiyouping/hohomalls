@@ -6,13 +6,13 @@ This project will cover server, web and mobile applications. Currently, the serv
 
 ## 1. Prerequisites
 
-To build and run the applications, make sure you have at least [JDK 11](http://openjdk.java.net/) and [Node 16](https://nodejs.org/en/) installed.
+To build and run the applications, make sure you have at least [JDK 11](http://openjdk.java.net/) installed.
 
 ## 2. How to run on local mode
 
 There are three ways to run the applications.
 
-Notice that the account used on local mode are `root`(username) and `P@55w0rd`(password).
+Note that the account used on local mode is `root`(username) and `P@55w0rd`(password).
 
 ### 2.1. On local machine
 
@@ -126,9 +126,13 @@ COM_HOHOMALLS_TOKEN_PRIVATE-KEY=actual_value_5;
 - Create required directory and files
 
     ````bash
-    mkdir /opt/hohomalls
-    cp -r hohomalls/docker/mongo /opt
+    mkdir -p /opt/docker/mongo/data
+    cp -r hohomalls/docker/mongo /opt/docker
+    
+    mkdir -p /opt/docker/redis/data
     cp -r hohomalls/docker/redis /opt
+    
+    mkdir /opt/docker/hohomalls
     ````
 
 - Start and stop the containers
@@ -143,7 +147,7 @@ COM_HOHOMALLS_TOKEN_PRIVATE-KEY=actual_value_5;
     docker-compose --env-file docker/.env.prod -f docker/compose-prod.yml down
     ```
 
-Notice that if you are using `Docker Swarm`, you may want to
+Note that if you are using `Docker Swarm`, you may want to
 use [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/) to manage the above sensitive data. In this case,
 you have to update the Docker compose files yourself.
 

@@ -17,4 +17,4 @@ It's recommended to install the following IDE plugins to assist development:
 - [PMD](https://pmd.github.io/#plugins) finds common programming flaws like unused variables, empty catch blocks,
     unnecessary object creation, and so forth.
 
-Notice that Gradle build will fail if the Java source code doesn't pass the check of checkstyle and PMD.
+Note that Gradle build will fail if the Java source code doesn't pass the check of checkstyle and PMD.
