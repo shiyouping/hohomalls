@@ -1,0 +1,20 @@
+global:
+  namespaceOverride: hohomalls-local
+fullnameOverride: hohomalls-mongo
+
+architecture: replicaset
+replicaCount: 1
+
+auth:
+  rootUser: root
+  rootPassword: P@55w0rd
+
+service:
+  nameOverride: hohomalls-mongo
+
+externalAccess:
+  enabled: true
+  service:
+    type: NodePort
+    nodePorts:
+      - 30000
