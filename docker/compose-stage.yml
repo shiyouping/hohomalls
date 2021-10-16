@@ -14,7 +14,7 @@ services:
 
   mongo:
     container_name: hohomalls-mongo
-    image: mongo:4.4.9
+    image: mongo:4.4.10
     command: --config /etc/mongo/mongod.conf
     ports:
       - "27017:27017"
