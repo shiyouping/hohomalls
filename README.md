@@ -12,7 +12,7 @@ To build and run the applications, make sure you have at least [JDK 11](http://o
 
 There are three ways to run the applications.
 
-Note that the account used on local mode is `root`(username) and `P@55w0rd`(password).
+Note that the account used on local mode is `root`(username) and `Pa55w0rd`(password).
 
 ### 2.1. On local machine
 
@@ -34,7 +34,7 @@ Add the following adresses to the hosts file:
 
     ```markdown
     Username: root
-    Password: P@55w0rd
+    Password: Pa55w0rd
     Auth database: admin
     ```
 
@@ -46,7 +46,7 @@ Add the following adresses to the hosts file:
 
     ```markdown
     # Update redis.conf
-    requirepass P@55w0rd
+    requirepass Pa55w0rd
     ```
 
 #### 2.1.4. Start the applications
