@@ -156,3 +156,9 @@ you have to update the Docker compose files yourself.
 If the applications will be running on the cloud, e.g. AWS VPC, the following is the recommended infrastructure:
 
 ![AWS Infrastructure](/docs/aws-infrastructure.png)
+
+## 5. TODO
+
+- Use MongoDB replication mode
+- Use Redis replication mode
+- Aggregate logs from different instances
