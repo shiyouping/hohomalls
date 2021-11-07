@@ -1,0 +1,18 @@
+# See full doc at https://artifacthub.io/packages/helm/bitnami/redis
+fullnameOverride: hohomalls-redis
+architecture: standalone
+
+image:
+  debug: true
+
+global:
+  namespaceOverride: hohomalls-local
+
+auth:
+  existingSecret: hohomalls
+  existingSecretPasswordKey: redis-password
+
+master:
+  service:
+    type: NodePort
+    nodePort: 31000

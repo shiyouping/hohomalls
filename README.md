@@ -4,11 +4,23 @@ This project aims to provide online shopping malls to Hong Kong merchants to sel
 
 This project will cover server, web and mobile applications. Currently, the server application have been being developed. Any interested persons are welcome, especially web and mobile developers.
 
+## Table of Content
+
+- [1. Prerequisites](#1-prerequisites)
+- [2. Run on the local environment](#2-run-on-the-local-environment)
+  - [2.1. On local machine](#21-on-local-machine)
+  - [2.2. On Docker](#22-on-docker)
+  - [2.3. On Kubernetes](#23-on-kubernetes)
+- [3. Run on the non-local environments](#3-run-on-the-non-local-environments)
+  - [3.1. On Docker](#31-on-docker)
+- [4. Infrastructure on the Cloud](#4-infrastructure-on-the-cloud)
+- [5. TODO](#5-todo)
+
 ## 1. Prerequisites
 
 To build and run the applications, make sure you have at least [JDK 11](http://openjdk.java.net/) installed.
 
-## 2. How to run on local mode
+## 2. Run on the local environment
 
 There are three ways to run the applications.
 
@@ -98,7 +110,7 @@ cd hohomalls/server
   ./gradlew clean bootBuildImage
   ```
 
-## 3. Staging and Production environments
+## 3. Run on the non-local environments
 
 The following environment variables have to be set before starting the applications:
 

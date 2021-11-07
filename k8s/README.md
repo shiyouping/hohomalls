@@ -1,5 +1,11 @@
 # Kubenetes Commands
 
+- Namespace
+- Secret
+- Storage Class
+- Deployment
+- Service
+
 ## Create a namespace
 
 ```bash
@@ -12,9 +18,6 @@ kubectl create -f namespace.yml
 ```bash
 # Permanently save the namespace for all subsequent kubectl commands in that context
 kubectl config set-context --current --namespace=hohomalls-local
-
-# Validate it
-kubectl config view --minify | grep namespace:
 ```
 
 ## Create secrets
@@ -22,6 +25,56 @@ kubectl config view --minify | grep namespace:
 ```bash
 echo -n "STRING" | base64
 kubectl create -f secret.yml
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Install OpenEBS
+
+```bash
+kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+```
+
+## [Create StorageClass](https://openebs.io/docs/user-guides/localpv-hostpath)
+
+```bash
+mkdir -p /opt/k8s/volumes
+kubectl apply -f storage-class.yml
+kubectl apply -f persistent-volume-claim.yml
 ```
 
 ## TODO

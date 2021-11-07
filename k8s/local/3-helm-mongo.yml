@@ -1,3 +1,4 @@
+# See full doc at https://artifacthub.io/packages/helm/bitnami/mongodb
 fullnameOverride: hohomalls-mongo
 architecture: standalone
 
@@ -6,9 +7,6 @@ image:
 
 global:
   namespaceOverride: hohomalls-local
-
-persistence:
-  size: 8Gi
 
 auth:
   existingSecret: hohomalls
