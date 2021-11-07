@@ -12,42 +12,49 @@ To build and run the applications, make sure you have at least [JDK 11](http://o
 
 There are three ways to run the applications.
 
-Note that the account used on local mode is `root`(username) and `Pa55w0rd`(password).
+Note that the account used on local mode is:
+
+```markdown
+Username: root
+Password: Pa55w0rd
+```
 
 ### 2.1. On local machine
 
 #### 2.1.1. Update hosts file
 
-Add the following adresses to the hosts file:
+Add the following mapping to the hosts file:
 
 ```markdown
 127.0.0.1 hohomalls
-127.0.0.1 hohomalls-mongo
-127.0.0.1 hohomalls-redis
 ```
 
 #### 2.1.2. Configure MongoDB
 
 - Install [MongoDB v4.4.x](https://www.mongodb.com/try/download)
-- Start MongoDB on port `27017`
 - [Enable access control](https://docs.mongodb.com/v4.4/tutorial/enable-authentication/) with:
 
-    ```markdown
-    Username: root
-    Password: Pa55w0rd
-    Auth database: admin
-    ```
+  ```javascript
+  use admin
+  db.createUser(
+    {
+      user: "root",
+      pwd: "Pa55w0rd",
+      roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+    }
+  )
+  ```
+
+- Start MongoDB on port `27017`
 
 #### 2.1.3. Configure Redis
 
 - Install [Redis v6.2.x](https://redis.io/download)
-- Start Redis on port `6379`
-- [Enable access control](https://stackink.com/how-to-set-password-for-redis-server/) with:
+- Start Redis on port `6379` with:
 
-    ```markdown
-    # Update redis.conf
-    requirepass Pa55w0rd
-    ```
+  ```bash
+  redis-server --requirepass Pa55w0rd
+  ```
 
 #### 2.1.4. Start the applications
 
@@ -63,22 +70,22 @@ cd hohomalls/server
 - Install [Docker](https://www.docker.com/get-started) and start it
 - Build the Docker image
 
-    ```bash
-    cd hohomalls/server
-    ./gradlew clean bootBuildImage
-    ```
+  ```bash
+  cd hohomalls/server
+  ./gradlew clean bootBuildImage
+  ```
 
 - Start and stop the containers
 
-    ```bash
-    cd hohomalls
+  ```bash
+  cd hohomalls/docker
 
-    # Create and start containers
-    docker-compose -f docker/compose-local.yml up -d
+  # Create and start containers
+  docker-compose --env-file .env.local up -d
 
-    # Stop and remove resources
-    docker-compose -f docker/compose-local.yml down
-    ```
+  # Stop and remove resources
+  docker-compose --env-file .env.local down
+  ```
 
 ### 2.3. On Kubernetes
 
@@ -86,66 +93,71 @@ cd hohomalls/server
 - Install [Docker](https://www.docker.com/get-started) and start it
 - Build the Docker image
 
-    ```bash
-    cd hohomalls/server
-    ./gradlew clean bootBuildImage
-    ```
+  ```bash
+  cd hohomalls/server
+  ./gradlew clean bootBuildImage
+  ```
 
 ## 3. Staging and Production environments
 
 The following environment variables have to be set before starting the applications:
 
 ```markdown
-SPRING_REDIS_PASSWORD=actual_value_1;
-SPRING_DATA_MONGODB_USERNAME=actual_value_2;
-SPRING_DATA_MONGODB_PASSWORD=actual_value_3;
-COM_HOHOMALLS_TOKEN_PUBLIC-KEY=actual_value_4;
-COM_HOHOMALLS_TOKEN_PRIVATE-KEY=actual_value_5;
+SPRING_PROFILES_ACTIVE = actual_value
+SPRING_REDIS_HOST = actual_value
+SPRING_REDIS_PASSWORD = actual_value
+SPRING_DATA_MONGODB_HOST = actual_value
+SPRING_DATA_MONGODB_USERNAME = actual_value
+SPRING_DATA_MONGODB_PASSWORD = actual_value
+COM_HOHOMALLS_TOKEN_PUBLIC-KEY = actual_value
+COM_HOHOMALLS_TOKEN_PRIVATE-KEY = actual_value
 ```
 
 ### 3.1. On Docker
 
 - Configure the variables in a Docker environment file
 
-    ```bash
-    cd hohomalls/docker
-    touch .env.prod
-    vi .env.prod
-    ```
+  ```bash
+  cd hohomalls/docker
+  touch .env
+  vi .env
+  ```
 
 - Set the correct values in the environment file
 
-    ```markdown
-    REDIS_PASSWORD=actual_value_1
-    MONGODB_USERNAME=actual_value_2
-    MONGODB_PASSWORD=actual_value_3
-    TOKEN_PUBLIC_KEY=actual_value_4
-    TOKEN_PRIVATE_KEY=actual_value_5
-    ```
+  ```markdown
+  REDIS_HOST=actual_value
+  REDIS_PASSWORD=actual_value
+  MONGODB_HOST=actual_value
+  MONGODB_USERNAME=actual_value
+  MONGODB_PASSWORD=actual_value
+  TOKEN_PUBLIC_KEY=actual_value
+  TOKEN_PRIVATE_KEY=actual_value
+  ```
 
 - Create required directory and files
 
-    ````bash
-    mkdir -p /opt/docker/mongo/data
-    cp -r hohomalls/docker/mongo /opt/docker
-    
-    mkdir -p /opt/docker/redis/data
-    cp -r hohomalls/docker/redis /opt
-    
-    mkdir /opt/docker/hohomalls
-    ````
+  ```bash
+  mkdir -p /opt/docker/mongo/data
+  cp -r hohomalls/docker/mongo /opt/docker
+
+  mkdir -p /opt/docker/redis/data
+  cp -r hohomalls/docker/redis /opt
+
+  mkdir /opt/docker/hohomalls
+  ```
 
 - Start and stop the containers
 
-    ```bash
-    cd hohomalls
+  ```bash
+  cd hohomalls
 
-    # Create and start containers using production configurations
-    docker-compose --env-file docker/.env.prod -f docker/compose-prod.yml up -d
+  # Create and start containers
+  docker-compose --env-file docker/.env -f docker/compose-prod.yml up -d
 
-    # Stop and remove resources
-    docker-compose --env-file docker/.env.prod -f docker/compose-prod.yml down
-    ```
+  # Stop and remove resources
+  docker-compose --env-file docker/.env -f docker/compose-prod.yml down
+  ```
 
 Note that if you are using `Docker Swarm`, you may want to
 use [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/) to manage the above sensitive data. In this case,

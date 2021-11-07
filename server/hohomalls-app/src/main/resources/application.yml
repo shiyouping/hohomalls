@@ -5,11 +5,11 @@ server:
 
 spring:
   redis:
-    host: hohomalls-redis
+    host: hohomalls
     port: 6379
   data:
     mongodb:
-      host: hohomalls-mongo
+      host: hohomalls
       port: 27017
       database: hohomalls
       auto-index-creation: true

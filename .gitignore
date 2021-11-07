@@ -8,7 +8,8 @@ build
 .git
 .classpath
 .project
-.env.*
+.env.prod
+.env.stage
 k8s/prod/secret.yml
 k8s/stage/secret.yml
 
