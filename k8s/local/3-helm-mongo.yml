@@ -12,6 +12,5 @@ auth:
   existingSecret: hohomalls
 
 service:
-  nameOverride: hohomalls-mongo
   type: NodePort
   nodePort: 30000
