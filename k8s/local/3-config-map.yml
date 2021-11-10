@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: hohomalls-local
+  name: hohomalls
+data:
+  spring-profile: local
+  redis-host: hohomalls-redis-master
+  mongodb-host: hohomalls-mongo
+
+
