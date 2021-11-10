@@ -39,7 +39,7 @@ services:
 
   hohomalls:
     container_name: hohomalls-app
-    image: hohomalls-app:${VERSION_BITNAMI_HOHOMALLS_APP}
+    image: hohomalls-app:${VERSION_HOHOMALLS_APP}
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
       SPRING_REDIS_HOST: hohomalls-redis

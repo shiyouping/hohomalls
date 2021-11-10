@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hohomalls-app
+spec:
+  selector:
+    matchLabels:
+      app: hohomalls-app
+  template:
+    metadata:
+      labels:
+        app: hohomalls-app
+    spec:
+      containers:
+      - name: hohomalls-app
+        image: hohomalls-app:1.0.0-SNAPSHOT
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1024m"
+        ports:
+        - containerPort: 8080
