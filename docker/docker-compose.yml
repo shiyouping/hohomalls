@@ -7,7 +7,6 @@ networks:
 volumes:
   hohomalls-mongo-volume:
   hohomalls-redis-volume:
-  hohomalls-app-volume:
 
 services:
   # See doc at https://hub.docker.com/r/bitnami/mongodb
@@ -51,8 +50,6 @@ services:
       COM_HOHOMALLS_TOKEN_PRIVATE-KEY: ${TOKEN_PRIVATE_KEY}
     ports:
       - "8080:8080"
-    volumes:
-      - hohomalls-app-volume:/data
     depends_on:
       - mongo
       - redis

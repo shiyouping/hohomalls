@@ -1,10 +1,11 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: hohomalls-local
   name: hohomalls-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: hohomalls-app
@@ -17,6 +18,7 @@ spec:
       containers:
         - name: hohomalls-app
           image: hohomalls-app:1.0.0-SNAPSHOT
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               memory: "512Mi"
@@ -33,7 +35,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: hohomalls
-                  key: hohomalls-redis-master
+                  key: redis-host
             - name: SPRING_REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -43,7 +45,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: hohomalls
-                  key: hohomalls-mongo
+                  key: mongodb-host
             - name: SPRING_DATA_MONGODB_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -63,4 +65,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: hohomalls
-                  key: token_private_key
+                  key: token-private-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hohomalls-app
+spec:
+  type: NodePort
+  selector:
+    app: hohomalls-app
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30200
