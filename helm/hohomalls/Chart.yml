@@ -1,0 +1,24 @@
+home: https://github.com/shiyouping/hohomalls
+apiVersion: v2
+name: hohomalls
+type: application
+kubeVersion: ^1.22
+
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: "mongodb"
+    version: 10.29.2
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami/mongodb
+  - name: "redis"
+    version: 15.5.5
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami/redis
+
+maintainers:
+  - name: Ricky Shi
+    email: ricky.shiyouping@gmail.com

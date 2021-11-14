@@ -10,6 +10,8 @@ build
 .project
 .env.prod
 .env.stage
+**/*.tgz
+**/Chart.lock
 k8s/prod/secret.yml
 k8s/stage/secret.yml
 
