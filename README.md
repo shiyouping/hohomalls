@@ -18,7 +18,7 @@ This project will cover server, web and mobile applications. Currently, the serv
 
 ## 1. Prerequisites
 
-To build and run the applications, make sure you have at least [JDK 11](http://openjdk.java.net/) installed.
+To build and run the applications, make sure you have at least [JDK 17](http://openjdk.java.net/) installed.
 
 ## 2. Run on the local environment
 
