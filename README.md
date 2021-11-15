@@ -90,7 +90,7 @@ cd hohomalls/server
 - Start and stop the containers
 
   ```bash
-  cd hohomalls/docker
+  cd hohomalls/container/docker
 
   # Create and start containers
   docker-compose --env-file .env.local up -d
@@ -130,7 +130,7 @@ COM_HOHOMALLS_TOKEN_PRIVATE-KEY = actual_value
 - Configure the variables in a Docker environment file
 
   ```bash
-  cd hohomalls/docker
+  cd hohomalls/container/docker
   touch .env
   vi .env
   ```
@@ -147,28 +147,16 @@ COM_HOHOMALLS_TOKEN_PRIVATE-KEY = actual_value
   TOKEN_PRIVATE_KEY=actual_value
   ```
 
-- Create required directory and files
-
-  ```bash
-  mkdir -p /opt/docker/mongo/data
-  cp -r hohomalls/docker/mongo /opt/docker
-
-  mkdir -p /opt/docker/redis/data
-  cp -r hohomalls/docker/redis /opt
-
-  mkdir /opt/docker/hohomalls
-  ```
-
 - Start and stop the containers
 
   ```bash
-  cd hohomalls
+  cd hohomalls/container/docker
 
   # Create and start containers
-  docker-compose --env-file docker/.env -f docker/compose-prod.yml up -d
+  docker-compose up -d
 
   # Stop and remove resources
-  docker-compose --env-file docker/.env -f docker/compose-prod.yml down
+  docker-compose down
   ```
 
 Note that if you are using `Docker Swarm`, you may want to
