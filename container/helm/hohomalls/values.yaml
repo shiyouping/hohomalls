@@ -1,6 +1,6 @@
 global:
   productName: &globalProductName hohomalls
-  namespace: &globalNamespace hohomalls-local
+  namespaceOverride: hohomalls-local-1
   redisPassword: UGE1NXcwcmQ=
   mongodbRootUser: cm9vdA==
   mongodbRootPassword: UGE1NXcwcmQ=
@@ -9,9 +9,6 @@ global:
 redis:
   fullnameOverride: hohomalls-redis
   architecture: standalone
-
-  global:
-    namespaceOverride: *globalNamespace
 
   auth:
     existingSecret: *globalProductName
@@ -26,9 +23,6 @@ redis:
 mongodb:
   fullnameOverride: hohomalls-mongo
   architecture: standalone
-
-  global:
-    namespaceOverride: *globalNamespace
 
   auth:
     existingSecret: *globalProductName
