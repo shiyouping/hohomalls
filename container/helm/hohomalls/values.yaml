@@ -1,6 +1,6 @@
 global:
   productName: &globalProductName hohomalls
-  namespaceOverride: hohomalls-local-1
+  namespaceOverride: hohomalls-local
   redisPassword: UGE1NXcwcmQ=
   mongodbRootUser: cm9vdA==
   mongodbRootPassword: UGE1NXcwcmQ=
