@@ -4,8 +4,6 @@ metadata:
   namespace: hohomalls-local
   name: hohomalls
 data:
-  spring-profile: local
+  spring-active-profile: local
   redis-host: hohomalls-redis-master
   mongodb-host: hohomalls-mongo
-
-
