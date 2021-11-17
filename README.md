@@ -9,10 +9,15 @@ This project will cover server, web and mobile applications. Currently, the serv
 - [1. Prerequisites](#1-prerequisites)
 - [2. Run on the local environment](#2-run-on-the-local-environment)
   - [2.1. On local machine](#21-on-local-machine)
+    - [2.1.1. Update hosts file](#211-update-hosts-file)
+    - [2.1.2. Configure MongoDB](#212-configure-mongodb)
+    - [2.1.3. Configure Redis](#213-configure-redis)
+    - [2.1.4. Start the applications](#214-start-the-applications)
   - [2.2. On Docker](#22-on-docker)
   - [2.3. On Kubernetes](#23-on-kubernetes)
 - [3. Run on the non-local environments](#3-run-on-the-non-local-environments)
   - [3.1. On Docker](#31-on-docker)
+  - [3.2. On Kubenetes](#32-on-kubenetes)
 - [4. Infrastructure on the Cloud](#4-infrastructure-on-the-cloud)
 - [5. TODO](#5-todo)
 
@@ -93,21 +98,43 @@ cd hohomalls/server
   cd hohomalls/container/docker
 
   # Create and start containers
-  docker-compose --env-file .env.local up -d
+  docker-compose up -d
 
   # Stop and remove resources
-  docker-compose --env-file .env.local down
+  docker-compose down
   ```
 
 ### 2.3. On Kubernetes
 
-- Install [Kubernetes](https://kubernetes.io/docs/setup/) and start it
 - Install [Docker](https://www.docker.com/get-started) and start it
 - Build the Docker image
 
   ```bash
   cd hohomalls/server
   ./gradlew clean bootBuildImage
+  ```
+
+- Install [Kubernetes](https://kubernetes.io/docs/setup/) and start it
+- Install [Helm](https://helm.sh/docs/intro/install/)
+- Install and start Hohomalls applications with Helm
+
+  ```bash
+  # Add Bitnami to Helm repo
+  helm repo add bitnami https://charts.bitnami.com/bitnami
+  helm repo update
+
+  cd hohomalls/container/helm
+  # Update the dependent charts
+  helm dependency update hohomalls
+
+  # Create the target namespace, e.g. hohomalls-local
+  kubectl create namespace hohomalls-local
+
+  # Switch to the namespace just created
+  kubectl config set-context --current --namespace=hohomalls-local
+
+  # Install hohomalls with release name local in the current namespace
+  helm install local hohomalls
   ```
 
 ## 3. Run on the non-local environments
@@ -127,41 +154,28 @@ COM_HOHOMALLS_TOKEN_PRIVATE-KEY = actual_value
 
 ### 3.1. On Docker
 
-- Configure the variables in a Docker environment file
-
-  ```bash
-  cd hohomalls/container/docker
-  touch .env
-  vi .env
-  ```
-
-- Set the correct values in the environment file
-
-  ```markdown
-  REDIS_HOST=actual_value
-  REDIS_PASSWORD=actual_value
-  MONGODB_HOST=actual_value
-  MONGODB_USERNAME=actual_value
-  MONGODB_PASSWORD=actual_value
-  TOKEN_PUBLIC_KEY=actual_value
-  TOKEN_PRIVATE_KEY=actual_value
-  ```
-
-- Start and stop the containers
-
-  ```bash
-  cd hohomalls/container/docker
-
-  # Create and start containers
-  docker-compose up -d
-
-  # Stop and remove resources
-  docker-compose down
-  ```
-
 Note that if you are using `Docker Swarm`, you may want to
-use [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/) to manage the above sensitive data. In this case,
+use [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/) to manage the sensitive data. In this case,
 you have to update the Docker compose files yourself.
+
+- Update configurations in `hohomalls/container/docker/.env`
+- Follow [2.2 On Docker](#22-on-docker) to start/stop the applications
+
+### 3.2. On Kubenetes
+
+- Update configurations in `hohomalls/container/helm/hohomalls/values.yaml`
+- Follow [2.3 On Kubernetes](#23-on-kubernetes) to start/stop the applications with appropriate namespace and release name, e.g.:
+
+  ```bash
+  # Create the target namespace, e.g. hohomalls-prod
+  kubectl create namespace hohomalls-prod
+
+  # Switch to the namespace just created
+  kubectl config set-context --current --namespace=hohomalls-prod
+
+  # Install hohomalls with release name prod in the current namespace
+  helm install prod hohomalls
+  ```
 
 ## 4. Infrastructure on the Cloud
 

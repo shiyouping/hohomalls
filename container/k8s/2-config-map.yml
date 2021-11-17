@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: hohomalls
 data:
-  spring-active-profile: local
+  active-profile: local
   redis-host: hohomalls-redis-master
   mongodb-host: hohomalls-mongo

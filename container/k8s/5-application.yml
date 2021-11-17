@@ -28,7 +28,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: hohomalls
-                  key: spring-active-profile
+                  key: active-profile
             - name: SPRING_REDIS_HOST
               valueFrom:
                 configMapKeyRef:

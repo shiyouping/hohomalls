@@ -27,7 +27,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Values.global.productName }}
-                  key: spring-active-profile
+                  key: active-profile
             - name: SPRING_REDIS_HOST
               valueFrom:
                 configMapKeyRef:
