@@ -8,11 +8,7 @@ This project will cover server, web and mobile applications. Currently, the serv
 
 - [1. Prerequisites](#1-prerequisites)
 - [2. Run on the local environment](#2-run-on-the-local-environment)
-  - [2.1. On local machine](#21-on-local-machine)
-    - [2.1.1. Update hosts file](#211-update-hosts-file)
-    - [2.1.2. Configure MongoDB](#212-configure-mongodb)
-    - [2.1.3. Configure Redis](#213-configure-redis)
-    - [2.1.4. Start the applications](#214-start-the-applications)
+  - [2.1. On local host](#21-on-local-host)
   - [2.2. On Docker](#22-on-docker)
   - [2.3. On Kubernetes](#23-on-kubernetes)
 - [3. Run on the non-local environments](#3-run-on-the-non-local-environments)
@@ -36,7 +32,7 @@ Username: root
 Password: Pa55w0rd
 ```
 
-### 2.1. On local machine
+### 2.1. On local host
 
 #### 2.1.1. Update hosts file
 
