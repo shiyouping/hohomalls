@@ -1,9 +1,20 @@
 global:
   productName: &globalProductName hohomalls
-  namespaceOverride: hohomalls-local
   redisPassword: UGE1NXcwcmQ=
   mongodbRootUser: cm9vdA==
   mongodbRootPassword: UGE1NXcwcmQ=
+
+# See full doc at https://artifacthub.io/packages/helm/bitnami/mongodb
+mongodb:
+  fullnameOverride: hohomalls-mongo
+  architecture: standalone
+
+  auth:
+    existingSecret: *globalProductName
+
+  service:
+    type: NodePort
+    nodePort: 30000
 
 # See full doc at https://artifacthub.io/packages/helm/bitnami/redis
 redis:
@@ -18,18 +29,6 @@ redis:
     service:
       type: NodePort
       nodePort: 30100
-
-# See full doc at https://artifacthub.io/packages/helm/bitnami/mongodb
-mongodb:
-  fullnameOverride: hohomalls-mongo
-  architecture: standalone
-
-  auth:
-    existingSecret: *globalProductName
-
-  service:
-    type: NodePort
-    nodePort: 30000
 
 hohomalls:
   imageName: hohomalls-app

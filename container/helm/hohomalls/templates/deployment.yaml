@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: {{ .Values.global.namespaceOverride }}
   name: {{ .Values.hohomalls.imageName }}
 spec:
   replicas: {{ .Values.hohomalls.replicas }}
@@ -10,7 +9,6 @@ spec:
       app: {{ .Values.hohomalls.imageName }}
   template:
     metadata:
-      namespace: {{ .Values.global.namespaceOverride }}
       labels:
         app: {{ .Values.hohomalls.imageName }}
     spec:

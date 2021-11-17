@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: hohomalls-local
   name: hohomalls-app
 spec:
   replicas: 1
@@ -11,7 +10,6 @@ spec:
       app: hohomalls-app
   template:
     metadata:
-      namespace: hohomalls-local
       labels:
         app: hohomalls-app
     spec:

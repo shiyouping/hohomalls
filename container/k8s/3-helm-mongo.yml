@@ -5,9 +5,6 @@ architecture: standalone
 image:
   debug: true
 
-global:
-  namespaceOverride: hohomalls-local
-
 auth:
   existingSecret: hohomalls
 
