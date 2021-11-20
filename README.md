@@ -112,7 +112,7 @@ cd hohomalls/server
 
 - Install [Kubernetes](https://kubernetes.io/docs/setup/) and start it
 - Install [Helm](https://helm.sh/docs/intro/install/)
-- Install and start Hohomalls applications with Helm
+- Install the applications with Helm
 
   ```bash
   # Add Bitnami to Helm repo
