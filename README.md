@@ -173,7 +173,7 @@ you have to update the Docker compose files yourself.
   helm install prod hohomalls
   ```
 
-## 4. Infrastructure on the Cloud
+## 4. AWS Infrastructure
 
 If the applications will be running on the cloud, e.g. AWS VPC, the following is the recommended infrastructure:
 
