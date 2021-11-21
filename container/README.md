@@ -35,6 +35,8 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 
 ## Kubenetes
 
+- kubectl config get-contexts
+- kubectl config use-context CONTEXT_NAME
 - kubectl config set-context --current --namespace=hohomalls-local
 - kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 - Scripts
