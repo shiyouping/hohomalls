@@ -13,6 +13,8 @@ spec:
       labels:
         app: hohomalls-app
     spec:
+      nodeSelector:
+        nodeType: hohomalls-app-worker
       containers:
         - name: hohomalls-app
           image: hohomalls-app:1.0.0-SNAPSHOT

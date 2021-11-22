@@ -14,7 +14,7 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 
 - minikube ip
 - minikube ssh
-- minikube start --memory max --cpus max
+- minikube start --memory max --cpus max --nodes=3
 - minikube image load hohomalls-app:1.0.0-SNAPSHOT
 
 ## Helm
@@ -38,6 +38,8 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 - kubectl config get-contexts
 - kubectl config use-context CONTEXT_NAME
 - kubectl config set-context --current --namespace=hohomalls-local
+- kubectl get nodes --show-labels
+- kubectl label nodes node-name key=value
 - kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 - Scripts
 

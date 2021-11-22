@@ -8,6 +8,8 @@ global:
 mongodb:
   fullnameOverride: hohomalls-mongo
   architecture: standalone
+  nodeSelector:
+    nodeType: hohomalls-data-worker
 
   auth:
     existingSecret: *globalProductName
@@ -15,6 +17,9 @@ mongodb:
   service:
     type: NodePort
     nodePort: 30000
+
+  volumePermissions:
+    enabled: true
 
 # See full doc at https://artifacthub.io/packages/helm/bitnami/redis
 redis:
@@ -26,9 +31,14 @@ redis:
     existingSecretPasswordKey: redis-password
 
   master:
+    nodeSelector:
+      nodeType: hohomalls-data-worker
     service:
       type: NodePort
       nodePort: 30100
+
+  volumePermissions:
+    enabled: true
 
 hohomalls:
   imageName: hohomalls-app

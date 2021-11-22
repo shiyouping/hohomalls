@@ -12,6 +12,8 @@ spec:
       labels:
         app: {{ .Values.hohomalls.imageName }}
     spec:
+      nodeSelector:
+        nodeType: hohomalls-app-worker
       containers:
         - name: {{ .Values.hohomalls.imageName }}
           image: {{ .Values.hohomalls.imageName }}:{{ .Values.hohomalls.imageTag }}

@@ -9,7 +9,12 @@ auth:
   existingSecret: hohomalls
   existingSecretPasswordKey: redis-password
 
+volumePermissions:
+  enabled: true
+
 master:
+  nodeSelector:
+    nodeType: hohomalls-data-worker
   service:
     type: NodePort
     nodePort: 30100

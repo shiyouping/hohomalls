@@ -1,12 +1,17 @@
 # See full doc at https://artifacthub.io/packages/helm/bitnami/mongodb
 fullnameOverride: hohomalls-mongo
 architecture: standalone
+nodeSelector:
+  nodeType: hohomalls-data-worker
 
 image:
   debug: true
 
 auth:
   existingSecret: hohomalls
+
+volumePermissions:
+  enabled: true
 
 service:
   type: NodePort

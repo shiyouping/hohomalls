@@ -5,7 +5,6 @@ kubeVersion: ^1.22
 
 version: 0.1.0
 appVersion: "0.1.0"
-home: https://github.com/shiyouping/hohomalls
 
 dependencies:
   - name: "mongodb"
@@ -19,6 +18,7 @@ dependencies:
     tags:
       - bitnami/redis
 
+home: https://github.com/shiyouping/hohomalls
 maintainers:
   - name: Ricky Shi
     email: ricky.shiyouping@gmail.com
