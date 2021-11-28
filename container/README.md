@@ -9,14 +9,18 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 ## Docker
 
 - docker-compose --env-file .env.local up -d
-- docker tag hohomalls-app:1.0.0-SNAPSHOT 726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls:1.0.0-SNAPSHOT
-- docker push 726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls:1.0.0-SNAPSHOT
+- docker logout
+- docker login
+- aws ecr get-login-password --region ap-east-1 | docker login --username AWS --password-stdin 726353715242.dkr.ecr.ap-east-1.amazonaws.com
+- docker tag hohomalls-app:1.0.0-SNAPSHOT 726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls-app:1.0.0-SNAPSHOT
+- docker push 726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls-app:1.0.0-SNAPSHOT
 
 ## Minikube
 
 - minikube ip
 - minikube ssh
 - minikube start --memory max --cpus max --nodes=3
+- eval $(minikube docker-env)
 - minikube image load hohomalls-app:1.0.0-SNAPSHOT
 
 ## Helm
