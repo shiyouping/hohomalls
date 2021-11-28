@@ -111,6 +111,14 @@ cd hohomalls/server
   ```
 
 - Install [Kubernetes](https://kubernetes.io/docs/setup/) and start it
+- Assign labels to the worker nodes
+
+  ```bash
+  # Replace worker-node-1 and worker-node-2 with actual worker node names
+  kubectl label nodes worker-node-1 nodeType=hohomalls-data-worker
+  kubectl label nodes worker-node-2 nodeType=hohomalls-app-worker
+  ```
+
 - Install [Helm](https://helm.sh/docs/intro/install/)
 - Install the applications with Helm
 
@@ -129,8 +137,8 @@ cd hohomalls/server
   # Switch to the namespace just created
   kubectl config set-context --current --namespace=hohomalls-local
 
-  # Install hohomalls with release name local in the current namespace
-  helm install local hohomalls
+  # Install hohomalls with release name hohomalls in the current namespace
+  helm install hohomalls hohomalls
   ```
 
 ## 3. Run on the non-local environments

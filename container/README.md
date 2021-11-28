@@ -45,7 +45,8 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 - kubectl config use-context CONTEXT_NAME
 - kubectl config set-context --current --namespace=hohomalls-local
 - kubectl get nodes --show-labels
-- kubectl label nodes node-name key=value
+- kubectl label nodes minikube-m02 nodeType=hohomalls-data-worker
+- kubectl label nodes minikube-m03 nodeType=hohomalls-app-worker
 - kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 - Scripts
 
