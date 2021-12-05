@@ -9,7 +9,7 @@ buildscript {
 
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.9.3'
+        graphqlDgsVersion = '4.9.10'
         jetbrainsAnnotationVersion = '22.0.0'
         jjwtVersion = '0.11.2'
         mapstructVersion = '1.4.2.Final'
@@ -17,8 +17,8 @@ buildscript {
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
         lombokPluginVersion = '6.0.0-m2'
-        springBootPluginVersion = '2.5.6'
-        dgsCodegenPluginVersion = '5.1.8'
+        springBootPluginVersion = '2.6.1'
+        dgsCodegenPluginVersion = '5.1.10'
 
         // The Checkstyle IDE plugin should support the version defined here
         checkstyleToolVersion = '8.44'
