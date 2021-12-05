@@ -22,6 +22,9 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 - minikube start --memory max --cpus max --nodes=3
 - eval $(minikube docker-env)
 - minikube image load hohomalls-app:1.0.0-SNAPSHOT
+- minikube minikube service --url hohomalls-mongo -n hohomalls-local &
+- minikube service --url hohomalls-redis-master -n hohomalls-local &
+- minikube service --url hohomalls-app -n hohomalls-local &
 
 ## Helm
 
