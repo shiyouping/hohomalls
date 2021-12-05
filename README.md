@@ -114,9 +114,9 @@ cd hohomalls/server
 - Assign labels to the worker nodes
 
   ```bash
-  # Replace worker-node-1 and worker-node-2 with actual worker node names
-  kubectl label nodes worker-node-1 nodeType=hohomalls-data-worker
-  kubectl label nodes worker-node-2 nodeType=hohomalls-app-worker
+  # Replace minikube-m02 and minikube-m03 with actual worker node names
+  kubectl label nodes minikube-m02 nodeType=hohomalls-data-worker
+  kubectl label nodes minikube-m03 nodeType=hohomalls-app-worker
   ```
 
 - Install [Helm](https://helm.sh/docs/intro/install/)
