@@ -63,3 +63,9 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
   helm install hohomalls-redis -f 4-helm-redis.yml bitnami/redis --version 15.5.5
   kubectl apply -f 5-application.yml
   ```
+
+## Amazon EKS CLI
+
+- eksctl get cluster -r ap-east-1
+- eksctl create cluster -f cluster.yml
+- eksctl delete cluster -n hohomalls -r ap-east-1

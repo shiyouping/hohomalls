@@ -1,0 +1,31 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: hohomalls
+  region: ap-east-1
+
+managedNodeGroups:
+  - name: ng-app-workers
+    instanceType: t3.micro
+    minSize: 1
+    maxSize: 1
+    desiredCapacity: 1
+    volumeSize: 10
+    ssh:
+      allow: true
+      publicKeyPath: ~/Development/amazon/dev-ec2-public-key-ricky.shi.pub
+    labels:
+      nodeType: hohomalls-app-worker
+  - name: ng-data-workers
+    instanceType: t3.micro
+    minSize: 1
+    maxSize: 1
+    desiredCapacity: 1
+    volumeSize: 10
+    ssh:
+      allow: true
+      publicKeyPath: ~/Development/amazon/dev-ec2-public-key-ricky.shi.pub
+    privateNetworking: true
+    labels:
+      nodeType: hohomalls-data-worker
