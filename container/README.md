@@ -39,7 +39,7 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
   helm dependency update hohomalls
   kubectl create namespace hohomalls-local
   kubectl config set-context --current --namespace=hohomalls-local
-  helm install test hohomalls
+  helm install hohomalls hohomalls
   ```
 
 ## Kubenetes
