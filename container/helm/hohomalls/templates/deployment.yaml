@@ -15,7 +15,7 @@ spec:
       nodeSelector:
         nodeType: hohomalls-app-worker
       containers:
-        - name: {{ .Values.hohomalls.imageName }}
+        - name: hohomalls-app
           image: {{ .Values.hohomalls.imageName }}:{{ .Values.hohomalls.imageTag }}
           imagePullPolicy: IfNotPresent
           resources:

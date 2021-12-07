@@ -29,6 +29,7 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 ## Helm
 
 - helm install test hohomalls --dry-run --debug
+- helm install --set hohomalls.imageName=726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls-app hohomalls hohomalls
 - Scripts
 
   ```bash
