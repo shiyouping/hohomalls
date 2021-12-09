@@ -11,9 +11,6 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 - docker login: Log in to a Docker registry
 - docker logout: Log out from a Docker registry
 - docker-compose --env-file .env.local up -d: Start the containers using the given environment file in the background and leave them running
-- docker tag hohomalls-app:1.0.0-SNAPSHOT 726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls-app:1.0.0-SNAPSHOT: Tag an image for a private repository
-- docker push 726353715242.dkr.ecr.ap-east-1.amazonaws.com/hohomalls-app:1.0.0-SNAPSHOT: Push an image or a repository to a registry
-- aws ecr get-login-password --region ap-east-1 | docker login --username AWS --password-stdin 726353715242.dkr.ecr.ap-east-1.amazonaws.com: Log in AWS ECR
 
 ## Helm
 
