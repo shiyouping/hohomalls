@@ -5,4 +5,6 @@ metadata:
 data:
   active-profile: {{ .Values.hohomalls.activeProfile }}
   redis-host: {{ .Values.redis.fullnameOverride }}-master
+  redis-port: {{ .Values.redis.master.service.nodePort | quote }}
   mongodb-host: {{ .Values.mongodb.fullnameOverride }}
+  mongodb-port: {{ .Values.mongodb.service.nodePort | quote }}

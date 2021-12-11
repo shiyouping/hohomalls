@@ -146,13 +146,25 @@ cd hohomalls/server
 The following environment variables have to be set before starting the applications:
 
 ```markdown
+# Required
 SPRING_PROFILES_ACTIVE = actual_value
+# Required
 SPRING_REDIS_HOST = actual_value
+# Optional. Default is 6379
+SPRING_REDIS_PORT = actual_value
+# Required
 SPRING_REDIS_PASSWORD = actual_value
+# Required
 SPRING_DATA_MONGODB_HOST = actual_value
+# Optional. Default is 27017
+SPRING_DATA_MONGODB_PORT = actual_value
+# Required
 SPRING_DATA_MONGODB_USERNAME = actual_value
+# Required
 SPRING_DATA_MONGODB_PASSWORD = actual_value
+# Required
 COM_HOHOMALLS_TOKEN_PUBLIC-KEY = actual_value
+# Required
 COM_HOHOMALLS_TOKEN_PRIVATE-KEY = actual_value
 ```
 

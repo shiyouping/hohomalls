@@ -35,6 +35,11 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.global.productName }}
                   key: redis-host
+            - name: SPRING_REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.productName }}
+                  key: redis-port
             - name: SPRING_REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -45,6 +50,11 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.global.productName }}
                   key: mongodb-host
+            - name: SPRING_DATA_MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.productName }}
+                  key: mongodb-port
             - name: SPRING_DATA_MONGODB_USERNAME
               valueFrom:
                 secretKeyRef:

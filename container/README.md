@@ -69,7 +69,7 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 - create a cluster and install hohomalls
 
   ```bash
-  cd /hohomalls/container/eks
+  cd hohomalls/container/eks
   eksctl create cluster -f cluster.yml
 
   cd hohomalls/container/helm
