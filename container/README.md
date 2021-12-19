@@ -35,9 +35,9 @@ Note that files in `k8s` directory are for the purpose of testing on the local m
 - minikube start --memory max --cpus max --nodes=3: Start minikube
 - eval $(minikube docker-env): Configure environment to use minikube’s Docker daemon
 - minikube image load hohomalls-app:1.0.0-SNAPSHOT: Load directly to in-cluster container runtime
-- minikube service --url hohomalls-mongo -n hohomalls-local &: Return the Kubernetes URL for a service in your local cluster
-- minikube service --url hohomalls-redis-master -n hohomalls-local &: Return the Kubernetes URL for a service in your local cluster
-- minikube service --url hohomalls-app -n hohomalls-local &: Return the Kubernetes URL for a service in your local cluster
+- minikube service --url hohomalls-mongo &: Return the Kubernetes URL for a service in your local cluster
+- minikube service --url hohomalls-redis-master &: Return the Kubernetes URL for a service in your local cluster
+- minikube service --url hohomalls-app &: Return the Kubernetes URL for a service in your local cluster
 
 ## Kubenetes
 
