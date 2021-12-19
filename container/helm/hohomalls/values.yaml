@@ -50,5 +50,5 @@ hohomalls:
   nodePort: 30200
   resources:
     limits:
-      memory: "512Mi"
+      memory: "1024Mi"
       cpu: "1024m"

@@ -8,6 +8,7 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
     runtimeOnly group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    runtimeOnly group: 'io.netty', name: 'netty-resolver-dns-native-macos', classifier: 'osx-aarch_64'
     testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
 }
 
