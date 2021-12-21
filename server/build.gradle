@@ -9,12 +9,13 @@ buildscript {
 
         // Dependency versions
         apacheValidatorVersion = '1.7'
-        graphqlDgsVersion = '4.9.11'
+        graphqlDgsVersion = '4.9.14'
         jetbrainsAnnotationVersion = '22.0.0'
         jjwtVersion = '0.11.2'
         mapstructVersion = '1.4.2.Final'
         nettyVersion = '4.1.71.Final'
         log4jVersion = '2.17.0'
+        springCloudVersion = '2021.0.0'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
@@ -87,6 +88,7 @@ subprojects {
             imports {
                 // Import dependency version numbers
                 mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+                mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
             }
 
             dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion

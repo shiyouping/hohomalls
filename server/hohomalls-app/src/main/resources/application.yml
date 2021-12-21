@@ -4,6 +4,8 @@ server:
   max-http-header-size: 64KB
 
 spring:
+  application:
+    name: hohomalls-app
   redis:
     host: hohomalls
     port: 6379

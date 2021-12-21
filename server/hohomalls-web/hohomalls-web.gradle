@@ -10,6 +10,7 @@ dependencies {
     api group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     api group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    api group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
 }
