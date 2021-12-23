@@ -2,8 +2,6 @@ type UserDto {
     email: ID!
     mobile: String
     nickname: String!
-    status: UserStatus!
-    token: String!
     addresses: [AddressDto!]
 }
 

@@ -16,7 +16,7 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.*
 
 /**
  * Customize the error response attributes returned to the client. The error attribute yml
- * configuration from Spring doesn't work any more.
+ * configuration from Spring doesn't work anymore.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 28/6/2021
@@ -74,24 +74,16 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
   }
 
   private HttpError.Type fromStatus(int status) {
-    switch (status) {
-      case 400:
-        return HttpError.Type.BAD_REQUEST;
-      case 412:
-        return HttpError.Type.FAILED_PRECONDITION;
-      case 500:
-        return HttpError.Type.INTERNAL;
-      case 404:
-        return HttpError.Type.NOT_FOUND;
-      case 401:
-        return HttpError.Type.PERMISSION_DENIED;
-      case 403:
-        return HttpError.Type.UNAUTHENTICATED;
-      case 503:
-        return HttpError.Type.UNAVAILABLE;
-      default:
-        return HttpError.Type.UNKNOWN;
-    }
+    return switch (status) {
+      case 400 -> HttpError.Type.BAD_REQUEST;
+      case 412 -> HttpError.Type.FAILED_PRECONDITION;
+      case 500 -> HttpError.Type.INTERNAL;
+      case 404 -> HttpError.Type.NOT_FOUND;
+      case 401 -> HttpError.Type.PERMISSION_DENIED;
+      case 403 -> HttpError.Type.UNAUTHENTICATED;
+      case 503 -> HttpError.Type.UNAVAILABLE;
+      default -> HttpError.Type.UNKNOWN;
+    };
   }
 
   private HttpError.Type fromThrowable(Throwable throwable) {

@@ -4,6 +4,7 @@ import com.hohomalls.app.document.User;
 import com.hohomalls.app.graphql.types.CreateUserDto;
 import com.hohomalls.app.graphql.types.CredentialsDto;
 import com.hohomalls.app.graphql.types.Role;
+import com.hohomalls.app.graphql.types.UserDto;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
 import com.hohomalls.web.aop.HasAnyRoles;
@@ -13,6 +14,7 @@ import com.hohomalls.web.util.AuthorityUtil;
 import com.hohomalls.web.util.HttpHeaderUtil;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
+import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -42,15 +44,25 @@ public class UserDataFetcher {
   private final SessionService sessionService;
   private final PasswordEncoder passwordEncoder;
 
+  @DgsQuery
+  @HasAnyRoles({ROLE_BUYER, ROLE_SELLER})
+  public Mono<UserDto> findUser(@RequestHeader String authorization) {
+    var token = HttpHeaderUtil.getAuth(authorization);
+    var email = tokenService.getEmail(token.get());
+    return userService
+        .findOneByEmail(email.get())
+        .flatMap(user -> Mono.justOrEmpty(userMapper.toDto(user)));
+  }
+
   @DgsMutation
   @HasAnyRoles(ROLE_ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsDto credentialsDto) {
-    return this.userService
+    return userService
         .findOneByEmail(credentialsDto.getEmail())
         .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid credentials")))
         .flatMap(
             user -> {
-              if (!this.passwordEncoder.matches(credentialsDto.getPassword(), user.getPassword())) {
+              if (!passwordEncoder.matches(credentialsDto.getPassword(), user.getPassword())) {
                 return Mono.error(new DgsBadRequestException("Invalid credentials"));
               }
 
@@ -62,11 +74,7 @@ public class UserDataFetcher {
   @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
   public Mono<Void> signOut(@RequestHeader String authorization) {
     var token = HttpHeaderUtil.getAuth(authorization);
-    if (token.isEmpty()) {
-      return Mono.error(new DgsBadRequestException("Invalid auth"));
-    }
-
-    return this.sessionService.delete(token.get()).then();
+    return sessionService.delete(token.get()).then();
   }
 
   @DgsMutation
@@ -78,14 +86,14 @@ public class UserDataFetcher {
       roles.add(Role.ROLE_BUYER);
     }
 
-    return this.userService.save(this.userMapper.toDoc(createUserDto)).flatMap(this::createSession);
+    return userService.save(userMapper.toDoc(createUserDto)).flatMap(this::createSession);
   }
 
   @NotNull
   private Mono<String> createSession(@NotNull User user) {
     checkNotNull(user, "user cannot be null");
 
-    var token = this.tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
+    var token = tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
     if (token.isEmpty()) {
       return Mono.error(new RuntimeException("Failed to generate JWT"));
     }
@@ -93,6 +101,6 @@ public class UserDataFetcher {
     Authentication authentication =
         new UsernamePasswordAuthenticationToken(
             user.getEmail(), token.get(), AuthorityUtil.getAuthorityList(user.getRoles()));
-    return this.sessionService.save(token.get(), authentication);
+    return sessionService.save(token.get(), authentication);
   }
 }

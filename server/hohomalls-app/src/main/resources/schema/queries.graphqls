@@ -1,3 +1,3 @@
 type Query {
-    findUser: UserDto!
+    findUser: UserDto
 }

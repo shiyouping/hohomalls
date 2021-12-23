@@ -47,8 +47,8 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
             Optional<String> email;
 
             try {
-              roles = this.tokenService.getRoles(token.get());
-              email = this.tokenService.getEmail(token.get());
+              roles = tokenService.getRoles(token.get());
+              email = tokenService.getEmail(token.get());
             } catch (Exception ex) {
               throw new BadCredentialsException("Invalid jwt token", ex);
             }

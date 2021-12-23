@@ -32,7 +32,7 @@ public class SessionServiceImpl implements SessionService {
       return Mono.just(false);
     }
 
-    return this.redisTemplate.delete(session).map(value -> value > 0);
+    return redisTemplate.delete(session).map(value -> value > 0);
   }
 
   @Override
@@ -41,7 +41,7 @@ public class SessionServiceImpl implements SessionService {
       return Mono.empty();
     }
 
-    return this.redisTemplate.opsForValue().get(session);
+    return redisTemplate.opsForValue().get(session);
   }
 
   @Override
@@ -50,7 +50,7 @@ public class SessionServiceImpl implements SessionService {
       return Mono.just(false);
     }
 
-    return this.redisTemplate.hasKey(session);
+    return redisTemplate.hasKey(session);
   }
 
   @Override
@@ -62,10 +62,10 @@ public class SessionServiceImpl implements SessionService {
 
     checkNotNull(authentication, "authentication cannot be null");
 
-    // Supports multilogin
-    return this.redisTemplate
+    // Supports multi-login
+    return redisTemplate
         .opsForValue()
-        .set(session, authentication, Duration.ofHours(this.tokenProperties.getLifespan()))
+        .set(session, authentication, Duration.ofHours(tokenProperties.getLifespan()))
         .map(value -> session);
   }
 }
