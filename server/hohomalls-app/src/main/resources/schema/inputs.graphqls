@@ -23,6 +23,11 @@ input CredentialsDto {
     password: String!
 }
 
+input ChangePasswordDto {
+    before: String!
+    after: String!
+}
+
 enum Role {
     ROLE_SELLER
     ROLE_BUYER

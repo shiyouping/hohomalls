@@ -1,10 +1,7 @@
 package com.hohomalls.app.datafetcher;
 
 import com.hohomalls.app.document.User;
-import com.hohomalls.app.graphql.types.CreateUserDto;
-import com.hohomalls.app.graphql.types.CredentialsDto;
-import com.hohomalls.app.graphql.types.Role;
-import com.hohomalls.app.graphql.types.UserDto;
+import com.hohomalls.app.graphql.types.*;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
 import com.hohomalls.web.aop.HasAnyRoles;
@@ -44,11 +41,31 @@ public class UserDataFetcher {
   private final SessionService sessionService;
   private final PasswordEncoder passwordEncoder;
 
+  @DgsMutation
+  @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
+  public Mono<Void> changePassword(
+      @RequestHeader String authorization,
+      @InputArgument("password") ChangePasswordDto changePasswordDto) {
+
+    if (changePasswordDto == null
+        || changePasswordDto.getBefore() == null
+        || changePasswordDto.getAfter() == null) {
+      return Mono.error(new DgsBadRequestException("Invalid password"));
+    }
+
+    if (changePasswordDto.getAfter().equals(changePasswordDto.getBefore())) {
+      return Mono.error(new DgsBadRequestException("Password doesn't change"));
+    }
+
+    var email = tokenService.getEmailFromAuth(authorization);
+    return userService.changePassword(
+        email.get(), changePasswordDto.getAfter(), changePasswordDto.getBefore());
+  }
+
   @DgsQuery
   @HasAnyRoles({ROLE_BUYER, ROLE_SELLER})
   public Mono<UserDto> findUser(@RequestHeader String authorization) {
-    var token = HttpHeaderUtil.getAuth(authorization);
-    var email = tokenService.getEmail(token.get());
+    var email = tokenService.getEmailFromJwt(authorization);
     return userService
         .findOneByEmail(email.get())
         .flatMap(user -> Mono.justOrEmpty(userMapper.toDto(user)));

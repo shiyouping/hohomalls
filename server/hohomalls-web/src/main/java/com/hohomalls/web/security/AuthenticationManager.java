@@ -27,7 +27,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
       return Mono.just(authentication);
     }
 
-    return this.sessionService
+    return sessionService
         .has(authentication.getCredentials().toString())
         .filter(hasSession -> hasSession)
         .switchIfEmpty(Mono.error(new BadCredentialsException("Session expired.")))

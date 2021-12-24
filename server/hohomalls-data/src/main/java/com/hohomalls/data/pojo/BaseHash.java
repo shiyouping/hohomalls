@@ -4,6 +4,7 @@ import com.hohomalls.core.pojo.BasePojo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,5 +16,5 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class BaseHash extends BasePojo implements Serializable {
-  private static final long serialVersionUID = 4251929247232799479L;
+  @Serial private static final long serialVersionUID = 4251929247232799479L;
 }

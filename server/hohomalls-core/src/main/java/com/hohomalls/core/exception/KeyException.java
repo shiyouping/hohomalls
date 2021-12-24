@@ -1,5 +1,7 @@
 package com.hohomalls.core.exception;
 
+import java.io.Serial;
+
 /**
  * The class of KeyException.
  *
@@ -7,7 +9,7 @@ package com.hohomalls.core.exception;
  * @since 14/8/2021
  */
 public class KeyException extends RuntimeException {
-  private static final long serialVersionUID = 5783930684555858723L;
+  @Serial private static final long serialVersionUID = 5783930684555858723L;
 
   public KeyException() {}
 

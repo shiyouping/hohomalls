@@ -20,10 +20,10 @@ class TokenServiceImplTest {
   public void testGetEmail() {
     var properties = getProperties();
     var service = new TokenServiceImpl(properties);
-    var email = service.getEmail(null);
+    var email = service.getEmailFromJwt(null);
     assertThat(email.isEmpty()).as("email is empty").isTrue();
 
-    email = service.getEmail(token);
+    email = service.getEmailFromJwt(token);
     assertThat(email.isPresent()).as("email is present").isTrue();
     assertThat(email.get()).as("email").isEqualTo("ricky@gmail.com");
   }

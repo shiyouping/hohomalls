@@ -2,6 +2,7 @@ package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
+import com.hohomalls.core.exception.InvalidInputException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +32,26 @@ public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
 
   @Override
+  public @NotNull Mono<Void> changePassword(
+      @NotNull String email, @NotNull String newPassword, @NotNull String oldPassword) {
+    log.info("Changing password for {}", email);
+    return findOneByEmail(email)
+        .switchIfEmpty(
+            Mono.error(new InvalidInputException(String.format("Invalid email %s", email))))
+        .flatMap(
+            user -> {
+              if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+                return Mono.error(
+                    new InvalidInputException(String.format("Invalid password %s", oldPassword)));
+              }
+
+              user.setPassword(newPassword);
+              return save(user);
+            })
+        .then();
+  }
+
+  @Override
   public @NotNull Flux<User> findAllByMobile(@Nullable String mobile) {
     log.info("Finding users by mobile={}", mobile);
 
@@ -38,7 +59,7 @@ public class UserServiceImpl implements UserService {
       return Flux.empty();
     }
 
-    return this.userRepository.findAll(Example.of(User.builder().mobile(mobile).build()));
+    return userRepository.findAll(Example.of(User.builder().mobile(mobile).build()));
   }
 
   @Override
@@ -49,7 +70,7 @@ public class UserServiceImpl implements UserService {
       return Mono.empty();
     }
 
-    return this.userRepository.findOne(Example.of(User.builder().email(email).build()));
+    return userRepository.findOne(Example.of(User.builder().email(email).build()));
   }
 
   @Override
@@ -60,7 +81,7 @@ public class UserServiceImpl implements UserService {
       return Mono.empty();
     }
 
-    return this.userRepository.findById(id);
+    return userRepository.findById(id);
   }
 
   @Override
@@ -71,7 +92,7 @@ public class UserServiceImpl implements UserService {
       return Mono.empty();
     }
 
-    return this.userRepository.findOne(Example.of(User.builder().nickname(nickname).build()));
+    return userRepository.findOne(Example.of(User.builder().nickname(nickname).build()));
   }
 
   @Override
@@ -86,8 +107,8 @@ public class UserServiceImpl implements UserService {
     user.setCreatedAt(now);
     user.setUpdatedAt(now);
     user.setStatus(ACTIVE);
-    user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    return this.userRepository.save(user);
+    return userRepository.save(user);
   }
 }

@@ -16,10 +16,13 @@ import java.util.Optional;
 public interface TokenService {
 
   @NotNull
-  Optional<String> getEmail(@Nullable String jws);
+  Optional<String> getEmailFromAuth(@Nullable String auth);
 
   @NotNull
-  List<Role> getRoles(@Nullable String jws);
+  Optional<String> getEmailFromJwt(@Nullable String jwt);
+
+  @NotNull
+  List<Role> getRoles(@Nullable String jwt);
 
   @NotNull
   Optional<String> getToken(

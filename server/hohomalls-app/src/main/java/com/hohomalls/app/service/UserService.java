@@ -15,6 +15,10 @@ import reactor.core.publisher.Mono;
 public interface UserService {
 
   @NotNull
+  Mono<Void> changePassword(
+      @NotNull String email, @NotNull String newPassword, @NotNull String oldPassword);
+
+  @NotNull
   Flux<User> findAllByMobile(@Nullable String mobile);
 
   @NotNull

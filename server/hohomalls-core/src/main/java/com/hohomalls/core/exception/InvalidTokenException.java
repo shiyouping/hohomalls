@@ -1,5 +1,7 @@
 package com.hohomalls.core.exception;
 
+import java.io.Serial;
+
 /**
  * The class of InvalidTokenException.
  *
@@ -7,11 +9,7 @@ package com.hohomalls.core.exception;
  * @since 3/6/2021
  */
 public class InvalidTokenException extends RuntimeException {
-  private static final long serialVersionUID = -8544042869950326470L;
-
-  public InvalidTokenException() {
-    super();
-  }
+  @Serial private static final long serialVersionUID = -8544042869950326470L;
 
   public InvalidTokenException(String message) {
     super(message);

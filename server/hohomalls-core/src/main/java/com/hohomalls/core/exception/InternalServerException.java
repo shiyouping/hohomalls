@@ -1,5 +1,7 @@
 package com.hohomalls.core.exception;
 
+import java.io.Serial;
+
 /**
  * The class of InternalServerException.
  *
@@ -7,11 +9,7 @@ package com.hohomalls.core.exception;
  * @since 29/7/2021
  */
 public class InternalServerException extends RuntimeException {
-  private static final long serialVersionUID = 557581850064263066L;
-
-  public InternalServerException() {
-    super();
-  }
+  @Serial private static final long serialVersionUID = 557581850064263066L;
 
   public InternalServerException(String message) {
     super(message);

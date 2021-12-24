@@ -51,7 +51,7 @@ public final class JwtUtil {
 
     var claims = Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(jws);
     if (claims == null) {
-      throw new InvalidTokenException();
+      throw new InvalidTokenException("No claims found");
     }
 
     var body = claims.getBody();

@@ -7,6 +7,7 @@ import com.hohomalls.core.util.JwtUtil;
 import com.hohomalls.core.util.KeyUtil;
 import com.hohomalls.web.common.Role;
 import com.hohomalls.web.property.TokenProperties;
+import com.hohomalls.web.util.HttpHeaderUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,18 @@ public class TokenServiceImpl implements TokenService {
   private final TokenProperties properties;
 
   @Override
-  public @NotNull Optional<String> getEmail(@Nullable String token) {
-    var claims = getJwsClaims(token);
+  public @NotNull Optional<String> getEmailFromAuth(@Nullable String auth) {
+    if (auth == null) {
+      return Optional.empty();
+    }
+
+    var token = HttpHeaderUtil.getAuth(auth);
+    return getEmailFromJwt(token.orElse(null));
+  }
+
+  @Override
+  public @NotNull Optional<String> getEmailFromJwt(@Nullable String jwt) {
+    var claims = getJwsClaims(jwt);
     if (claims.isEmpty()) {
       return Optional.empty();
     }
@@ -55,8 +66,8 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
-  public @NotNull List<Role> getRoles(@Nullable String token) {
-    var claims = getJwsClaims(token);
+  public @NotNull List<Role> getRoles(@Nullable String jwt) {
+    var claims = getJwsClaims(jwt);
     if (claims.isEmpty()) {
       return List.of();
     }
@@ -77,13 +88,13 @@ public class TokenServiceImpl implements TokenService {
     }
 
     if (privateKey == null) {
-      privateKey = KeyUtil.toPrivateKey(this.properties.getPrivateKey());
+      privateKey = KeyUtil.toPrivateKey(properties.getPrivateKey());
     }
 
     var roleList =
         Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
     var roleString = String.join(COMMA, roleList);
-    var expiration = Date.from(Instant.now().plus(this.properties.getLifespan(), ChronoUnit.HOURS));
+    var expiration = Date.from(Instant.now().plus(properties.getLifespan(), ChronoUnit.HOURS));
     Map<String, Object> claims =
         Map.of(Global.SUBJECT, SUBJECT, EMAIL, email, NICKNAME, nickname, ROLES, roleString);
     return Optional.of(JwtUtil.generate(privateKey, claims, expiration));
@@ -92,7 +103,7 @@ public class TokenServiceImpl implements TokenService {
   @Override
   public @NotNull Optional<String> getToken(
       @Nullable String email, @Nullable String nickname, @Nullable List<Role> roles) {
-    return this.getToken(email, nickname, ArrayUtil.fromList(roles));
+    return getToken(email, nickname, ArrayUtil.fromList(roles));
   }
 
   private Optional<Jws<Claims>> getJwsClaims(@Nullable String token) {
@@ -101,7 +112,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     if (publicKey == null) {
-      publicKey = KeyUtil.toPublicKey(this.properties.getPublicKey());
+      publicKey = KeyUtil.toPublicKey(properties.getPublicKey());
     }
 
     var claims = JwtUtil.parse(publicKey, token);
@@ -110,7 +121,7 @@ public class TokenServiceImpl implements TokenService {
       throw new InvalidTokenException("Invalid subject");
     }
 
-    var start = Date.from(Instant.now().minus(this.properties.getLifespan(), ChronoUnit.HOURS));
+    var start = Date.from(Instant.now().minus(properties.getLifespan(), ChronoUnit.HOURS));
     if (start.after(body.getExpiration())) {
       throw new InvalidTokenException("Token expired");
     }
