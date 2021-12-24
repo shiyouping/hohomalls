@@ -63,8 +63,8 @@ public class SecurityConfig {
         .disable()
         .authorizeExchange()
         .anyExchange()
-        .access(this.authorizationManager)
+        .access(authorizationManager)
         .and()
-        .addFilterAt(this.authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
+        .addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
   }
 }

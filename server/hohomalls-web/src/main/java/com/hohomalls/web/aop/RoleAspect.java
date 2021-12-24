@@ -95,7 +95,7 @@ public class RoleAspect {
     }
 
     var auth = getAuth(joinPoint.getArgs(), method);
-    if (!roles.stream().allMatch(role -> this.hasRole(auth, role))) {
+    if (!roles.stream().allMatch(role -> hasRole(auth, role))) {
       throw new AccessDeniedException("No authorization");
     }
   }
@@ -111,7 +111,7 @@ public class RoleAspect {
     }
 
     var auth = getAuth(joinPoint.getArgs(), method);
-    if (roles.stream().noneMatch(role -> this.hasRole(auth, role))) {
+    if (roles.stream().noneMatch(role -> hasRole(auth, role))) {
       throw new AccessDeniedException("No authorization");
     }
   }
@@ -119,7 +119,7 @@ public class RoleAspect {
   private Authentication getAuth(Object[] args, Method method) {
     try {
       var token = getAuthToken(args, method);
-      return this.sessionService.getAuthentication(token).toFuture().get();
+      return sessionService.getAuthentication(token).toFuture().get();
     } catch (InterruptedException | ExecutionException ex) {
       log.error("Failed to get session from the database");
       throw new InternalServerException(ex);

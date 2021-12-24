@@ -2,6 +2,7 @@ package com.hohomalls.web.scalar;
 
 import com.netflix.graphql.dgs.DgsScalar;
 import graphql.schema.Coercing;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The class of VoidScalar.
@@ -13,17 +14,19 @@ import graphql.schema.Coercing;
 public class VoidScalar implements Coercing<Void, Void> {
 
   @Override
-  public Void parseLiteral(Object input) {
+  @NotNull
+  public Void parseLiteral(@NotNull Object input) {
     return null;
   }
 
   @Override
-  public Void parseValue(Object input) {
+  @NotNull
+  public Void parseValue(@NotNull Object input) {
     return null;
   }
 
   @Override
-  public Void serialize(Object dataFetcherResult) {
+  public Void serialize(@NotNull Object dataFetcherResult) {
     return null;
   }
 }

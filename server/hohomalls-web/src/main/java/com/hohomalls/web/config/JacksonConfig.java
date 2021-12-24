@@ -24,7 +24,7 @@ public class JacksonConfig {
   @PostConstruct
   public void registerModule() {
     // Add UsernamePasswordAuthenticationTokenDeserializer
-    this.mapper.registerModule(new CoreJackson2Module());
+    mapper.registerModule(new CoreJackson2Module());
     log.info("CoreJackson2Module was registered");
   }
 }

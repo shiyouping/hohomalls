@@ -1,5 +1,6 @@
 package com.hohomalls.web.handler;
 
+import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.web.common.HttpError;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -28,7 +30,7 @@ import java.util.UUID;
  */
 @Slf4j
 @Component
-public class GraphqlExceptionHandler implements DataFetcherExceptionHandler {
+public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
 
   @Override
   public DataFetcherExceptionHandlerResult onException(
@@ -42,7 +44,8 @@ public class GraphqlExceptionHandler implements DataFetcherExceptionHandler {
     } else if (exception instanceof DgsEntityNotFoundException) {
       error = getGraphqlError(TypedGraphQLError.newNotFoundBuilder(), path, exception);
     } else if (exception instanceof DgsBadRequestException
-        || exception instanceof DgsInvalidInputArgumentException) {
+        || exception instanceof DgsInvalidInputArgumentException
+        || exception instanceof InvalidInputException) {
       error = getGraphqlError(TypedGraphQLError.newBadRequestBuilder(), path, exception);
     } else {
       error = getGraphqlError(TypedGraphQLError.newInternalErrorBuilder(), path, exception);
@@ -52,16 +55,21 @@ public class GraphqlExceptionHandler implements DataFetcherExceptionHandler {
   }
 
   private GraphQLError getGraphqlError(Builder builder, ResultPath path, Throwable exception) {
-    var errorId = UUID.randomUUID().toString();
+    var id = UUID.randomUUID().toString();
 
     if (log.isErrorEnabled()) {
       log.error(
           String.format(
               "Failed to execute data fetcher for %s: %s. ErrorId=%s",
-              path, exception.getMessage(), errorId),
+              path, exception.getMessage(), id),
           exception);
     }
 
-    return builder.message(errorId).path(path).origin(HttpError.Origin.WEB.name()).build();
+    return builder
+        .message(exception.getMessage())
+        .debugInfo(Map.of("exceptionId", id, "exceptionName", exception.getClass().getSimpleName()))
+        .path(path)
+        .origin(HttpError.Origin.WEB.name())
+        .build();
   }
 }
