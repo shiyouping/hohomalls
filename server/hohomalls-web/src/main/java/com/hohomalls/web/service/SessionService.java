@@ -13,6 +13,10 @@ import reactor.core.publisher.Mono;
  */
 public interface SessionService {
 
+  /** Clear all sessions associated with the given email. */
+  @NotNull
+  Mono<Boolean> clear(@Nullable String email);
+
   @NotNull
   Mono<Boolean> delete(@Nullable String session);
 

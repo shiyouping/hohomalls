@@ -8,9 +8,11 @@ import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.*;
 
@@ -28,6 +30,7 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
   private static final String KEY_ERRORS = "errors";
   private static final String KEY_ERROR = "error";
   private static final String KEY_STATUS = "status";
+  private static final String KEY_PATH = "path";
   private static final String ERROR_ATTRIBUTE =
       "org.springframework.boot.web.reactive.error.DefaultErrorAttributes.ERROR";
 
@@ -36,10 +39,16 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
       ServerRequest request, ErrorAttributeOptions options) {
 
     options.including(EXCEPTION, STACK_TRACE, MESSAGE, BINDING_ERRORS);
+
     var attributes = super.getErrorAttributes(request, options);
     var status = (Integer) attributes.get(KEY_STATUS);
     var error = (String) attributes.get(KEY_ERROR);
     var throwable = request.attribute(ERROR_ATTRIBUTE);
+    var locations = List.of((String) attributes.get(KEY_PATH));
+
+    Map<String, String> debugInfo = Maps.newHashMapWithExpectedSize(2);
+    debugInfo.put(HttpError.DEBUG_INFO_EXCEPTION_ID, UUID.randomUUID().toString());
+
     Map<String, Object> errorAttributes = Maps.newHashMap();
 
     if (throwable.isEmpty()) {
@@ -47,23 +56,30 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
           KEY_ERRORS,
           List.of(
               HttpError.builder()
+                  .message(error)
+                  .locations(locations)
                   .extensions(
                       HttpError.Extensions.builder()
                           .errorType(fromStatus(status))
-                          .errorDetail(error)
-                          .origin(HttpError.Origin.UNKNOWN)
+                          .origin(HttpError.Origin.APP)
+                          .debugInfo(debugInfo)
                           .build())
                   .build()));
     } else {
       var t = (Throwable) throwable.get();
+      debugInfo.put(HttpError.DEBUG_INFO_EXCEPTION_NAME, t.getClass().getSimpleName());
+
       errorAttributes.put(
           KEY_ERRORS,
           List.of(
               HttpError.builder()
+                  .message(t.getMessage())
+                  .locations(locations)
                   .extensions(
                       HttpError.Extensions.builder()
                           .errorType(fromThrowable(t))
-                          .errorDetail(t.getMessage())
+                          .origin(HttpError.Origin.APP)
+                          .debugInfo(debugInfo)
                           .build())
                   .build()));
     }
@@ -90,6 +106,10 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
     // TODO supplement more here
     if (throwable instanceof AuthenticationException) {
       return HttpError.Type.UNAUTHENTICATED;
+    }
+
+    if (throwable instanceof ResponseStatusException) {
+      return HttpError.Type.NOT_FOUND;
     }
 
     return HttpError.Type.INTERNAL;

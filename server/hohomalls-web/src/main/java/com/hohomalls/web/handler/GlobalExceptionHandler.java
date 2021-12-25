@@ -65,9 +65,15 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
           exception);
     }
 
+    // The data structure should be consistent with HttpError
     return builder
         .message(exception.getMessage())
-        .debugInfo(Map.of("exceptionId", id, "exceptionName", exception.getClass().getSimpleName()))
+        .debugInfo(
+            Map.of(
+                HttpError.DEBUG_INFO_EXCEPTION_ID,
+                id,
+                HttpError.DEBUG_INFO_EXCEPTION_NAME,
+                exception.getClass().getSimpleName()))
         .path(path)
         .origin(HttpError.Origin.WEB.name())
         .build();

@@ -4,6 +4,7 @@ import com.hohomalls.app.document.User;
 import com.hohomalls.app.graphql.types.*;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
+import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.web.aop.HasAnyRoles;
 import com.hohomalls.web.service.SessionService;
 import com.hohomalls.web.service.TokenService;
@@ -15,6 +16,7 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,13 +48,6 @@ public class UserDataFetcher {
   public Mono<Void> changePassword(
       @RequestHeader String authorization,
       @InputArgument("password") ChangePasswordDto changePasswordDto) {
-
-    if (changePasswordDto == null
-        || changePasswordDto.getBefore() == null
-        || changePasswordDto.getAfter() == null) {
-      return Mono.error(new DgsBadRequestException("Invalid password"));
-    }
-
     if (changePasswordDto.getAfter().equals(changePasswordDto.getBefore())) {
       return Mono.error(new DgsBadRequestException("Password doesn't change"));
     }
@@ -94,6 +89,7 @@ public class UserDataFetcher {
     return sessionService.delete(token.get()).then();
   }
 
+  @SneakyThrows
   @DgsMutation
   @HasAnyRoles(ROLE_ANONYMOUS)
   public Mono<String> signUp(@InputArgument("user") CreateUserDto createUserDto) {
@@ -101,6 +97,12 @@ public class UserDataFetcher {
     if (!roles.contains(Role.ROLE_BUYER)) {
       // Every new user has the buyer role
       roles.add(Role.ROLE_BUYER);
+    }
+
+    if (userService.findOneByEmail(createUserDto.getEmail()).toFuture().get() != null) {
+      return Mono.error(
+          new InvalidInputException(
+              String.format("Email %s was already registered", createUserDto.getEmail())));
     }
 
     return userService.save(userMapper.toDoc(createUserDto)).flatMap(this::createSession);

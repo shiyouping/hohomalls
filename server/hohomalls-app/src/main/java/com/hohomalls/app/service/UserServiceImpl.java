@@ -3,6 +3,7 @@ package com.hohomalls.app.service;
 import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
 import com.hohomalls.core.exception.InvalidInputException;
+import com.hohomalls.web.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final SessionService sessionService;
 
   @Override
   public @NotNull Mono<Void> changePassword(
@@ -46,7 +48,8 @@ public class UserServiceImpl implements UserService {
               }
 
               user.setPassword(newPassword);
-              return save(user);
+              // Require users to login again after password change
+              return save(user).then(sessionService.clear(email));
             })
         .then();
   }

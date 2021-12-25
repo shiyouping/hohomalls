@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.Map;
 
 /**
- * This class is defined this way just to align with GraphQLError, so that all the error responses
- * have a unified data structure.
+ * This class is defined this way just to align with {@link graphql.GraphQLError}, so that all the
+ * error responses have a unified data structure.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 21/7/2021
@@ -17,8 +18,12 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class HttpError {
+  public static final String DEBUG_INFO_EXCEPTION_ID = "exceptionId";
+  public static final String DEBUG_INFO_EXCEPTION_NAME = "exceptionName";
 
-  private final String message = UUID.randomUUID().toString();
+  private String message;
+  private List<String> path;
+  private List<String> locations;
   private Extensions extensions;
 
   public enum Type {
@@ -45,7 +50,7 @@ public class HttpError {
   @AllArgsConstructor
   public static class Extensions {
     private Type errorType;
-    private String errorDetail;
     private Origin origin;
+    private Map<String, String> debugInfo;
   }
 }

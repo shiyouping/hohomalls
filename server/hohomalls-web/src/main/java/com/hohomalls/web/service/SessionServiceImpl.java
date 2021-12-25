@@ -27,6 +27,25 @@ public class SessionServiceImpl implements SessionService {
   private final ReactiveRedisTemplate<String, Authentication> redisTemplate;
 
   @Override
+  public @NotNull Mono<Boolean> clear(@Nullable String email) {
+    if (email == null) {
+      return Mono.just(false);
+    }
+
+    return redisTemplate
+        .scan()
+        .flatMap(key -> redisTemplate.opsForValue().get(key))
+        .flatMap(
+            auth -> {
+              if (email.equals(auth.getPrincipal())) {
+                return redisTemplate.opsForValue().delete((String) auth.getCredentials());
+              }
+              return Mono.empty();
+            })
+        .then(Mono.just(true));
+  }
+
+  @Override
   public @NotNull Mono<Boolean> delete(@Nullable String session) {
     if (session == null) {
       return Mono.just(false);
