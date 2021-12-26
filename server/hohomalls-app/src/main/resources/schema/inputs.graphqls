@@ -28,6 +28,14 @@ input ChangePasswordDto {
     after: String!
 }
 
+input UpdateUserDto {
+    # A unique nickname
+    nickname: String!
+    roles: [Role]!
+    mobile: String
+    addresses: [CreateAddressDto!]
+}
+
 enum Role {
     ROLE_SELLER
     ROLE_BUYER

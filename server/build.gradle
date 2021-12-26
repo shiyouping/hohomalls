@@ -8,15 +8,17 @@ buildscript {
         defaultEncoding = 'UTF-8'
 
         // Dependency versions
+        apacheCommonsVersion = '1.9.4'
         apacheValidatorVersion = '1.7'
         graphqlDgsVersion = '4.9.14'
         jetbrainsAnnotationVersion = '22.0.0'
         jjwtVersion = '0.11.2'
+        libphonenumberVersion = '8.12.40'
+        log4jVersion = '2.17.0'
         mapstructVersion = '1.4.2.Final'
         nettyVersion = '4.1.71.Final'
-        log4jVersion = '2.17.0'
-        springCloudVersion = '2021.0.0'
         passayVersion = '1.6.1'
+        springCloudVersion = '2021.0.0'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
@@ -92,10 +94,12 @@ subprojects {
                 mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
             }
 
-            dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
-            dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
+            dependency group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: libphonenumberVersion
             dependency group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-platform-dependencies', version: graphqlDgsVersion
+            dependency group: 'commons-beanutils', name: 'commons-beanutils', version: apacheCommonsVersion
+            dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
             dependency group: 'io.netty', name: 'netty-resolver-dns-native-macos', version: nettyVersion, classifier: 'osx-aarch_64'
+            dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'org.passay', name: 'passay', version: passayVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {

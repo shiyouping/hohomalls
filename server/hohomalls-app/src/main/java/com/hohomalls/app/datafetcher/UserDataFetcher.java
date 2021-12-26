@@ -4,7 +4,7 @@ import com.hohomalls.app.document.User;
 import com.hohomalls.app.graphql.types.*;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
-import com.hohomalls.core.exception.InvalidInputException;
+import com.hohomalls.core.util.BeanUtil;
 import com.hohomalls.web.aop.HasAnyRoles;
 import com.hohomalls.web.service.SessionService;
 import com.hohomalls.web.service.TokenService;
@@ -52,33 +52,33 @@ public class UserDataFetcher {
       return Mono.error(new DgsBadRequestException("Password doesn't change"));
     }
 
-    var email = tokenService.getEmailFromAuth(authorization);
-    return userService.changePassword(
+    var email = this.tokenService.getEmailFromAuth(authorization);
+    return this.userService.changePassword(
         email.get(), changePasswordDto.getAfter(), changePasswordDto.getBefore());
   }
 
   @DgsQuery
   @HasAnyRoles({ROLE_BUYER, ROLE_SELLER})
   public Mono<UserDto> findUser(@RequestHeader String authorization) {
-    var email = tokenService.getEmailFromAuth(authorization);
-    return userService
+    var email = this.tokenService.getEmailFromAuth(authorization);
+    return this.userService
         .findOneByEmail(email.get())
-        .flatMap(user -> Mono.justOrEmpty(userMapper.toDto(user)));
+        .flatMap(user -> Mono.justOrEmpty(this.userMapper.toDto(user)));
   }
 
   @DgsMutation
   @HasAnyRoles(ROLE_ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsDto credentialsDto) {
-    return userService
+    return this.userService
         .findOneByEmail(credentialsDto.getEmail())
         .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid credentials")))
         .flatMap(
             user -> {
-              if (!passwordEncoder.matches(credentialsDto.getPassword(), user.getPassword())) {
+              if (!this.passwordEncoder.matches(credentialsDto.getPassword(), user.getPassword())) {
                 return Mono.error(new DgsBadRequestException("Invalid credentials"));
               }
 
-              return createSession(user);
+              return this.createSession(user);
             });
   }
 
@@ -86,7 +86,7 @@ public class UserDataFetcher {
   @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
   public Mono<Void> signOut(@RequestHeader String authorization) {
     var token = HttpHeaderUtil.getAuth(authorization);
-    return sessionService.delete(token.get()).then();
+    return this.sessionService.delete(token.get()).then();
   }
 
   @SneakyThrows
@@ -99,20 +99,35 @@ public class UserDataFetcher {
       roles.add(Role.ROLE_BUYER);
     }
 
-    if (userService.findOneByEmail(createUserDto.getEmail()).toFuture().get() != null) {
+    if (this.userService.findOneByEmail(createUserDto.getEmail()).toFuture().get() != null) {
       return Mono.error(
-          new InvalidInputException(
+          new DgsBadRequestException(
               String.format("Email %s was already registered", createUserDto.getEmail())));
     }
 
-    return userService.save(userMapper.toDoc(createUserDto)).flatMap(this::createSession);
+    return this.userService.save(this.userMapper.toDoc(createUserDto)).flatMap(this::createSession);
+  }
+
+  @DgsMutation
+  @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
+  public Mono<UserDto> updateUser(
+      @RequestHeader String authorization, @InputArgument("user") UpdateUserDto updateUserDto) {
+    var email = this.tokenService.getEmailFromAuth(authorization);
+    return this.userService
+        .findOneByEmail(email.get())
+        .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid credentials")))
+        .flatMap(
+            user -> {
+              BeanUtil.copyNonnullProperties(user, this.userMapper.toDoc(updateUserDto));
+              return this.userService.save(user).map(this.userMapper::toDto);
+            });
   }
 
   @NotNull
   private Mono<String> createSession(@NotNull User user) {
     checkNotNull(user, "user cannot be null");
 
-    var token = tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
+    var token = this.tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
     if (token.isEmpty()) {
       return Mono.error(new RuntimeException("Failed to generate JWT"));
     }
@@ -120,6 +135,6 @@ public class UserDataFetcher {
     Authentication authentication =
         new UsernamePasswordAuthenticationToken(
             user.getEmail(), token.get(), AuthorityUtil.getAuthorityList(user.getRoles()));
-    return sessionService.save(token.get(), authentication);
+    return this.sessionService.save(token.get(), authentication);
   }
 }

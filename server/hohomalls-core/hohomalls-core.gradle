@@ -3,9 +3,11 @@ plugins {
 }
 
 dependencies {
+    api group: 'commons-beanutils', name: 'commons-beanutils'
     api group: 'io.jsonwebtoken', name: 'jjwt-api'
-    api group: 'io.projectreactor', name: 'reactor-core'
     api group: 'org.passay', name: 'passay'
+    api group: 'io.projectreactor', name: 'reactor-core'
+    api group: 'com.googlecode.libphonenumber', name: 'libphonenumber'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
 }

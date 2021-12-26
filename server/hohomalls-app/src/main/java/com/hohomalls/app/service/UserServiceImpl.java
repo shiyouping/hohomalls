@@ -4,6 +4,7 @@ import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
 import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.core.util.PasswordUtil;
+import com.hohomalls.core.util.PhoneUtil;
 import com.hohomalls.web.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,71 +39,71 @@ public class UserServiceImpl implements UserService {
   @Override
   public @NotNull Mono<Void> changePassword(
       @NotNull String email, @NotNull String newPassword, @NotNull String oldPassword) {
-    log.info("Changing password for {}", email);
-    return findOneByEmail(email)
+    UserServiceImpl.log.info("Changing password for {}", email);
+    return this.findOneByEmail(email)
         .switchIfEmpty(
             Mono.error(new InvalidInputException(String.format("Invalid email %s", email))))
         .flatMap(
             user -> {
-              if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+              if (!this.passwordEncoder.matches(oldPassword, user.getPassword())) {
                 return Mono.error(
                     new InvalidInputException(String.format("Invalid password %s", oldPassword)));
               }
 
               user.setPassword(newPassword);
               // Require users to login again after password change
-              return save(user).then(sessionService.clear(email));
+              return this.save(user).then(this.sessionService.clear(email));
             })
         .then();
   }
 
   @Override
   public @NotNull Flux<User> findAllByMobile(@Nullable String mobile) {
-    log.info("Finding users by mobile={}", mobile);
+    UserServiceImpl.log.info("Finding users by mobile={}", mobile);
 
     if (mobile == null) {
       return Flux.empty();
     }
 
-    return userRepository.findAll(Example.of(User.builder().mobile(mobile).build()));
+    return this.userRepository.findAll(Example.of(User.builder().mobile(mobile).build()));
   }
 
   @Override
   public @NotNull Mono<User> findOneByEmail(@Nullable String email) {
-    log.info("Finding a user by email={}", email);
+    UserServiceImpl.log.info("Finding a user by email={}", email);
 
     if (email == null) {
       return Mono.empty();
     }
 
-    return userRepository.findOne(Example.of(User.builder().email(email).build()));
+    return this.userRepository.findOne(Example.of(User.builder().email(email).build()));
   }
 
   @Override
   public @NotNull Mono<User> findOneById(@Nullable String id) {
-    log.info("Finding a user by id={}", id);
+    UserServiceImpl.log.info("Finding a user by id={}", id);
 
     if (id == null) {
       return Mono.empty();
     }
 
-    return userRepository.findById(id);
+    return this.userRepository.findById(id);
   }
 
   @Override
   public @NotNull Mono<User> findOneByNickname(@Nullable String nickname) {
-    log.info("Finding a user by nickname={}", nickname);
+    UserServiceImpl.log.info("Finding a user by nickname={}", nickname);
 
     if (nickname == null) {
       return Mono.empty();
     }
 
-    return userRepository.findOne(Example.of(User.builder().nickname(nickname).build()));
+    return this.userRepository.findOne(Example.of(User.builder().nickname(nickname).build()));
   }
 
   @Override
   public @NotNull Mono<User> save(@NotNull User user) {
-    log.info("Saving a user={}", user);
+    UserServiceImpl.log.info("Saving a user={}", user);
 
     if (user == null) {
       return Mono.error(new InvalidInputException("user is null"));
@@ -112,16 +113,27 @@ public class UserServiceImpl implements UserService {
       return Mono.error(new InvalidInputException("Invalid email"));
     }
 
-    if (!PasswordUtil.isValid(user.getPassword())) {
-      return Mono.error(new InvalidInputException("Invalid password"));
+    if (user.getMobile() != null && !PhoneUtil.isValid(user.getMobile())) {
+      return Mono.error(new InvalidInputException("Invalid phone number"));
+    }
+
+    if (!PasswordUtil.isEncoded(user.getPassword())) {
+      if (!PasswordUtil.isValid(user.getPassword())) {
+        return Mono.error(new InvalidInputException("Invalid password"));
+      }
+
+      user.setPassword(this.passwordEncoder.encode(user.getPassword()));
     }
 
     Instant now = Instant.now();
-    user.setCreatedAt(now);
+
+    if (user.getCreatedAt() == null) {
+      user.setCreatedAt(now);
+    }
+
     user.setUpdatedAt(now);
     user.setStatus(ACTIVE);
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    return userRepository.save(user);
+    return this.userRepository.save(user);
   }
 }
