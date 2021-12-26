@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api group: 'io.jsonwebtoken', name: 'jjwt-api'
     api group: 'io.projectreactor', name: 'reactor-core'
+    api group: 'org.passay', name: 'passay'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
     testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
 }

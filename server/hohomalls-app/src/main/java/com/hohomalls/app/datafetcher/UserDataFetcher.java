@@ -60,7 +60,7 @@ public class UserDataFetcher {
   @DgsQuery
   @HasAnyRoles({ROLE_BUYER, ROLE_SELLER})
   public Mono<UserDto> findUser(@RequestHeader String authorization) {
-    var email = tokenService.getEmailFromJwt(authorization);
+    var email = tokenService.getEmailFromAuth(authorization);
     return userService
         .findOneByEmail(email.get())
         .flatMap(user -> Mono.justOrEmpty(userMapper.toDto(user)));

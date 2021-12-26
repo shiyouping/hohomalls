@@ -16,6 +16,7 @@ buildscript {
         nettyVersion = '4.1.71.Final'
         log4jVersion = '2.17.0'
         springCloudVersion = '2021.0.0'
+        passayVersion = '1.6.1'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
@@ -95,6 +96,7 @@ subprojects {
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
             dependency group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-platform-dependencies', version: graphqlDgsVersion
             dependency group: 'io.netty', name: 'netty-resolver-dns-native-macos', version: nettyVersion, classifier: 'osx-aarch_64'
+            dependency group: 'org.passay', name: 'passay', version: passayVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'
@@ -121,10 +123,8 @@ subprojects {
     }
 
     compileJava {
-        options.compilerArgs += [
-                '-Amapstruct.defaultComponentModel=spring',
-                '-Amapstruct.defaultInjectionStrategy=constructor'
-        ]
+        options.compilerArgs += ['-Amapstruct.defaultComponentModel=spring',
+                                 '-Amapstruct.defaultInjectionStrategy=constructor']
     }
 
     test {

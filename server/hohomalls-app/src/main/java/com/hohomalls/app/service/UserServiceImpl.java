@@ -3,9 +3,11 @@ package com.hohomalls.app.service;
 import com.hohomalls.app.document.User;
 import com.hohomalls.app.repository.UserRepository;
 import com.hohomalls.core.exception.InvalidInputException;
+import com.hohomalls.core.util.PasswordUtil;
 import com.hohomalls.web.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Example;
@@ -103,7 +105,15 @@ public class UserServiceImpl implements UserService {
     log.info("Saving a user={}", user);
 
     if (user == null) {
-      return Mono.error(new IllegalArgumentException("user is null"));
+      return Mono.error(new InvalidInputException("user is null"));
+    }
+
+    if (!EmailValidator.getInstance().isValid(user.getEmail())) {
+      return Mono.error(new InvalidInputException("Invalid email"));
+    }
+
+    if (!PasswordUtil.isValid(user.getPassword())) {
+      return Mono.error(new InvalidInputException("Invalid password"));
     }
 
     Instant now = Instant.now();

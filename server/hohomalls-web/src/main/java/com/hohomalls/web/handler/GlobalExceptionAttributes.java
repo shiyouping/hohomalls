@@ -5,6 +5,7 @@ import com.hohomalls.web.common.HttpError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -104,6 +105,10 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
 
   private HttpError.Type fromThrowable(Throwable throwable) {
     // TODO supplement more here
+    if (throwable instanceof BadCredentialsException) {
+      return HttpError.Type.UNAUTHENTICATED;
+    }
+
     if (throwable instanceof AuthenticationException) {
       return HttpError.Type.UNAUTHENTICATED;
     }
