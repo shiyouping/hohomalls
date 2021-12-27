@@ -1,8 +1,11 @@
 package com.hohomalls.app.document;
 
+import com.hohomalls.core.pojo.Address;
 import com.hohomalls.data.pojo.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
 
 /**
  * Order.
@@ -16,4 +19,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Order extends BaseDoc {}
+public class Order extends BaseDoc {
+
+  private String number;
+  private LocalDate placedOn;
+  private String itemId;
+  private Integer quantity;
+  private Address shippingAddress;
+  private OrderStatus status;
+
+  public enum OrderStatus {
+    PLACED,
+    PAID,
+    SHIPPED,
+    DELIVERED
+  }
+}

@@ -1,5 +1,6 @@
 package com.hohomalls.app.document;
 
+import com.hohomalls.core.pojo.Address;
 import com.hohomalls.data.pojo.BaseDoc;
 import com.hohomalls.web.common.Role;
 import lombok.*;
@@ -39,21 +40,12 @@ public class User extends BaseDoc {
   /** A hashed password. */
   private String password;
 
+  private Float rating;
+
   /** The user status. */
   public enum UserStatus {
     ACTIVE,
     INACTIVE,
     TERMINATED
-  }
-
-  /** The embedded pojo. */
-  @Data
-  public static class Address {
-    private String postCode;
-    private String country;
-    private String city;
-    private String street;
-    private String contact;
-    private String addressee;
   }
 }
