@@ -1,6 +1,6 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.web.common.Role;
+import com.hohomalls.core.enumeration.Role;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

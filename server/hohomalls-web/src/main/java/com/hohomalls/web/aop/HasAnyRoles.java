@@ -1,6 +1,6 @@
 package com.hohomalls.web.aop;
 
-import com.hohomalls.web.common.Role;
+import com.hohomalls.core.enumeration.Role;
 
 import java.lang.annotation.*;
 

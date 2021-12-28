@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import static com.hohomalls.web.common.Role.ROLE_BUYER;
-import static com.hohomalls.web.common.Role.ROLE_SELLER;
+import static com.hohomalls.core.enumeration.Role.ROLE_BUYER;
+import static com.hohomalls.core.enumeration.Role.ROLE_SELLER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(OrderAnnotation.class)

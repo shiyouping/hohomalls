@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import reactor.core.publisher.Mono;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.hohomalls.web.common.Role.*;
+import static com.hohomalls.core.enumeration.Role.*;
 
 /**
  * The class of UserDataFetcher.

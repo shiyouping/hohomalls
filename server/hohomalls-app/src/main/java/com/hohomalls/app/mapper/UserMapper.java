@@ -16,9 +16,11 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface UserMapper {
 
+  @Mapping(target = "rating", ignore = true)
   @Mapping(target = "status", constant = "ACTIVE")
   User toDoc(CreateUserDto createUserDto);
 
+  @Mapping(target = "rating", ignore = true)
   @Mapping(target = "status", ignore = true)
   @Mapping(target = "password", ignore = true)
   @Mapping(target = "email", ignore = true)

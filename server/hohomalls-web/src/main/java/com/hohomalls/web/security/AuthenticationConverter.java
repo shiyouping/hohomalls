@@ -1,6 +1,6 @@
 package com.hohomalls.web.security;
 
-import com.hohomalls.web.common.Role;
+import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.web.service.TokenService;
 import com.hohomalls.web.util.AuthorityUtil;
 import com.hohomalls.web.util.HttpHeaderUtil;

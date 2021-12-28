@@ -1,4 +1,4 @@
-package com.hohomalls.web.common;
+package com.hohomalls.core.enumeration;
 
 /**
  * The interface of Role.

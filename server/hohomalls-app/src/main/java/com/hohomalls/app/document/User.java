@@ -1,8 +1,8 @@
 package com.hohomalls.app.document;
 
+import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.core.pojo.Address;
 import com.hohomalls.data.pojo.BaseDoc;
-import com.hohomalls.web.common.Role;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

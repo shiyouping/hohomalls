@@ -1,8 +1,8 @@
 package com.hohomalls.web.aop;
 
+import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.core.exception.InternalServerException;
 import com.hohomalls.core.util.ArrayUtil;
-import com.hohomalls.web.common.Role;
 import com.hohomalls.web.service.SessionService;
 import com.hohomalls.web.util.HttpHeaderUtil;
 import com.netflix.graphql.dgs.exceptions.InvalidDgsConfigurationException;
@@ -81,11 +81,11 @@ public class RoleAspect {
     }
 
     if (hasAnyRoles != null) {
-      checkHasAnyRoles(joinPoint, method, hasAnyRoles);
+      this.checkHasAnyRoles(joinPoint, method, hasAnyRoles);
       return;
     }
 
-    checkHasAllRoles(joinPoint, method, Objects.requireNonNull(hasAllRoles));
+    this.checkHasAllRoles(joinPoint, method, Objects.requireNonNull(hasAllRoles));
   }
 
   private void checkHasAllRoles(JoinPoint joinPoint, Method method, HasAllRoles hasAllRoles) {
@@ -94,8 +94,8 @@ public class RoleAspect {
       throw new InvalidDgsConfigurationException("No roles found in hasAllRoles annotation");
     }
 
-    var auth = getAuth(joinPoint.getArgs(), method);
-    if (!roles.stream().allMatch(role -> hasRole(auth, role))) {
+    var auth = this.getAuth(joinPoint.getArgs(), method);
+    if (!roles.stream().allMatch(role -> this.hasRole(auth, role))) {
       throw new AccessDeniedException("No authorization");
     }
   }
@@ -110,18 +110,18 @@ public class RoleAspect {
       return;
     }
 
-    var auth = getAuth(joinPoint.getArgs(), method);
-    if (roles.stream().noneMatch(role -> hasRole(auth, role))) {
+    var auth = this.getAuth(joinPoint.getArgs(), method);
+    if (roles.stream().noneMatch(role -> this.hasRole(auth, role))) {
       throw new AccessDeniedException("No authorization");
     }
   }
 
   private Authentication getAuth(Object[] args, Method method) {
     try {
-      var token = getAuthToken(args, method);
-      return sessionService.getAuthentication(token).toFuture().get();
+      var token = this.getAuthToken(args, method);
+      return this.sessionService.getAuthentication(token).toFuture().get();
     } catch (InterruptedException | ExecutionException ex) {
-      log.error("Failed to get session from the database");
+      RoleAspect.log.error("Failed to get session from the database");
       throw new InternalServerException(ex);
     }
   }
