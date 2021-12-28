@@ -4,6 +4,8 @@ import com.hohomalls.core.pojo.BasePojo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.Instant;
+
 /**
  * The parent class of all data documents.
  *
@@ -12,4 +14,8 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class BaseDoc extends BasePojo {}
+public class BaseDoc extends BasePojo {
+  private String id;
+  private Instant createdAt;
+  private Instant updatedAt;
+}

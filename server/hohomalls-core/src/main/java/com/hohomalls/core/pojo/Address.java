@@ -1,9 +1,6 @@
 package com.hohomalls.core.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * Address.
@@ -15,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Address {
+@EqualsAndHashCode(callSuper = true)
+public final class Address extends BasePojo {
 
   private String postCode;
   private String country;

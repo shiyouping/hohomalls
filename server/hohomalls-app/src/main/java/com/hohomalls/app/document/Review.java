@@ -21,6 +21,7 @@ public class Review extends BaseDoc {
   private String buyerId;
   private String itemId;
   private String shopId;
+  private String orderId;
   private Integer rating;
   private String description;
 }
