@@ -25,6 +25,13 @@ buildscript {
         lombokPluginVersion = '6.0.0-m2'
         springBootPluginVersion = '2.6.1'
         dgsCodegenPluginVersion = '5.1.11'
+        liquibasePluginVersion = '2.1.1'
+
+        // Other tool versions
+        picocliVersion = '4.6.2'
+        mongoDriverVersion = '3.12.10'
+        liquibaseCoreVersion = '4.6.2'
+        liquibaseGroovyDslVersion = '3.0.2'
 
         // The Checkstyle IDE plugin should support the version defined here
         checkstyleToolVersion = '8.44'
@@ -51,6 +58,7 @@ buildscript {
         classpath "io.freefair.gradle:lombok-plugin:$lombokPluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
         classpath "com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:$dgsCodegenPluginVersion"
+        classpath "org.liquibase:liquibase-gradle-plugin:$liquibasePluginVersion"
     }
 }
 
@@ -98,9 +106,13 @@ subprojects {
             dependency group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-platform-dependencies', version: graphqlDgsVersion
             dependency group: 'commons-beanutils', name: 'commons-beanutils', version: apacheCommonsVersion
             dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
+            dependency group: 'info.picocli', name: 'picocli', version: picocliVersion
             dependency group: 'io.netty', name: 'netty-resolver-dns-native-macos', version: nettyVersion, classifier: 'osx-aarch_64'
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
+            dependency group: 'org.liquibase', name: 'liquibase-core', version: liquibaseCoreVersion
+            dependency group: 'org.liquibase', name: 'liquibase-groovy-dsl', version: liquibaseGroovyDslVersion
             dependency group: 'org.passay', name: 'passay', version: passayVersion
+            dependency group: 'org.mongodb', name: 'mongo-java-driver', version: mongoDriverVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'

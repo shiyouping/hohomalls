@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot'
     id 'com.netflix.dgs.codegen'
+    id 'org.liquibase.gradle'
 }
 
 dependencies {
@@ -9,6 +10,10 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
     runtimeOnly group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     runtimeOnly group: 'io.netty', name: 'netty-resolver-dns-native-macos', classifier: 'osx-aarch_64'
+    liquibaseRuntime group: 'info.picocli', name: 'picocli'
+    liquibaseRuntime group: 'org.liquibase', name: 'liquibase-core'
+    liquibaseRuntime group: 'org.liquibase', name: 'liquibase-groovy-dsl'
+    liquibaseRuntime group: 'org.mongodb', name: 'mongo-java-driver'
     testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
 }
 
