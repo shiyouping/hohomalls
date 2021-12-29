@@ -1,0 +1,8 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation group: 'io.mongock', name: 'mongock-springboot'
+    implementation group: 'io.mongock', name: 'mongodb-springdata-v3-driver'
+}

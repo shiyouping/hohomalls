@@ -19,20 +19,15 @@ buildscript {
         nettyVersion = '4.1.71.Final'
         passayVersion = '1.6.1'
         springCloudVersion = '2021.0.0'
+        mongockVersion = '5.0.34'
 
         // Plugin versions
         dependencyManagementPluginVersion = '1.0.11.RELEASE'
         lombokPluginVersion = '6.0.0-m2'
         springBootPluginVersion = '2.6.1'
         dgsCodegenPluginVersion = '5.1.11'
-        liquibasePluginVersion = '2.1.1'
 
         // Other tool versions
-        picocliVersion = '4.6.2'
-        mongoDriverVersion = '3.12.10'
-        liquibaseCoreVersion = '4.6.2'
-        liquibaseGroovyDslVersion = '3.0.2'
-
         // The Checkstyle IDE plugin should support the version defined here
         checkstyleToolVersion = '8.44'
         // The PMD IDE plugin should support the version defined here
@@ -58,7 +53,6 @@ buildscript {
         classpath "io.freefair.gradle:lombok-plugin:$lombokPluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
         classpath "com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:$dgsCodegenPluginVersion"
-        classpath "org.liquibase:liquibase-gradle-plugin:$liquibasePluginVersion"
     }
 }
 
@@ -100,19 +94,16 @@ subprojects {
                 // Import dependency version numbers
                 mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
                 mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+                mavenBom "io.mongock:mongock-bom:${mongockVersion}"
             }
 
             dependency group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: libphonenumberVersion
             dependency group: 'com.netflix.graphql.dgs', name: 'graphql-dgs-platform-dependencies', version: graphqlDgsVersion
             dependency group: 'commons-beanutils', name: 'commons-beanutils', version: apacheCommonsVersion
             dependency group: 'commons-validator', name: 'commons-validator', version: apacheValidatorVersion
-            dependency group: 'info.picocli', name: 'picocli', version: picocliVersion
             dependency group: 'io.netty', name: 'netty-resolver-dns-native-macos', version: nettyVersion, classifier: 'osx-aarch_64'
             dependency group: 'org.jetbrains', name: 'annotations', version: jetbrainsAnnotationVersion
-            dependency group: 'org.liquibase', name: 'liquibase-core', version: liquibaseCoreVersion
-            dependency group: 'org.liquibase', name: 'liquibase-groovy-dsl', version: liquibaseGroovyDslVersion
             dependency group: 'org.passay', name: 'passay', version: passayVersion
-            dependency group: 'org.mongodb', name: 'mongo-java-driver', version: mongoDriverVersion
 
             dependencySet(group: 'org.mapstruct', version: mapstructVersion) {
                 entry 'mapstruct'

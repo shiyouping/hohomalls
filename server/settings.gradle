@@ -4,6 +4,7 @@ include ':hohomalls-core'
 include ':hohomalls-data'
 include ':hohomalls-web'
 include ':hohomalls-app'
+include ':hohomalls-mongo'
 
 rootProject.children.each {
     // Use the project name as build.gradle
