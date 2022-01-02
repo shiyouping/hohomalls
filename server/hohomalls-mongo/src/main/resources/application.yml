@@ -1,0 +1,4 @@
+mongock:
+  migration-scan-package:
+    - com.hohomalls.mongo.changeunit
+  transactionEnabled: true
