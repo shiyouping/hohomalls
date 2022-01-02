@@ -1,0 +1,131 @@
+{
+  "insert": "categories",
+  "documents": [
+    {
+      "_id": "Electronics",
+      "description": "Electronics",
+      "parentId": null,
+      "ancestorIds": [
+        "Accessories_Supplies",
+        "Camera_Photo",
+        "Car_VehicleElectronics",
+        "CellPhones_Accessories",
+        "Computers_Accessories",
+        "GPS_Navigation",
+        "Headphones",
+        "HomeAudio",
+        "OfficeElectronics",
+        "PortableAudio_Video",
+        "Security_Surveillance",
+        "ServicePlans",
+        "Television_Video",
+        "VideoGameConsoles_Accessories",
+        "VideoProjectors",
+        "WearableTechnology",
+        "eBookReaders_Accessories"
+      ]
+    },
+    {
+      "_id": "Accessories_Supplies",
+      "description": "Accessories & Supplies",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Camera_Photo",
+      "description": "Camera & Photo",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Car_VehicleElectronics",
+      "description": "Car & Vehicle Electronics",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "CellPhones_Accessories",
+      "description": "Cell Phones & Accessories",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Computers_Accessories",
+      "description": "Computers & Accessories",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "GPS_Navigation",
+      "description": "GPS & Navigation",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Headphones",
+      "description": "Headphones",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "HomeAudio",
+      "description": "Home Audio",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "OfficeElectronics",
+      "description": "Office Electronics",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "PortableAudio_Video",
+      "description": "Portable Audio & Video",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Security_Surveillance",
+      "description": "Security & Surveillance",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "ServicePlans",
+      "description": "Service Plans",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Television_Video",
+      "description": "Television & Video",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "VideoGameConsoles_Accessories",
+      "description": "Video Game Consoles & Accessories",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "VideoProjectors",
+      "description": "Video Projectors",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "WearableTechnology",
+      "description": "Wearable Technology",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "eBookReaders_Accessories",
+      "description": "eBook Readers & Accessories",
+      "parentId": "Electronics",
+      "ancestorIds": []
+    }
+  ]
+}

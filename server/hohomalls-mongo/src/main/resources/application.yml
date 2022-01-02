@@ -1,4 +1,7 @@
 mongock:
-  migration-scan-package:
+  change-unit-scan-package:
     - com.hohomalls.mongo.changeunit
-  transactionEnabled: true
+  transaction-enabled: true
+  runner-type: applicationrunner
+  default-migration-author: hohomalls
+  throw-exception-if-cannot-obtain-lock: true
