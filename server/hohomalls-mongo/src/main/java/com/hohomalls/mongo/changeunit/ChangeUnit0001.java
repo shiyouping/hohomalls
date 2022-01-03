@@ -1,10 +1,7 @@
 package com.hohomalls.mongo.changeunit;
 
 import com.hohomalls.mongo.util.FileReader;
-import io.mongock.api.annotations.BeforeExecution;
-import io.mongock.api.annotations.ChangeUnit;
-import io.mongock.api.annotations.Execution;
-import io.mongock.api.annotations.RollbackExecution;
+import io.mongock.api.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -30,9 +27,16 @@ public class ChangeUnit0001 {
 
   @Execution
   public void execution() {
-    this.mongoTemplate.executeCommand(FileReader.read("change-unit-0001.json"));
+    this.mongoTemplate.executeCommand(FileReader.read("change-unit/0001.json"));
+  }
+
+  @RollbackBeforeExecution
+  public void rollbackBeforeExecution() {
+    this.mongoTemplate.dropCollection(ChangeUnit0001.CATEGORIES);
   }
 
   @RollbackExecution
-  public void rollbackExecution() {}
+  public void rollbackExecution() {
+    this.mongoTemplate.executeCommand(FileReader.read("change-unit/0001-rollback.json"));
+  }
 }

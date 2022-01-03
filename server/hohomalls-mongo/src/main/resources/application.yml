@@ -1,7 +1,14 @@
+spring:
+  application:
+    name: hohomalls-mongo
+  data:
+    mongodb:
+      port: 27017
+      database: hohomalls
+      authentication-database: admin
+
 mongock:
-  change-unit-scan-package:
+  migration-scan-package:
     - com.hohomalls.mongo.changeunit
-  transaction-enabled: true
   runner-type: applicationrunner
-  default-migration-author: hohomalls
   throw-exception-if-cannot-obtain-lock: true

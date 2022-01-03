@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      host: hohomalls
+      username: root
+      password: Pa55w0rd
+
+mongock:
+  transaction-enabled: false

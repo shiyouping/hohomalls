@@ -1,0 +1,113 @@
+{
+  "delete": "categories",
+  "deletes": [
+    {
+      "q": {
+        "_id": "Electronics"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Accessories_Supplies"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Camera_Photo"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Car_VehicleElectronics"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "CellPhones_Accessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Computers_Accessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "GPS_Navigation"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Headphones"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "HomeAudio"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "OfficeElectronics"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "PortableAudio_Video"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Security_Surveillance"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "ServicePlans"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Television_Video"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "VideoGameConsoles_Accessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "VideoProjectors"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "WearableTechnology"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "eBookReaders_Accessories"
+      },
+      "limit": 1
+    }
+  ]
+}

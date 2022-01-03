@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      host: hohomalls
+      username: # Injected via environment variables
+      password: # Injected via environment variables
+
+mongock:
+  transaction-enabled: true
