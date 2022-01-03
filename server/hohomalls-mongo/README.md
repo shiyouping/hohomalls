@@ -1,7 +1,7 @@
 # Hohomalls Mongo
 
 This project is for tracking, versioning, and deploying database changes to MongoDB. It's another standalone project
-from hohomalls-app.
+built on top of [Mongock](https://mongock.io/).
 
 ## Change Unit Rules
 
@@ -14,4 +14,27 @@ from hohomalls-app.
 - Once the change units are executed successfully, they are not allowed to change again. Any following changes should be
   in new change units.
 
-See the detailed usages at https://mongock.io/
+## How to Build
+
+````bash
+cd hohomalls/server/hohomalls-mongo
+../gradlew clean bootJar
+
+# Option 1: Java System Properties (VM Arguments)
+java -jar -Dspring.profiles.active=local build/libs/hohomalls-mongo-1.0.0-SNAPSHOT.jar
+
+# Option 2: Program arguments
+java -jar build/libs/hohomalls-mongo-1.0.0-SNAPSHOT.jar --spring.profiles.active=local 
+````
+
+## How to Run
+
+````bash
+cd hohomalls/server/hohomalls-mongo/build/libs/
+
+# Option 1: Java System Properties (VM Arguments)
+java -jar -Dspring.profiles.active=local hohomalls-mongo-1.0.0-SNAPSHOT.jar
+
+# Option 2: Program arguments
+java -jar hohomalls-mongo-1.0.0-SNAPSHOT.jar --spring.profiles.active=local 
+````
