@@ -4,6 +4,20 @@ The server application is built on top
 of [Spring WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html)
 and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running environment.
 
+## Modules
+
+- hohomalls-core: A library subproject that provides the core functions which are the foundation of other subproject. No
+  business logic is included.
+- hohomalls-data: A library subproject that provides the core functions for MongoDB and Redis. No business logic is
+  included.
+- hohomalls-web: A library subproject that provides the core functions for GraphQL and Spring WebFlux. No business logic
+  is included.
+- hohomalls-app: A monolithic, stateless and standalone application that can be scaled up and down with ease, say, in
+  Kubernetes. It was designed and developed in the way that it can be divided into microservices without difficulties. A
+  good article to
+  read: [Don’t Start With Microservices – Monoliths Are Your Friend](https://arnoldgalovics.com/microservices-in-production/)
+- hohomalls-mongo: A standalone project for tracking, versioning, and deploying database changes to MongoDB.
+
 ## Development
 
 It's recommended to install the following IDE plugins to assist development:
