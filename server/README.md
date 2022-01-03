@@ -6,15 +6,14 @@ and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running
 
 ## Modules
 
-- hohomalls-core: A library subproject that provides the core functions which are the foundation of other subproject. No
-  business logic is included.
-- hohomalls-data: A library subproject that provides the core functions for MongoDB and Redis. No business logic is
-  included.
-- hohomalls-web: A library subproject that provides the core functions for GraphQL and Spring WebFlux. No business logic
+- hohomalls-core: A library subproject that provides the core functionalities which are the foundation of other
+  subprojects. No business logic is included.
+- hohomalls-data: A library subproject that provides the core functionalities for MongoDB and Redis. No business logic
   is included.
-- hohomalls-app: A monolithic, stateless and standalone application that can be scaled up and down with ease, say, in
-  Kubernetes. It was designed and developed in the way that it can be divided into microservices without difficulties. A
-  good article to
+- hohomalls-web: A library subproject that provides the core functionalities for GraphQL and Spring WebFlux. No business
+  logic is included.
+- hohomalls-app: A monolithic, stateless and standalone application that can be scaled up and down with ease. It was
+  designed and developed in the way that it can be divided into microservices without difficulties. A good article to
   read: [Don’t Start With Microservices – Monoliths Are Your Friend](https://arnoldgalovics.com/microservices-in-production/)
 - hohomalls-mongo: A standalone project for tracking, versioning, and deploying database changes to MongoDB.
 
