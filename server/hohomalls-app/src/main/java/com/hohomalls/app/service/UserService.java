@@ -22,13 +22,13 @@ public interface UserService {
   Flux<User> findAllByMobile(@Nullable String mobile);
 
   @NotNull
-  Mono<User> findOneByEmail(@Nullable String email);
+  Mono<User> findByEmail(@Nullable String email);
 
   @NotNull
-  Mono<User> findOneById(@Nullable String id);
+  Mono<User> findById(@Nullable String id);
 
   @NotNull
-  Mono<User> findOneByNickname(@Nullable String nickname);
+  Mono<User> findByNickname(@Nullable String nickname);
 
   @NotNull
   Mono<User> save(@NotNull User user);

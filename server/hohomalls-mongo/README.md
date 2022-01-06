@@ -10,7 +10,7 @@ built on top of [Mongock](https://mongock.io/).
 - The order of change units must be increased by 1 each time
 - @Execution and @RollbackExecution must be implemented in every single change unit
 - Perform DDL operations in @BeforeExecution
-- Use MongoTemplate in favour of using Repository classes directly to perform the migrations
+- Use MongoTemplate to execute [MongoDB Commands](https://docs.mongodb.com/v4.4/reference/command/) in JSON files
 - Once the change units are executed successfully, they are not allowed to change again. Any following changes should be
   in new change units.
 

@@ -62,7 +62,7 @@ public class UserDataFetcher {
   public Mono<UserDto> findUser(@RequestHeader String authorization) {
     var email = this.tokenService.getEmailFromAuth(authorization);
     return this.userService
-        .findOneByEmail(email.get())
+        .findByEmail(email.get())
         .flatMap(user -> Mono.justOrEmpty(this.userMapper.toDto(user)));
   }
 
@@ -70,7 +70,7 @@ public class UserDataFetcher {
   @HasAnyRoles(ROLE_ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsDto credentialsDto) {
     return this.userService
-        .findOneByEmail(credentialsDto.getEmail())
+        .findByEmail(credentialsDto.getEmail())
         .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid credentials")))
         .flatMap(
             user -> {
@@ -99,7 +99,7 @@ public class UserDataFetcher {
       roles.add(Role.ROLE_BUYER);
     }
 
-    if (this.userService.findOneByEmail(createUserDto.getEmail()).toFuture().get() != null) {
+    if (this.userService.findByEmail(createUserDto.getEmail()).toFuture().get() != null) {
       return Mono.error(
           new DgsBadRequestException(
               String.format("Email %s was already registered", createUserDto.getEmail())));
@@ -114,7 +114,7 @@ public class UserDataFetcher {
       @RequestHeader String authorization, @InputArgument("user") UpdateUserDto updateUserDto) {
     var email = this.tokenService.getEmailFromAuth(authorization);
     return this.userService
-        .findOneByEmail(email.get())
+        .findByEmail(email.get())
         .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid credentials")))
         .flatMap(
             user -> {

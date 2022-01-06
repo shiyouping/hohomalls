@@ -15,6 +15,12 @@ type AddressDto {
     addressee: String!
 }
 
+type CategoryDto {
+    id: String!
+    description: String!
+    ancestors: [CategoryDto]!
+}
+
 enum UserStatus {
     ACTIVE
     INACTIVE

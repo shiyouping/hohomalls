@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
   public @NotNull Mono<Void> changePassword(
       @NotNull String email, @NotNull String newPassword, @NotNull String oldPassword) {
     UserServiceImpl.log.info("Changing password for {}", email);
-    return this.findOneByEmail(email)
+    return this.findByEmail(email)
         .switchIfEmpty(
             Mono.error(new InvalidInputException(String.format("Invalid email %s", email))))
         .flatMap(
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NotNull Mono<User> findOneByEmail(@Nullable String email) {
+  public @NotNull Mono<User> findByEmail(@Nullable String email) {
     UserServiceImpl.log.info("Finding a user by email={}", email);
 
     if (email == null) {
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NotNull Mono<User> findOneById(@Nullable String id) {
+  public @NotNull Mono<User> findById(@Nullable String id) {
     UserServiceImpl.log.info("Finding a user by id={}", id);
 
     if (id == null) {
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public @NotNull Mono<User> findOneByNickname(@Nullable String nickname) {
+  public @NotNull Mono<User> findByNickname(@Nullable String nickname) {
     UserServiceImpl.log.info("Finding a user by nickname={}", nickname);
 
     if (nickname == null) {
