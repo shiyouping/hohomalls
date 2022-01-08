@@ -18,7 +18,7 @@ type AddressDto {
 type CategoryDto {
     id: String!
     description: String!
-    ancestors: [CategoryDto]!
+    ancestors: [CategoryDto!]
 }
 
 enum UserStatus {

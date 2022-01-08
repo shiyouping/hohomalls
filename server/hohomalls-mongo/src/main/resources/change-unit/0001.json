@@ -29,7 +29,24 @@
       "_id": "Accessories_Supplies",
       "description": "Accessories & Supplies",
       "parentId": "Electronics",
-      "ancestorIds": []
+      "ancestorIds": [
+        "Audio_VideoAccessories",
+        "Camera_PhotoAccessories",
+        "CellPhoneAccessories",
+        "GPSSystemAccessories",
+        "HomeAudioAccessories",
+        "OfficeElectronicsAccessories",
+        "VehicleElectronicsAccessories",
+        "PowerStrips_SurgeProtectors",
+        "TelephoneAccessories",
+        "BlankMedia",
+        "Cables",
+        "Mounts",
+        "Microphones",
+        "PowerProtection",
+        "CordManagement",
+        "CableOrganizerBags_Cases"
+      ]
     },
     {
       "_id": "Camera_Photo",
@@ -125,6 +142,102 @@
       "_id": "eBookReaders_Accessories",
       "description": "eBook Readers & Accessories",
       "parentId": "Electronics",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Audio_VideoAccessories",
+      "description": "Audio & Video Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Camera_PhotoAccessories",
+      "description": "Camera & Photo Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "CellPhoneAccessories",
+      "description": "Cell Phone Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "GPSSystemAccessories",
+      "description": "GPS System Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "HomeAudioAccessories",
+      "description": "Home Audio Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "OfficeElectronicsAccessories",
+      "description": "Office Electronics Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "VehicleElectronicsAccessories",
+      "description": "Vehicle Electronics Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "PowerStrips_SurgeProtectors",
+      "description": "Power Strips & Surge Protectors",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "TelephoneAccessories",
+      "description": "Telephone Accessories",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "BlankMedia",
+      "description": "Blank Media",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Cables",
+      "description": "Cables",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Mounts",
+      "description": "Mounts",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "Microphones",
+      "description": "Microphones",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "PowerProtection",
+      "description": "Power Protection",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "CordManagement",
+      "description": "Cord Management",
+      "parentId": "Accessories_Supplies",
+      "ancestorIds": []
+    },
+    {
+      "_id": "CableOrganizerBags_Cases",
+      "description": "Cable Organizer Bags & Cases",
+      "parentId": "Accessories_Supplies",
       "ancestorIds": []
     }
   ]

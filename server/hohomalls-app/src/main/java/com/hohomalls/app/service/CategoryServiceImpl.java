@@ -5,10 +5,9 @@ import com.hohomalls.app.repository.CategoryRepository;
 import com.hohomalls.core.exception.InternalServerException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 /**
  * CategoryServiceImpl.
@@ -23,14 +22,12 @@ public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
 
+  @NotNull
   @Override
-  public Mono<List<Category>> findAll() {
+  public Flux<Category> findAll() {
     CategoryServiceImpl.log.info("Finding all categories");
-
     return this.categoryRepository
         .findAll()
-        .collectList()
-        .switchIfEmpty(Mono.error(new InternalServerException("No categories found in mongodb.")))
-        .flatMap(categories -> {});
+        .switchIfEmpty(Flux.error(new InternalServerException("No categories in the database")));
   }
 }

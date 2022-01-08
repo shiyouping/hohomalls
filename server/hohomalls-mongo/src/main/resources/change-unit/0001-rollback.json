@@ -105,7 +105,97 @@
     },
     {
       "q": {
-        "_id": "eBookReaders_Accessories"
+        "_id": "Audio_VideoAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Camera_PhotoAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "CellPhoneAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "GPSSystemAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "HomeAudioAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "OfficeElectronicsAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "VehicleElectronicsAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "PowerStrips_SurgeProtectors"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "TelephoneAccessories"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "BlankMedia"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Cables"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Mounts"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "Microphones"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "PowerProtection"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "CordManagement"
+      },
+      "limit": 1
+    },
+    {
+      "q": {
+        "_id": "CableOrganizerBags_Cases"
       },
       "limit": 1
     }

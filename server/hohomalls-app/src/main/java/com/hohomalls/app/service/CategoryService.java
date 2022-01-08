@@ -1,9 +1,8 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.Category;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+import reactor.core.publisher.Flux;
 
 /**
  * CategoryService.
@@ -13,5 +12,6 @@ import java.util.List;
  */
 public interface CategoryService {
 
-  Mono<List<Category>> findAll();
+  @NotNull
+  Flux<Category> findAll();
 }
