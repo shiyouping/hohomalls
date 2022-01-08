@@ -18,10 +18,7 @@ public interface FileReader {
 
   @SneakyThrows
   static String read(@NotNull String fileName) {
-    var stream =
-        FileReader.class
-            .getClassLoader()
-            .getResourceAsStream(Objects.requireNonNull(fileName, "fileName cannot be null"));
+    var stream = FileReader.class.getClassLoader().getResourceAsStream(fileName);
 
     return CharStreams.toString(
         new InputStreamReader(

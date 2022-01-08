@@ -11,8 +11,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * The class of SessionServiceImpl.
  *
@@ -32,13 +30,13 @@ public class SessionServiceImpl implements SessionService {
       return Mono.just(false);
     }
 
-    return redisTemplate
+    return this.redisTemplate
         .scan()
-        .flatMap(key -> redisTemplate.opsForValue().get(key))
+        .flatMap(key -> this.redisTemplate.opsForValue().get(key))
         .flatMap(
             auth -> {
               if (email.equals(auth.getPrincipal())) {
-                return redisTemplate.opsForValue().delete((String) auth.getCredentials());
+                return this.redisTemplate.opsForValue().delete((String) auth.getCredentials());
               }
               return Mono.empty();
             })
@@ -51,7 +49,7 @@ public class SessionServiceImpl implements SessionService {
       return Mono.just(false);
     }
 
-    return redisTemplate.delete(session).map(value -> value > 0);
+    return this.redisTemplate.delete(session).map(value -> value > 0);
   }
 
   @Override
@@ -60,7 +58,7 @@ public class SessionServiceImpl implements SessionService {
       return Mono.empty();
     }
 
-    return redisTemplate.opsForValue().get(session);
+    return this.redisTemplate.opsForValue().get(session);
   }
 
   @Override
@@ -69,7 +67,7 @@ public class SessionServiceImpl implements SessionService {
       return Mono.just(false);
     }
 
-    return redisTemplate.hasKey(session);
+    return this.redisTemplate.hasKey(session);
   }
 
   @Override
@@ -79,12 +77,10 @@ public class SessionServiceImpl implements SessionService {
       return Mono.empty();
     }
 
-    checkNotNull(authentication, "authentication cannot be null");
-
     // Supports multi-login
-    return redisTemplate
+    return this.redisTemplate
         .opsForValue()
-        .set(session, authentication, Duration.ofHours(tokenProperties.getLifespan()))
+        .set(session, authentication, Duration.ofHours(this.tokenProperties.getLifespan()))
         .map(value -> session);
   }
 }

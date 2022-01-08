@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -85,7 +84,7 @@ public class RoleAspect {
       return;
     }
 
-    this.checkHasAllRoles(joinPoint, method, Objects.requireNonNull(hasAllRoles));
+    this.checkHasAllRoles(joinPoint, method, hasAllRoles);
   }
 
   private void checkHasAllRoles(JoinPoint joinPoint, Method method, HasAllRoles hasAllRoles) {

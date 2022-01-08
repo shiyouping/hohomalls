@@ -11,8 +11,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * The interface of KeyUtil.
  *
@@ -24,8 +22,6 @@ public interface KeyUtil {
   /** Get the private key from its encoded string. */
   @NotNull
   static Key toPrivateKey(@NotNull String keyString) {
-    checkNotNull(keyString, "keyString cannot be null");
-
     try {
       PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Decoders.BASE64.decode(keyString));
       KeyFactory factory = KeyFactory.getInstance("RSA");
@@ -38,8 +34,6 @@ public interface KeyUtil {
   /** Get the public key from its encoded string. */
   @NotNull
   static Key toPublicKey(@NotNull String keyString) {
-    checkNotNull(keyString, "keyString cannot be null");
-
     try {
       X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Decoders.BASE64.decode(keyString));
       KeyFactory factory = KeyFactory.getInstance("RSA");

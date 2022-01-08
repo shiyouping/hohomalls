@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * The interface of JwtUtil.
  *
@@ -31,11 +29,8 @@ public final class JwtUtil {
   @NotNull
   public static String generate(
       @NotNull Key privateKey, @Nullable Map<String, Object> claims, @NotNull Date expiration) {
-    checkNotNull(privateKey, "privateKey cannot be null");
-    checkNotNull(expiration, "expiration cannot be null");
-
     return Jwts.builder()
-        .setIssuer(issuer)
+        .setIssuer(JwtUtil.issuer)
         .setId(UUID.randomUUID().toString())
         .setExpiration(expiration)
         .addClaims(claims)
@@ -46,16 +41,13 @@ public final class JwtUtil {
   /** Parse and validate the JWS. */
   @NotNull
   public static Jws<Claims> parse(@NotNull Key publicKey, @NotNull String jws) {
-    checkNotNull(publicKey, "publicKey cannot be null");
-    checkNotNull(jws, "jws cannot be null");
-
     var claims = Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(jws);
     if (claims == null) {
       throw new InvalidTokenException("No claims found");
     }
 
     var body = claims.getBody();
-    if (!issuer.equals(body.getIssuer())) {
+    if (!JwtUtil.issuer.equals(body.getIssuer())) {
       throw new InvalidTokenException("Invalid issuer");
     }
 

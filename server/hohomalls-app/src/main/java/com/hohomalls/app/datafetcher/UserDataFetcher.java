@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestHeader;
 import reactor.core.publisher.Mono;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.hohomalls.core.enumeration.Role.*;
 
 /**
@@ -125,8 +124,6 @@ public class UserDataFetcher {
 
   @NotNull
   private Mono<String> createSession(@NotNull User user) {
-    checkNotNull(user, "user cannot be null");
-
     var token = this.tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
     if (token.isEmpty()) {
       return Mono.error(new RuntimeException("Failed to generate JWT"));

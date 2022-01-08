@@ -14,8 +14,6 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * The class of AuthenticationFilter.
  *
@@ -32,10 +30,6 @@ public class AuthenticationFilter implements WebFilter {
       @NotNull ReactiveAuthenticationManager authenticationManager,
       @NotNull ServerAuthenticationConverter authenticationConverter,
       @NotNull ServerAuthenticationEntryPoint authenticationEntryPoint) {
-
-    checkNotNull(authenticationManager, "authenticationManager cannot be null");
-    checkNotNull(authenticationConverter, "authenticationConverter cannot be null");
-    checkNotNull(authenticationEntryPoint, "authenticationEntryPoint cannot be null");
 
     this.authenticationWebFilter = new AuthenticationWebFilter(authenticationManager);
     this.authenticationWebFilter.setServerAuthenticationConverter(authenticationConverter);
