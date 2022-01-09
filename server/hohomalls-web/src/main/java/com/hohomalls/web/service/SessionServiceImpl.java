@@ -1,6 +1,6 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.web.property.TokenProperties;
+import com.hohomalls.web.config.WebProperties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +21,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
 
-  private final TokenProperties tokenProperties;
+  private final WebProperties webProperties;
   private final ReactiveRedisTemplate<String, Authentication> redisTemplate;
 
   @Override
@@ -80,7 +80,7 @@ public class SessionServiceImpl implements SessionService {
     // Supports multi-login
     return this.redisTemplate
         .opsForValue()
-        .set(session, authentication, Duration.ofHours(this.tokenProperties.getLifespan()))
+        .set(session, authentication, Duration.ofHours(this.webProperties.token().lifespan()))
         .map(value -> session);
   }
 }

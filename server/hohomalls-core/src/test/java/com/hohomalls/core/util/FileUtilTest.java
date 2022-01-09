@@ -14,7 +14,7 @@ public class FileUtilTest {
 
   @Test
   public void testReadAsBytes() {
-    var actual = FileUtil.readAsBytes("image-file.jpg");
+    var actual = FileUtil.readAsBytes("image-file.png");
     assertThat(actual).isNotNull();
     assertThat(actual).isNotEmpty();
   }

@@ -6,3 +6,4 @@ data:
   active-profile: local
   redis-host: hohomalls-redis-master
   mongodb-host: hohomalls-mongo
+  base-storage-url: FIXME

@@ -8,3 +8,4 @@ data:
   redis-port: {{ .Values.hohomalls.redisPort | quote }}
   mongodb-host: {{ .Values.mongodb.fullnameOverride }}
   mongodb-port: {{ .Values.hohomalls.mongodbPort | quote }}
+  base-storage-url: {{ .Values.hohomalls.baseStorageUrl | quote }}

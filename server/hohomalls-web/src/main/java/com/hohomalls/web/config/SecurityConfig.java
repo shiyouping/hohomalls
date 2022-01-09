@@ -35,7 +35,7 @@ public class SecurityConfig {
   @Bean
   @Profile(PROFILE_NON_PROD)
   public SecurityWebFilterChain localFilterChain(ServerHttpSecurity http) {
-    return commonSecurity(http)
+    return this.commonSecurity(http)
         // Disable HTTP Security Response Headers. See details at:
         // https://docs.spring.io/spring-security/site/docs/current/reference/html5/#webflux-headers
         .headers()
@@ -51,7 +51,7 @@ public class SecurityConfig {
   @Bean
   @Profile(PROFILE_PROD)
   public SecurityWebFilterChain productionFilterChain(ServerHttpSecurity http) {
-    return commonSecurity(http).redirectToHttps(withDefaults()).build();
+    return this.commonSecurity(http).redirectToHttps(withDefaults()).build();
   }
 
   private ServerHttpSecurity commonSecurity(ServerHttpSecurity http) {
@@ -63,8 +63,8 @@ public class SecurityConfig {
         .disable()
         .authorizeExchange()
         .anyExchange()
-        .access(authorizationManager)
+        .access(this.authorizationManager)
         .and()
-        .addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
+        .addFilterAt(this.authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION);
   }
 }

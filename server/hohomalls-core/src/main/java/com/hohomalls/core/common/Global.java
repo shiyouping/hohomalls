@@ -9,6 +9,8 @@ package com.hohomalls.core.common;
 public final class Global {
 
   public static final String COMMA = ",";
+  public static final String PATH_DELIMITER = "/";
+
   // JWT related
   public static final String EMAIL = "email";
   public static final String ROLES = "roles";

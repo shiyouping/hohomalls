@@ -9,6 +9,7 @@ import com.hohomalls.web.aop.HasAnyRoles;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 
@@ -23,6 +24,7 @@ import static com.hohomalls.core.enumeration.Role.*;
  * @author ricky.shiyouping@gmail.com
  * @since 6/1/2022
  */
+@Slf4j
 @DgsComponent
 @RequiredArgsConstructor
 public class CategoryDataFetcher {
@@ -33,6 +35,7 @@ public class CategoryDataFetcher {
   @DgsQuery
   @HasAnyRoles({ROLE_ANONYMOUS, ROLE_BUYER, ROLE_SELLER})
   public Mono<List<CategoryDto>> findAllCategories() {
+    CategoryDataFetcher.log.info("Received a request to find all categories");
     return this.categoryService
         .findAll()
         .collectList()

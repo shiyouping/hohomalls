@@ -42,10 +42,10 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
     options.including(EXCEPTION, STACK_TRACE, MESSAGE, BINDING_ERRORS);
 
     var attributes = super.getErrorAttributes(request, options);
-    var status = (Integer) attributes.get(KEY_STATUS);
-    var error = (String) attributes.get(KEY_ERROR);
-    var throwable = request.attribute(ERROR_ATTRIBUTE);
-    var locations = List.of((String) attributes.get(KEY_PATH));
+    var status = (Integer) attributes.get(GlobalExceptionAttributes.KEY_STATUS);
+    var error = (String) attributes.get(GlobalExceptionAttributes.KEY_ERROR);
+    var throwable = request.attribute(GlobalExceptionAttributes.ERROR_ATTRIBUTE);
+    var locations = List.of((String) attributes.get(GlobalExceptionAttributes.KEY_PATH));
 
     Map<String, String> debugInfo = Maps.newHashMapWithExpectedSize(2);
     debugInfo.put(HttpError.DEBUG_INFO_EXCEPTION_ID, UUID.randomUUID().toString());
@@ -54,14 +54,14 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
 
     if (throwable.isEmpty()) {
       errorAttributes.put(
-          KEY_ERRORS,
+              GlobalExceptionAttributes.KEY_ERRORS,
           List.of(
               HttpError.builder()
                   .message(error)
                   .locations(locations)
                   .extensions(
                       HttpError.Extensions.builder()
-                          .errorType(fromStatus(status))
+                          .errorType(this.fromStatus(status))
                           .origin(HttpError.Origin.APP)
                           .debugInfo(debugInfo)
                           .build())
@@ -71,22 +71,22 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
       debugInfo.put(HttpError.DEBUG_INFO_EXCEPTION_NAME, t.getClass().getSimpleName());
 
       errorAttributes.put(
-          KEY_ERRORS,
+              GlobalExceptionAttributes.KEY_ERRORS,
           List.of(
               HttpError.builder()
                   .message(t.getMessage())
                   .locations(locations)
                   .extensions(
                       HttpError.Extensions.builder()
-                          .errorType(fromThrowable(t))
+                          .errorType(this.fromThrowable(t))
                           .origin(HttpError.Origin.APP)
                           .debugInfo(debugInfo)
                           .build())
                   .build()));
     }
 
-    errorAttributes.put(KEY_STATUS, status);
-    log.error("Cannot proceed. ErrorAttributes={}", errorAttributes);
+    errorAttributes.put(GlobalExceptionAttributes.KEY_STATUS, status);
+    GlobalExceptionAttributes.log.error("Cannot proceed. ErrorAttributes={}", errorAttributes);
     return errorAttributes;
   }
 

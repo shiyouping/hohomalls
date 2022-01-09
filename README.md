@@ -163,9 +163,11 @@ SPRING_DATA_MONGODB_USERNAME = actual_value
 # Required
 SPRING_DATA_MONGODB_PASSWORD = actual_value
 # Required
-COM_HOHOMALLS_TOKEN_PUBLIC-KEY = actual_value
+COM_HOHOMALLS_WEB_MULTIPART_BASE-STORAGE-URL = actual_value
 # Required
-COM_HOHOMALLS_TOKEN_PRIVATE-KEY = actual_value
+COM_HOHOMALLS_WEB_TOKEN_PUBLIC-KEY = actual_value
+# Required
+COM_HOHOMALLS_WEB_TOKEN_PRIVATE-KEY = actual_value
 ```
 
 ### 3.1. On Docker

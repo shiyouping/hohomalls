@@ -110,6 +110,6 @@ public class HashUtilTest {
             .as("Short text should be equal")
             .isNotEqualTo(getMurmur3("Hello".getBytes(StandardCharsets.UTF_8)));
 
-    assertThat(getMurmur3(readAsBytes("image-file.jpg"))).isNotNull();
+    assertThat(getMurmur3(readAsBytes("image-file.png"))).isNotNull();
   }
 }

@@ -19,5 +19,14 @@ spring:
 
 com:
   hohomalls:
-    token:
-      lifespan: 240
+    web:
+      multipart:
+        # FIXME
+        max-file-size: 1024
+        # FIXME
+        content-types:
+          - a
+          - b
+          - c
+      token:
+        lifespan: 240

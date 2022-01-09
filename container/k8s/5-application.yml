@@ -56,12 +56,17 @@ spec:
                 secretKeyRef:
                   name: hohomalls
                   key: mongodb-root-password
-            - name: COM_HOHOMALLS_TOKEN_PUBLIC-KEY
+            - name: COM_HOHOMALLS_WEB_MULTIPART_BASE-STORAGE-URL
+              valueFrom:
+                configMapKeyRef:
+                  name: hohomalls
+                  key: base-storage-url
+            - name: COM_HOHOMALLS_WEB_TOKEN_PUBLIC-KEY
               valueFrom:
                 secretKeyRef:
                   name: hohomalls
                   key: token-public-key
-            - name: COM_HOHOMALLS_TOKEN_PRIVATE-KEY
+            - name: COM_HOHOMALLS_WEB_TOKEN_PRIVATE-KEY
               valueFrom:
                 secretKeyRef:
                   name: hohomalls

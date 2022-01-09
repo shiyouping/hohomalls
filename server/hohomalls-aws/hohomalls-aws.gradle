@@ -1,0 +1,9 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api project(':hohomalls-core')
+    api group: 'org.springframework.cloud', name: 'spring-cloud-aws-context'
+    api group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure'
+}

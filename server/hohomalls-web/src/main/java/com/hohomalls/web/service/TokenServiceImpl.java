@@ -6,7 +6,7 @@ import com.hohomalls.core.exception.InvalidTokenException;
 import com.hohomalls.core.util.ArrayUtil;
 import com.hohomalls.core.util.JwtUtil;
 import com.hohomalls.core.util.KeyUtil;
-import com.hohomalls.web.property.TokenProperties;
+import com.hohomalls.web.config.WebProperties;
 import com.hohomalls.web.util.HttpHeaderUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -38,7 +38,7 @@ public class TokenServiceImpl implements TokenService {
   private static final String SUBJECT = "access-token";
   private static Key privateKey;
   private static Key publicKey;
-  private final TokenProperties properties;
+  private final WebProperties webProperties;
 
   @Override
   public @NotNull Optional<String> getEmailFromAuth(@Nullable String auth) {
@@ -88,13 +88,14 @@ public class TokenServiceImpl implements TokenService {
     }
 
     if (TokenServiceImpl.privateKey == null) {
-      TokenServiceImpl.privateKey = KeyUtil.toPrivateKey(this.properties.getPrivateKey());
+      TokenServiceImpl.privateKey = KeyUtil.toPrivateKey(this.webProperties.token().privateKey());
     }
 
     var roleList =
         Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
     var roleString = String.join(COMMA, roleList);
-    var expiration = Date.from(Instant.now().plus(this.properties.getLifespan(), ChronoUnit.HOURS));
+    var expiration =
+        Date.from(Instant.now().plus(this.webProperties.token().lifespan(), ChronoUnit.HOURS));
     Map<String, Object> claims =
         Map.of(
             Global.SUBJECT,
@@ -120,7 +121,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     if (TokenServiceImpl.publicKey == null) {
-      TokenServiceImpl.publicKey = KeyUtil.toPublicKey(this.properties.getPublicKey());
+      TokenServiceImpl.publicKey = KeyUtil.toPublicKey(this.webProperties.token().publicKey());
     }
 
     var claims = JwtUtil.parse(TokenServiceImpl.publicKey, token);
@@ -129,7 +130,8 @@ public class TokenServiceImpl implements TokenService {
       throw new InvalidTokenException("Invalid subject");
     }
 
-    var start = Date.from(Instant.now().minus(this.properties.getLifespan(), ChronoUnit.HOURS));
+    var start =
+        Date.from(Instant.now().minus(this.webProperties.token().lifespan(), ChronoUnit.HOURS));
     if (start.after(body.getExpiration())) {
       throw new InvalidTokenException("Token expired");
     }

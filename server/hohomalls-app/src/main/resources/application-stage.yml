@@ -15,6 +15,9 @@ dgs:
 
 com:
   hohomalls:
-    token:
-      public-key: # Injected via environment variables
-      private-key: # Injected via environment variables
+    web:
+      multipart:
+        base-storage-url: # Injected via environment variables
+      token:
+        public-key: # Injected via environment variables
+        private-key: # Injected via environment variables
