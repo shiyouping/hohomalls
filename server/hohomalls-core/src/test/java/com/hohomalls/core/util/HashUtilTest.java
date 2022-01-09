@@ -1,0 +1,115 @@
+package com.hohomalls.core.util;
+
+import org.junit.jupiter.api.Test;
+
+import java.nio.charset.StandardCharsets;
+
+import static com.hohomalls.core.util.FileUtil.readAsBytes;
+import static com.hohomalls.core.util.HashUtil.getMurmur3;
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * HashUtilTest.
+ *
+ * @author ricky.shiyouping@gmail.com
+ * @since 9/1/2022
+ */
+public class HashUtilTest {
+
+  @Test
+  public void testGetMurmur3() {
+      var longText1 = """
+              static inline uint32_t murmur_32_scramble(uint32_t k) {
+                  k *= 0xcc9e2d51;
+                  k = (k << 15) | (k >> 17);
+                  k *= 0x1b873593;
+                  return k;
+              }
+              uint32_t murmur3_32(const uint8_t* key, size_t len, uint32_t seed)
+              {
+              	uint32_t h = seed;
+                  uint32_t k;
+                  /* Read in groups of 4. */
+                  for (size_t i = len >> 2; i; i--) {
+                      // Here is a source of differing results across endiannesses.
+                      // A swap here has no effects on hash properties though.
+                      memcpy(&k, key, sizeof(uint32_t));
+                      key += sizeof(uint32_t);
+                      h ^= murmur_32_scramble(k);
+                      h = (h << 13) | (h >> 19);
+                      h = h * 5 + 0xe6546b64;
+                  }
+                  /* Read the rest. */
+                  k = 0;
+                  for (size_t i = len & 3; i; i--) {
+                      k <<= 8;
+                      k |= key[i - 1];
+                  }
+                  // A swap is *not* necessary here because the preceding loop already
+                  // places the low bytes in the low places according to whatever endianness
+                  // we use. Swaps only apply when the memory is copied in a chunk.
+                  h ^= murmur_32_scramble(k);
+                  /* Finalize. */
+              	h ^= len;
+              	h ^= h >> 16;
+              	h *= 0x85ebca6b;
+              	h ^= h >> 13;
+              	h *= 0xc2b2ae35;
+              	h ^= h >> 16;
+              	return h;
+              }
+              """;
+
+      var longText2 = """
+              static inline uint32_t murmur_32_scramble(uint32_t k) {
+                  k *= 0xcc9e2d51;
+                  k = (k << 15) | (k >> 17);
+                  k *= 0x1b873593;
+                  return k;
+              }
+              uint32_t murmur3_32(const uint8_t* key, size_t len, uint32_t seed)
+              {
+              	uint32_t h = seed;
+                  uint32_t k;
+                  /* Read in groups of 4. */
+                  for (size_t i = len >> 2; i; i--) {
+                      // Here is a source of differing results across endiannesses.
+                      // A swap here has no effects on hash properties though.
+                      memcpy(&k, key, sizeof(uint32_t));
+                      key += sizeof(uint32_t);
+                      h ^= murmur_32_scramble(k);
+                      h = (h << 13) | (h >> 19);
+                      h = h * 5 + 0xe6546b64;
+                  }
+                  /* Read the rest. */
+                  k = 0;
+                  for (size_t i = len & 3; i; i--) {
+                      k <<= 8;
+                      k |= key[i - 1];
+                  }
+                  // A swap is *not* necessary here because the preceding loop already
+                  // places the low bytes in the low places according to whatever endianness
+                  // we use. Swaps only apply when the memory is copied in a chunk.
+                  h ^= murmur_32_scramble(k);
+                  /* Finalize. */
+              	h ^= len;
+              	h ^= h >> 16;
+              	h *= 0x85ebca6b;
+              	h ^= h >> 13;
+              	h *= 0xc2b2ae35;
+              	h ^= h >> 16;
+              	return h;
+              }
+              """;
+
+    assertThat(getMurmur3(longText1.getBytes(StandardCharsets.UTF_8)))
+            .as("Long text should be equal")
+            .isEqualTo(getMurmur3(longText2.getBytes(StandardCharsets.UTF_8)));
+
+    assertThat(getMurmur3("Hello World".getBytes(StandardCharsets.UTF_8)))
+            .as("Short text should be equal")
+            .isNotEqualTo(getMurmur3("Hello".getBytes(StandardCharsets.UTF_8)));
+
+    assertThat(getMurmur3(readAsBytes("image-file.jpg"))).isNotNull();
+  }
+}

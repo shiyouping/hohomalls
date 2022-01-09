@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 public interface FileReader {
 
+  @NotNull
   @SneakyThrows
   static String read(@NotNull String fileName) {
     var stream = FileReader.class.getClassLoader().getResourceAsStream(fileName);
