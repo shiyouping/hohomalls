@@ -41,13 +41,12 @@ public class UserServiceImpl implements UserService {
       @NotNull String email, @NotNull String newPassword, @NotNull String oldPassword) {
     UserServiceImpl.log.info("Changing password for {}", email);
     return this.findByEmail(email)
-        .switchIfEmpty(
-            Mono.error(new InvalidInputException(String.format("Invalid email %s", email))))
+        .switchIfEmpty(Mono.error(new InvalidInputException("Invalid email %s".formatted(email))))
         .flatMap(
             user -> {
               if (!this.passwordEncoder.matches(oldPassword, user.getPassword())) {
                 return Mono.error(
-                    new InvalidInputException(String.format("Invalid password %s", oldPassword)));
+                    new InvalidInputException("Invalid password %s".formatted(oldPassword)));
               }
 
               user.setPassword(newPassword);

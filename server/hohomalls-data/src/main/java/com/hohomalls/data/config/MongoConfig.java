@@ -35,8 +35,7 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
   @Override
   protected void configureClientSettings(MongoClientSettings.Builder builder) {
     var connectionString =
-        String.format(
-            "mongodb://%s:%s", this.mongoProperties.getHost(), this.mongoProperties.getPort());
+        "mongodb://%s:%s".formatted(this.mongoProperties.getHost(), this.mongoProperties.getPort());
     builder.applyConnectionString(new ConnectionString(connectionString));
     builder.credential(
         MongoCredential.createCredential(
@@ -44,7 +43,7 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
             this.mongoProperties.getAuthenticationDatabase(),
             this.mongoProperties.getPassword()));
 
-    log.info("MongoDb Connection String = {}", connectionString); // NOPMD
+    MongoConfig.log.info("MongoDb Connection String = {}", connectionString); // NOPMD
   }
 
   @Override

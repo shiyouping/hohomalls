@@ -40,15 +40,15 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
     GraphQLError error;
 
     if (exception instanceof AccessDeniedException) {
-      error = getGraphqlError(TypedGraphQLError.newPermissionDeniedBuilder(), path, exception);
+      error = this.getGraphqlError(TypedGraphQLError.newPermissionDeniedBuilder(), path, exception);
     } else if (exception instanceof DgsEntityNotFoundException) {
-      error = getGraphqlError(TypedGraphQLError.newNotFoundBuilder(), path, exception);
+      error = this.getGraphqlError(TypedGraphQLError.newNotFoundBuilder(), path, exception);
     } else if (exception instanceof DgsBadRequestException
         || exception instanceof DgsInvalidInputArgumentException
         || exception instanceof InvalidInputException) {
-      error = getGraphqlError(TypedGraphQLError.newBadRequestBuilder(), path, exception);
+      error = this.getGraphqlError(TypedGraphQLError.newBadRequestBuilder(), path, exception);
     } else {
-      error = getGraphqlError(TypedGraphQLError.newInternalErrorBuilder(), path, exception);
+      error = this.getGraphqlError(TypedGraphQLError.newInternalErrorBuilder(), path, exception);
     }
 
     return DataFetcherExceptionHandlerResult.newResult().error(error).build();
@@ -57,11 +57,10 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
   private GraphQLError getGraphqlError(Builder builder, ResultPath path, Throwable exception) {
     var id = UUID.randomUUID().toString();
 
-    if (log.isErrorEnabled()) {
-      log.error(
-          String.format(
-              "Failed to execute data fetcher for %s: %s. ErrorId=%s",
-              path, exception.getMessage(), id),
+    if (GlobalExceptionHandler.log.isErrorEnabled()) {
+      GlobalExceptionHandler.log.error(
+          "Failed to execute data fetcher for %s: %s. ErrorId=%s"
+              .formatted(path, exception.getMessage(), id),
           exception);
     }
 
