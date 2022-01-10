@@ -1,7 +1,6 @@
 scalar Void
-scalar Upload
 
-type Mutation {
+extend type Mutation {
     # Sign up a user and get an access token in jws
     signUp(user: CreateUserDto): String!
 
@@ -16,7 +15,4 @@ type Mutation {
 
     # Update the details of a user
     updateUser(user: UpdateUserDto!): UserDto!
-
-    # Upload a file and return the URL on the server
-    uploadFile(file: Upload!, rootDir: String!, subDir: String!): String
 }

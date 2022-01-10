@@ -35,6 +35,11 @@ public class FileDataFetcher {
   private final FileHashService fileHashService;
   private final WebProperties webProperties;
 
+  /**
+   * The file upload of DGS Framework doesn't work with Spring WebFlux.
+   *
+   * <p>See the issue reported at https://github.com/Netflix/dgs-framework/issues/819
+   */
   @SneakyThrows
   @HasAnyRoles({Role.ROLE_BUYER, Role.ROLE_SELLER})
   @DgsData(parentType = GraphqlType.MUTATION)
