@@ -31,6 +31,6 @@ public interface AuthorityUtil {
     }
 
     return AuthorityUtils.commaSeparatedStringToAuthorityList(
-        roles.stream().map(Role::name).collect(Collectors.joining(Global.COMMA)));
+        roles.stream().map(Role::name).collect(Collectors.joining(Global.SIGN_COMMA)));
   }
 }

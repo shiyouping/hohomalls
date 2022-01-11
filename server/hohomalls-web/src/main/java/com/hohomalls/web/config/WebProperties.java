@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
-import static com.hohomalls.core.common.Global.PROPERTY_PREFIX;
+import static com.hohomalls.core.common.Global.CONFIG_PROPERTY_PREFIX;
 
 /**
  * WebProperties.
@@ -18,15 +18,19 @@ import static com.hohomalls.core.common.Global.PROPERTY_PREFIX;
  * @since 9/1/2022
  */
 @Validated
-@ConfigurationProperties(prefix = PROPERTY_PREFIX + "web")
+@ConfigurationProperties(prefix = CONFIG_PROPERTY_PREFIX + "web")
 public record WebProperties(@NotNull Multipart multipart,
                             @NotNull Token token) {
 
   @Validated
-  public record Multipart(@Positive long maxFileSize,
+  public record Multipart(@NotNull FileSize maxFileSize,
                           @NotBlank String baseStorageUrl,
-                          @NotEmpty List<String> contentTypes
-                          ) {
+                          @NotEmpty List<String> contentTypes) {
+  }
+
+  @Validated
+  public record FileSize(@Positive long image,
+                         @Positive long video) {
   }
 
   @Validated

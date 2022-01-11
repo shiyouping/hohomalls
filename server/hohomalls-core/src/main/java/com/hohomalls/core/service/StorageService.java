@@ -11,5 +11,5 @@ import org.jetbrains.annotations.NotNull;
 public interface StorageService {
 
   /** Save the data in the designated place. */
-  void save(byte[] data, @NotNull String fullPath, @NotNull String fileName);
+  void save(byte[] data, @NotNull String filePath, @NotNull String fileName);
 }

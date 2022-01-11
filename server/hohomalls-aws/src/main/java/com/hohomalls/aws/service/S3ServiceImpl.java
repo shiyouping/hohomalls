@@ -16,5 +16,5 @@ import org.springframework.stereotype.Service;
 public class S3ServiceImpl implements StorageService {
 
   @Override
-  public void save(byte[] data, @NotNull String fullPath, @NotNull String fileName) {}
+  public void save(byte[] data, @NotNull String filePath, @NotNull String fileName) {}
 }

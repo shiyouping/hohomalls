@@ -21,12 +21,13 @@ com:
   hohomalls:
     web:
       multipart:
-        # FIXME
-        max-file-size: 1024
-        # FIXME
+        # In the unit of KB
+        max-file-size:
+          image: 512
+          video: 5120
         content-types:
-          - a
-          - b
-          - c
+          - image/gif
+          - image/jpeg
+          - image/png
       token:
         lifespan: 240

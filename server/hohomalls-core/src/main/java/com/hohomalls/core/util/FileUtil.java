@@ -2,12 +2,15 @@ package com.hohomalls.core.util;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
+import com.google.common.io.Files;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * FileUtil.
@@ -16,6 +19,15 @@ import java.util.Objects;
  * @since 9/1/2022
  */
 public interface FileUtil {
+
+  @NotNull
+  static Optional<String> getExtension(@Nullable String fileName) {
+    if (fileName == null) {
+      return Optional.empty();
+    }
+
+    return Optional.of(Files.getFileExtension(fileName));
+  }
 
   @SneakyThrows
   static byte[] readAsBytes(@NotNull String fileName) {

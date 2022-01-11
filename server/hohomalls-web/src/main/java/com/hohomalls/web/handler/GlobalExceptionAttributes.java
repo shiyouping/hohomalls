@@ -1,11 +1,15 @@
 package com.hohomalls.web.handler;
 
 import com.google.common.collect.Maps;
+import com.hohomalls.core.exception.InvalidInputException;
+import com.hohomalls.core.exception.InvalidRequestException;
+import com.hohomalls.core.exception.InvalidTokenException;
 import com.hohomalls.web.common.HttpError;
+import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -51,6 +55,7 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
     debugInfo.put(HttpError.DEBUG_INFO_EXCEPTION_ID, UUID.randomUUID().toString());
 
     Map<String, Object> errorAttributes = Maps.newHashMap();
+    status = this.reviseStatus((Throwable) throwable.orElse(null), status);
 
     if (throwable.isEmpty()) {
       errorAttributes.put(
@@ -78,14 +83,15 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
                   .locations(locations)
                   .extensions(
                       HttpError.Extensions.builder()
-                          .errorType(this.fromThrowable(t))
+                          .errorType(this.fromStatus(status))
                           .origin(HttpError.Origin.APP)
                           .debugInfo(debugInfo)
                           .build())
                   .build()));
     }
 
-    errorAttributes.put(GlobalExceptionAttributes.KEY_STATUS, status);
+    // Always return 200 to comply with GraphQL standard
+    errorAttributes.put(GlobalExceptionAttributes.KEY_STATUS, 200);
     GlobalExceptionAttributes.log.error("Cannot proceed. ErrorAttributes={}", errorAttributes);
     return errorAttributes;
   }
@@ -103,20 +109,26 @@ public class GlobalExceptionAttributes extends DefaultErrorAttributes {
     };
   }
 
-  private HttpError.Type fromThrowable(Throwable throwable) {
-    // TODO supplement more here
-    if (throwable instanceof BadCredentialsException) {
-      return HttpError.Type.UNAUTHENTICATED;
+  private int reviseStatus(Throwable throwable, int status) {
+    if (throwable == null) {
+      return status;
     }
 
-    if (throwable instanceof AuthenticationException) {
-      return HttpError.Type.UNAUTHENTICATED;
+    if (throwable instanceof InvalidInputException
+            || throwable instanceof InvalidRequestException
+            || throwable instanceof DgsBadRequestException) {
+      return HttpStatus.BAD_REQUEST.value();
+    }
+
+    if (throwable instanceof AuthenticationException
+            || throwable instanceof InvalidTokenException) {
+      return HttpStatus.UNAUTHORIZED.value();
     }
 
     if (throwable instanceof ResponseStatusException) {
-      return HttpError.Type.NOT_FOUND;
+      return HttpStatus.NOT_FOUND.value();
     }
 
-    return HttpError.Type.INTERNAL;
+    return HttpStatus.INTERNAL_SERVER_ERROR.value();
   }
 }

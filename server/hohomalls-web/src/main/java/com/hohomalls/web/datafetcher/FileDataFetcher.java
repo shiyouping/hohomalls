@@ -4,8 +4,8 @@ import com.hohomalls.core.common.Global;
 import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.core.service.StorageService;
 import com.hohomalls.core.util.HashUtil;
-import com.hohomalls.data.document.FileHash;
-import com.hohomalls.data.service.FileHashService;
+import com.hohomalls.data.document.Metadata;
+import com.hohomalls.data.service.MetadataService;
 import com.hohomalls.web.aop.HasAnyRoles;
 import com.hohomalls.web.common.GraphqlType;
 import com.hohomalls.web.config.WebProperties;
@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
 public class FileDataFetcher {
 
   private final StorageService storageService;
-  private final FileHashService fileHashService;
+  private final MetadataService metadataService;
   private final WebProperties webProperties;
 
   /**
@@ -56,12 +56,6 @@ public class FileDataFetcher {
       return Mono.error(new DgsBadRequestException("Cannot save an empty file"));
     }
 
-    if (file.getSize() > this.webProperties.multipart().maxFileSize()) {
-      return Mono.error(
-          new DgsBadRequestException(
-              "File size exceeds %s".formatted(this.webProperties.multipart().maxFileSize())));
-    }
-
     if (!StringUtils.hasText(rootDir) || !StringUtils.hasText(subDir)) {
       return Mono.error(new DgsBadRequestException("Invalid rootDir or subDir"));
     }
@@ -73,25 +67,25 @@ public class FileDataFetcher {
     }
 
     var data = file.getBytes();
-    var fullPath = String.join(Global.PATH_DELIMITER, rootDir, subDir);
+    var hash = HashUtil.getMurmur3(data);
+    var fullPath = String.join(Global.SIGN_SLASH, rootDir, subDir);
 
-    return this.fileHashService
-        .findByDataAndFullPath(data, fullPath)
-        .switchIfEmpty(this.saveFile(data, fullPath))
+    return this.metadataService
+        .findByNameAndPath(hash, fullPath)
+        .switchIfEmpty(Mono.defer(() -> this.saveFile(data, fullPath, hash)))
         .map(this::getFullUrl);
   }
 
-  private String getFullUrl(FileHash fileHash) {
+  private String getFullUrl(Metadata metadata) {
     return String.join(
-        Global.PATH_DELIMITER,
+        Global.SIGN_SLASH,
         this.webProperties.multipart().baseStorageUrl(),
-        fileHash.getFullPath(),
-        fileHash.getHash());
+        metadata.getPath(),
+        metadata.getName());
   }
 
-  private Mono<FileHash> saveFile(byte[] data, String fullPath) {
-    var hash = HashUtil.getMurmur3(data);
+  private Mono<Metadata> saveFile(byte[] data, String fullPath, String hash) {
     this.storageService.save(data, fullPath, hash);
-    return this.fileHashService.save(FileHash.builder().hash(hash).fullPath(fullPath).build());
+    return this.metadataService.save(Metadata.builder().name(hash).path(fullPath).build());
   }
 }

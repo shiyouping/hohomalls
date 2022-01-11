@@ -66,6 +66,6 @@ class TokenServiceImplTest {
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk+fnC2zQe1b+VOeXj4Pq9q2CML+S3Qz/4px3m68I9sve8E299Zb80VcMTlJjxvWDGMIQTCpJKswHgYCiugqxFgOFSjhFuiXG3XLEuXjQVTCRyEhOXekJiGLMZQUok6RNtWjRc6pvowO+izddgED0Ru2DSyfdVgRJM0z1d2PVSrNPYl9dk/j0sC7RLBCvWDXOdn8RJBPCJAwo/ISs/U4Axfph3cKuya3E/G++LBwxr0hGz13n7rlqPs+hlLRNCNvlybkQrtcsKnY3vYMXT2+FLPpqztp2JmRTeTbVU/oTZp45JrrVszCQ/Ctd+Zx5rCsieyBc4rZvKNWwdHCo8K8h1QIDAQAB",
             24000L);
 
-    return new WebProperties(new Multipart(1, null, null), token);
+    return new WebProperties(new Multipart(new WebProperties.FileSize(1, 1), null, null), token);
   }
 }

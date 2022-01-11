@@ -8,20 +8,26 @@ package com.hohomalls.core.common;
  */
 public final class Global {
 
-  public static final String COMMA = ",";
-  public static final String PATH_DELIMITER = "/";
+  public static final String SIGN_COMMA = ",";
+  public static final String SIGN_PERIOD = ".";
+  public static final String SIGN_SLASH = "/";
 
-  // JWT related
-  public static final String EMAIL = "email";
-  public static final String ROLES = "roles";
-  public static final String NICKNAME = "nickname";
-  public static final String SUBJECT = "sub";
-  public static final String BASE_PACKAGE = "com.hohomalls";
-  public static final String PROPERTY_PREFIX = "com.hohomalls.";
+  public static final String MEDIA_TYPE_IMAGE = "image";
+  public static final String MEDIA_TYPE_VIDEO = "video";
+
+  public static final String JWT_EMAIL = "email";
+  public static final String JWT_ROLES = "roles";
+  public static final String JWT_NICKNAME = "nickname";
+  public static final String JWT_SUBJECT = "sub";
+
+  public static final String CONFIG_BASE_PACKAGE = "com.hohomalls";
+  public static final String CONFIG_PROPERTY_PREFIX = "com.hohomalls.";
+
   public static final String PROFILE_NON_PROD = "!prod";
   public static final String PROFILE_PROD = "prod";
+
   public static final String AUTH_PREFIX = "Bearer";
-  public static final String ANONYMOUS = "ANONYMOUS";
+  public static final String AUTH_ANONYMOUS = "ANONYMOUS";
 
   private Global() {}
 }

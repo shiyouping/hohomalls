@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hohomalls.core.common.Global.ANONYMOUS;
+import static com.hohomalls.core.common.Global.AUTH_ANONYMOUS;
 
 /**
  * Converts JWT token to an Authentication.
@@ -47,8 +47,8 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
             Optional<String> email;
 
             try {
-              roles = tokenService.getRoles(token.get());
-              email = tokenService.getEmailFromJwt(token.get());
+              roles = this.tokenService.getRoles(token.get());
+              email = this.tokenService.getEmailFromJwt(token.get());
             } catch (Exception ex) {
               throw new BadCredentialsException("Invalid jwt token", ex);
             }
@@ -62,7 +62,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
           }
 
           return new AnonymousAuthenticationToken(
-              ANONYMOUS, ANONYMOUS, AuthorityUtil.getAnonymousAuthority());
+              AUTH_ANONYMOUS, AUTH_ANONYMOUS, AuthorityUtil.getAnonymousAuthority());
         });
   }
 }

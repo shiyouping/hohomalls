@@ -57,7 +57,7 @@ public class TokenServiceImpl implements TokenService {
       return Optional.empty();
     }
 
-    var email = claims.get().getBody().get(EMAIL, String.class);
+    var email = claims.get().getBody().get(JWT_EMAIL, String.class);
     if (!EmailValidator.getInstance().isValid(email)) {
       throw new InvalidTokenException("Invalid email");
     }
@@ -72,12 +72,12 @@ public class TokenServiceImpl implements TokenService {
       return List.of();
     }
 
-    var roles = claims.get().getBody().get(ROLES, String.class);
+    var roles = claims.get().getBody().get(JWT_ROLES, String.class);
     if (!StringUtils.hasText(roles)) {
       throw new InvalidTokenException("Invalid role");
     }
 
-    return Arrays.stream(roles.split(COMMA)).map(Role::valueOf).collect(Collectors.toList());
+    return Arrays.stream(roles.split(SIGN_COMMA)).map(Role::valueOf).collect(Collectors.toList());
   }
 
   @Override
@@ -93,18 +93,18 @@ public class TokenServiceImpl implements TokenService {
 
     var roleList =
         Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
-    var roleString = String.join(COMMA, roleList);
+    var roleString = String.join(SIGN_COMMA, roleList);
     var expiration =
         Date.from(Instant.now().plus(this.webProperties.token().lifespan(), ChronoUnit.HOURS));
     Map<String, Object> claims =
         Map.of(
-            Global.SUBJECT,
+            Global.JWT_SUBJECT,
             TokenServiceImpl.SUBJECT,
-            EMAIL,
+            JWT_EMAIL,
             email,
-            NICKNAME,
+            JWT_NICKNAME,
             nickname,
-            ROLES,
+            JWT_ROLES,
             roleString);
     return Optional.of(JwtUtil.generate(TokenServiceImpl.privateKey, claims, expiration));
   }

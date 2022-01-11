@@ -13,5 +13,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class DummyStorageServiceImpl implements StorageService {
   @Override
-  public void save(byte[] data, @NotNull String fullPath, @NotNull String fileName) {}
+  public void save(byte[] data, @NotNull String filePath, @NotNull String fileName) {}
 }

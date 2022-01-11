@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
-import static com.hohomalls.core.common.Global.BASE_PACKAGE;
+import static com.hohomalls.core.common.Global.CONFIG_BASE_PACKAGE;
 
 /**
  * MongoDB configurations.
@@ -22,7 +22,7 @@ import static com.hohomalls.core.common.Global.BASE_PACKAGE;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@EnableReactiveMongoRepositories(basePackages = BASE_PACKAGE)
+@EnableReactiveMongoRepositories(basePackages = CONFIG_BASE_PACKAGE)
 public class MongoConfig extends AbstractReactiveMongoConfiguration {
 
   private final MongoProperties mongoProperties;

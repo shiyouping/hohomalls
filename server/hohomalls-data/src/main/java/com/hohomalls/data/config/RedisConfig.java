@@ -17,7 +17,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-import static com.hohomalls.core.common.Global.BASE_PACKAGE;
+import static com.hohomalls.core.common.Global.CONFIG_BASE_PACKAGE;
 
 /**
  * The class of RedisConfig.
@@ -33,7 +33,7 @@ import static com.hohomalls.core.common.Global.BASE_PACKAGE;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@EnableRedisRepositories(basePackages = BASE_PACKAGE)
+@EnableRedisRepositories(basePackages = CONFIG_BASE_PACKAGE)
 public class RedisConfig {
 
   private final RedisProperties redisProperties;
