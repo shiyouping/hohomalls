@@ -4,6 +4,8 @@ plugins {
 
 dependencies {
     api project(':hohomalls-core')
+    api group: 'jakarta.annotation', name: 'jakarta.annotation-api'
+    api group: 'jakarta.validation', name: 'jakarta.validation-api'
     api('org.springframework.cloud:spring-cloud-starter-aws') {
         exclude group: 'com.amazonaws', module: 'aws-java-sdk-ec2'
         exclude group: 'com.amazonaws', module: 'aws-java-sdk-cloudformation'
