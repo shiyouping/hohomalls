@@ -1,6 +1,7 @@
 package com.hohomalls.core.service;
 
 import org.jetbrains.annotations.NotNull;
+import reactor.core.publisher.Mono;
 
 /**
  * StorageService.
@@ -11,5 +12,5 @@ import org.jetbrains.annotations.NotNull;
 public interface StorageService {
 
   /** Save the data in the designated place. */
-  void save(byte[] data, @NotNull String filePath, @NotNull String fileName);
+  Mono<Void> save(byte[] data, @NotNull String filePath, @NotNull String fileName);
 }

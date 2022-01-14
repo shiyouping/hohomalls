@@ -92,7 +92,8 @@ public class FileServiceImpl implements FileService {
   }
 
   private Mono<Metadata> saveFile(byte[] data, String path, String name) {
-    this.storageService.save(data, path, name);
-    return this.metadataService.save(Metadata.builder().name(name).path(path).build());
+    return this.storageService
+        .save(data, path, name)
+        .then(this.metadataService.save(Metadata.builder().name(name).path(path).build()));
   }
 }
