@@ -4,6 +4,8 @@ plugins {
 
 dependencies {
     api project(':hohomalls-core')
-    api group: 'org.springframework.cloud', name: 'spring-cloud-aws-context'
-    api group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure'
+    api('org.springframework.cloud:spring-cloud-starter-aws') {
+        exclude group: 'com.amazonaws', module: 'aws-java-sdk-ec2'
+        exclude group: 'com.amazonaws', module: 'aws-java-sdk-cloudformation'
+    }
 }

@@ -4,8 +4,7 @@ plugins {
 }
 
 dependencies {
-    // FIXME
-    // implementation project(':hohomalls-aws')
+    implementation project(':hohomalls-aws')
     implementation project(':hohomalls-web')
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'

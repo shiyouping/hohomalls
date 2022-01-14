@@ -13,6 +13,11 @@ dgs:
     graphiql:
       enabled: false
 
+cloud:
+  aws:
+    region:
+      static: # Injected via environment variables
+
 com:
   hohomalls:
     web:

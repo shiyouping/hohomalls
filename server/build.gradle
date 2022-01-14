@@ -49,8 +49,8 @@ buildscript {
     }
 
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
         classpath "io.freefair.gradle:lombok-plugin:$lombokPluginVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootPluginVersion"
         classpath "com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:$dgsCodegenPluginVersion"
     }

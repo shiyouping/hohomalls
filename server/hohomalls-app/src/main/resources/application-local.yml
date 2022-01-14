@@ -15,6 +15,11 @@ dgs:
     graphiql:
       enabled: true
 
+cloud:
+  aws:
+    region:
+      static: us-east-1
+
 com:
   hohomalls:
     web:
