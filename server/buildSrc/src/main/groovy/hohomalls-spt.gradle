@@ -1,0 +1,11 @@
+// Custom plugin for SpringBoot application
+plugins {
+    id 'hohomalls-lib'
+    id 'org.springframework.boot'
+}
+
+bootBuildImage {
+    // See Packaging OCI images at
+    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#build-image.customization
+    environment = ['BP_JVM_TYPE': 'JRE']
+}

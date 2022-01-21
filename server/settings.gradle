@@ -1,9 +1,16 @@
 rootProject.name = 'hohomalls-server'
 
+// Plugin versions are maintained in buildSrc/build.gradle
+// Dependency versions are maintained in hohomalls-bom.gradle
+include ':hohomalls-bom'
+
+// Subprojects as libraries
 include ':hohomalls-core'
 include ':hohomalls-data'
 include ':hohomalls-web'
 include ':hohomalls-aws'
+
+// Executable subprojects
 include ':hohomalls-app'
 include ':hohomalls-mongo'
 

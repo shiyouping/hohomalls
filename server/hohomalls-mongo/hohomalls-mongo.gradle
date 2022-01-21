@@ -1,9 +1,16 @@
 plugins {
-    id 'org.springframework.boot'
+    id 'hohomalls-spt'
 }
 
 dependencies {
-    implementation group: 'io.mongock', name: 'mongock-springboot'
-    implementation group: 'io.mongock', name: 'mongodb-springdata-v3-driver'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
+    // Get recommended versions from the bom
+    implementation platform(project(':hohomalls-bom'))
+
+    implementation 'io.mongock:mongock-springboot'
+    implementation 'io.mongock:mongodb-springdata-v3-driver'
+    implementation 'org.jetbrains:annotations'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 }

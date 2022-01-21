@@ -1,28 +1,29 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'com.netflix.dgs.codegen'
+    id 'hohomalls-gql'
 }
 
 dependencies {
+    annotationProcessor platform(project(':hohomalls-bom'))
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
+
     implementation project(':hohomalls-aws')
     implementation project(':hohomalls-web')
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
-    runtimeOnly group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    runtimeOnly group: 'io.netty', name: 'netty-resolver-dns-native-macos', classifier: 'osx-aarch_64'
-    testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
+    implementation 'org.mapstruct:mapstruct'
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.netty:netty-all'
+
+    testAnnotationProcessor platform(project(':hohomalls-bom'))
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor'
+
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-generateJava {
-    // See GraphQL configurations at:
-    // https://netflix.github.io/dgs/generating-code-from-schema/
-    packageName = 'com.hohomalls.app.graphql'
-    generateClient = false
-    generateBoxedTypes = true
-}
-
-bootBuildImage {
-    // See Packaging OCI images at
-    // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#build-image.customization
-    environment = ["BP_JVM_TYPE": "JRE"]
+compileJava {
+    options.compilerArgs += ['-Amapstruct.defaultComponentModel=spring',
+                             '-Amapstruct.defaultInjectionStrategy=constructor']
 }

@@ -32,42 +32,43 @@ public class JwtUtilTest {
   @Order(1)
   public void testGenerate() {
     var expiration = Date.from(Instant.parse("2050-01-01T00:00:00.00Z"));
-    Map<String, Object> claims = Map.of("email", email);
+    Map<String, Object> claims = Map.of("email", JwtUtilTest.email);
 
-    assertThatExceptionOfType(RuntimeException.class)
-        .as("IllegalArgument")
+    assertThatIllegalArgumentException()
         .isThrownBy(() -> JwtUtil.generate(null, claims, expiration));
 
-    assertThatExceptionOfType(RuntimeException.class)
-        .as("IllegalArgument")
-        .isThrownBy(() -> JwtUtil.generate(keyPair.getPrivate(), claims, null));
+    assertThatNullPointerException()
+        .isThrownBy(() -> JwtUtil.generate(JwtUtilTest.keyPair.getPrivate(), claims, null));
 
-    token = JwtUtil.generate(keyPair.getPrivate(), claims, expiration);
-    var jws = Jwts.parserBuilder().setSigningKey(keyPair.getPublic()).build().parseClaimsJws(token);
+    JwtUtilTest.token = JwtUtil.generate(JwtUtilTest.keyPair.getPrivate(), claims, expiration);
+    var jws =
+        Jwts.parserBuilder()
+            .setSigningKey(JwtUtilTest.keyPair.getPublic())
+            .build()
+            .parseClaimsJws(JwtUtilTest.token);
     assertThat(jws).as("jws").isNotNull();
     assertThat(jws.getHeader().getAlgorithm()).as("jws algorithm").isEqualTo("RS256");
     assertThat(jws.getBody().getIssuer()).as("jws issuer").isEqualTo("www.hohomalls.com");
     assertThat(jws.getBody().getId()).as("jws id").isNotNull();
     assertThat(jws.getBody().getExpiration()).as("jws expiration").isEqualTo(expiration);
-    assertThat(jws.getBody().get("email")).as("jws email").isEqualTo(email);
+    assertThat(jws.getBody().get("email")).as("jws email").isEqualTo(JwtUtilTest.email);
   }
 
   @Test
   @Order(2)
   public void testParse() {
-    assertThatNullPointerException()
-        .as("NullPointerException")
-        .isThrownBy(() -> JwtUtil.parse(null, token))
-        .withMessageContaining("publicKey cannot be null");
+    assertThatIllegalArgumentException()
+        .as("IllegalArgumentException")
+        .isThrownBy(() -> JwtUtil.parse(null, JwtUtilTest.token))
+        .withMessageContaining("signing key cannot be null");
 
-    assertThatNullPointerException()
-        .as("NullPointerException")
-        .isThrownBy(() -> JwtUtil.parse(keyPair.getPublic(), null))
-        .withMessageContaining("jws cannot be null");
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> JwtUtil.parse(JwtUtilTest.keyPair.getPublic(), null))
+        .withMessageContaining("JWT String argument cannot be null or empty.");
 
-    var claims = JwtUtil.parse(keyPair.getPublic(), token);
+    var claims = JwtUtil.parse(JwtUtilTest.keyPair.getPublic(), JwtUtilTest.token);
     assertThat(claims).as("claims").isNotNull();
     assertThat(claims.getBody()).as("claims body").isNotNull();
-    assertThat(claims.getBody().get("email")).as("claims email").isEqualTo(email);
+    assertThat(claims.getBody().get("email")).as("claims email").isEqualTo(JwtUtilTest.email);
   }
 }

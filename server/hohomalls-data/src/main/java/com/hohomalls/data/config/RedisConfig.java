@@ -48,11 +48,6 @@ public class RedisConfig {
   @Bean
   @NotNull
   public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
-    var clientConfig =
-        this.redisProperties.isSsl()
-            ? LettuceClientConfiguration.builder().useSsl().build()
-            : LettuceClientConfiguration.builder().build();
-
     var redisConfig =
         new RedisStandaloneConfiguration(
             this.redisProperties.getHost(), this.redisProperties.getPort());
@@ -64,6 +59,10 @@ public class RedisConfig {
         this.redisProperties.getHost(),
         this.redisProperties.getPort());
 
+    var clientConfig =
+        this.redisProperties.isSsl()
+            ? LettuceClientConfiguration.builder().useSsl().build()
+            : LettuceClientConfiguration.builder().build();
     return new LettuceConnectionFactory(redisConfig, clientConfig);
   }
 

@@ -1,13 +1,21 @@
 plugins {
-    id 'java-library'
+    id 'hohomalls-lib'
 }
 
 dependencies {
-    api group: 'commons-beanutils', name: 'commons-beanutils'
-    api group: 'io.jsonwebtoken', name: 'jjwt-api'
-    api group: 'org.passay', name: 'passay'
-    api group: 'io.projectreactor', name: 'reactor-core'
-    api group: 'com.googlecode.libphonenumber', name: 'libphonenumber'
-    testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl'
-    testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson'
+    // Get recommended versions from the bom
+    api platform(project(':hohomalls-bom'))
+    api 'com.google.guava:guava'
+    api 'com.googlecode.libphonenumber:libphonenumber'
+    api 'commons-beanutils:commons-beanutils'
+    api 'io.jsonwebtoken:jjwt-api'
+    api 'io.projectreactor:reactor-core'
+    api 'org.jetbrains:annotations'
+    api 'org.passay:passay'
+
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testRuntimeOnly 'io.jsonwebtoken:jjwt-impl'
+    testRuntimeOnly 'io.jsonwebtoken:jjwt-jackson'
 }

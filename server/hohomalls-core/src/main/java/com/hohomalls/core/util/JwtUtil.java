@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The interface of JwtUtil.
  *
@@ -29,6 +31,8 @@ public final class JwtUtil {
   @NotNull
   public static String generate(
       @NotNull Key privateKey, @Nullable Map<String, Object> claims, @NotNull Date expiration) {
+    checkNotNull(expiration, "expiration cannot be null");
+
     return Jwts.builder()
         .setIssuer(JwtUtil.issuer)
         .setId(UUID.randomUUID().toString())

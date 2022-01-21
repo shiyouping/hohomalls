@@ -1,0 +1,34 @@
+// See guideline at https://docs.gradle.org/current/userguide/java_platform_plugin.html
+plugins {
+    id 'java-platform'
+}
+
+javaPlatform {
+    // Allow to include the constraints from third-party BOMs
+    allowDependencies()
+}
+
+dependencies {
+    // Import versions from other BOMs
+    api platform('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:4.9.16')
+    api platform('org.springframework.boot:spring-boot-dependencies:2.6.2')
+    api platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.0')
+
+    constraints {
+        api 'com.github.ben-manes.caffeine:caffeine:3.0.5'
+        api 'com.googlecode.libphonenumber:libphonenumber:8.12.41'
+        api 'commons-beanutils:commons-beanutils:1.9.4'
+        api 'commons-validator:commons-validator:1.7'
+        api 'io.jsonwebtoken:jjwt-api:0.11.2'
+        api 'io.mongock:mongock-springboot:5.0.35'
+        api 'io.mongock:mongodb-springdata-v3-driver:5.0.35'
+        api 'io.netty:netty-all:4.1.73.Final'
+        api 'org.jetbrains:annotations:23.0.0'
+        api 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+        api 'org.mapstruct:mapstruct:1.4.2.Final'
+        api 'org.passay:passay:1.6.1'
+
+        runtime 'io.jsonwebtoken:jjwt-impl:0.11.2'
+        runtime 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+    }
+}
