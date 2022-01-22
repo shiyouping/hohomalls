@@ -12,8 +12,8 @@ dependencies {
 
     runtimeOnly 'io.jsonwebtoken:jjwt-impl'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
-    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.netty:netty-all'
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
     testAnnotationProcessor platform(project(':hohomalls-bom'))
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor'

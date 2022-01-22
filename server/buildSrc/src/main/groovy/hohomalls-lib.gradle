@@ -90,7 +90,7 @@ checkstyle {
 }
 
 pmd {
-    maxFailures = 10
+    maxFailures = 0
     consoleOutput = false
     ignoreFailures = false
     incrementalAnalysis = false

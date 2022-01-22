@@ -6,4 +6,4 @@ package com.hohomalls.core.pojo;
  * @author ricky.shiyouping@gmail.com
  * @since 16/7/2021
  */
-public abstract class BasePojo {}
+public class BasePojo {}

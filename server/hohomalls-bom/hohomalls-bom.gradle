@@ -3,6 +3,22 @@ plugins {
     id 'java-platform'
 }
 
+ext {
+    versions = ['caffeine'        : '3.0.5',
+                'commonsBeanutils': '1.9.4',
+                'commonsValidator': '1.7',
+                'dgsFramework'    : '4.9.16',
+                'jetbrains'       : '23.0.0',
+                'jjwt'            : '0.11.2',
+                'libphonenumber'  : '8.12.41',
+                'mapstruct'       : '1.4.2.Final',
+                'mongock'         : '5.0.35',
+                'netty'           : '4.1.73.Final',
+                'passay'          : '1.6.1',
+                'springBoot'      : '2.6.3',
+                'springCloud'     : '2021.0.0']
+}
+
 javaPlatform {
     // Allow to include the constraints from third-party BOMs
     allowDependencies()
@@ -10,25 +26,25 @@ javaPlatform {
 
 dependencies {
     // Import versions from other BOMs
-    api platform('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:4.9.16')
-    api platform('org.springframework.boot:spring-boot-dependencies:2.6.2')
-    api platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.0')
+    api platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$versions.dgsFramework")
+    api platform("org.springframework.boot:spring-boot-dependencies:$versions.springBoot")
+    api platform("org.springframework.cloud:spring-cloud-dependencies:$versions.springCloud")
 
     constraints {
-        api 'com.github.ben-manes.caffeine:caffeine:3.0.5'
-        api 'com.googlecode.libphonenumber:libphonenumber:8.12.41'
-        api 'commons-beanutils:commons-beanutils:1.9.4'
-        api 'commons-validator:commons-validator:1.7'
-        api 'io.jsonwebtoken:jjwt-api:0.11.2'
-        api 'io.mongock:mongock-springboot:5.0.35'
-        api 'io.mongock:mongodb-springdata-v3-driver:5.0.35'
-        api 'io.netty:netty-all:4.1.73.Final'
-        api 'org.jetbrains:annotations:23.0.0'
-        api 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-        api 'org.mapstruct:mapstruct:1.4.2.Final'
-        api 'org.passay:passay:1.6.1'
+        api "com.github.ben-manes.caffeine:caffeine:$versions.caffeine"
+        api "com.googlecode.libphonenumber:libphonenumber:$versions.libphonenumber"
+        api "commons-beanutils:commons-beanutils:$versions.commonsBeanutils"
+        api "commons-validator:commons-validator:$versions.commonsValidator"
+        api "io.jsonwebtoken:jjwt-api:$versions.jjwt"
+        api "io.mongock:mongock-springboot:$versions.mongock"
+        api "io.mongock:mongodb-springdata-v3-driver:$versions.mongock"
+        api "io.netty:netty-all:$versions.netty"
+        api "org.jetbrains:annotations:$versions.jetbrains"
+        api "org.mapstruct:mapstruct-processor:$versions.mapstruct"
+        api "org.mapstruct:mapstruct:$versions.mapstruct"
+        api "org.passay:passay:$versions.passay"
 
-        runtime 'io.jsonwebtoken:jjwt-impl:0.11.2'
-        runtime 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+        runtime "io.jsonwebtoken:jjwt-impl:$versions.jjwt"
+        runtime "io.jsonwebtoken:jjwt-jackson:$versions.jjwt"
     }
 }

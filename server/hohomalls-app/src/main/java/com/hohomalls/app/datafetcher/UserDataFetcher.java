@@ -4,6 +4,7 @@ import com.hohomalls.app.document.User;
 import com.hohomalls.app.graphql.types.*;
 import com.hohomalls.app.mapper.UserMapper;
 import com.hohomalls.app.service.UserService;
+import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.core.util.BeanUtil;
 import com.hohomalls.web.aop.HasAnyRoles;
 import com.hohomalls.web.service.SessionService;
@@ -25,8 +26,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestHeader;
 import reactor.core.publisher.Mono;
 
-import static com.hohomalls.core.enumeration.Role.*;
-
 /**
  * The class of UserDataFetcher.
  *
@@ -45,7 +44,7 @@ public class UserDataFetcher {
   private final PasswordEncoder passwordEncoder;
 
   @DgsMutation
-  @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
+  @HasAnyRoles({Role.ROLE_SELLER, Role.ROLE_BUYER})
   public Mono<Void> changePassword(
       @RequestHeader String authorization,
       @InputArgument("password") ChangePasswordDto changePasswordDto) {
@@ -63,7 +62,7 @@ public class UserDataFetcher {
   }
 
   @DgsQuery
-  @HasAnyRoles({ROLE_BUYER, ROLE_SELLER})
+  @HasAnyRoles({Role.ROLE_BUYER, Role.ROLE_SELLER})
   public Mono<UserDto> findUser(@RequestHeader String authorization) {
     UserDataFetcher.log.info(
         "Received a request to find the user. Authorization={}", authorization);
@@ -75,7 +74,7 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @HasAnyRoles(ROLE_ANONYMOUS)
+  @HasAnyRoles(Role.ROLE_ANONYMOUS)
   public Mono<String> signIn(@InputArgument("credentials") CredentialsDto credentialsDto) {
     UserDataFetcher.log.info("Received a request to sign in. Email={}", credentialsDto.getEmail());
 
@@ -93,7 +92,7 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
+  @HasAnyRoles({Role.ROLE_SELLER, Role.ROLE_BUYER})
   public Mono<Void> signOut(@RequestHeader String authorization) {
     UserDataFetcher.log.info("Received a request to sign out. Authorization={}", authorization);
 
@@ -103,14 +102,14 @@ public class UserDataFetcher {
 
   @SneakyThrows
   @DgsMutation
-  @HasAnyRoles(ROLE_ANONYMOUS)
+  @HasAnyRoles(Role.ROLE_ANONYMOUS)
   public Mono<String> signUp(@InputArgument("user") CreateUserDto createUserDto) {
     UserDataFetcher.log.info("Received a request to sign up. Email={}", createUserDto.getEmail());
 
     var roles = createUserDto.getRoles();
-    if (!roles.contains(Role.ROLE_BUYER)) {
+    if (!roles.contains(com.hohomalls.app.graphql.types.Role.ROLE_BUYER)) {
       // Every new user has the buyer role
-      roles.add(Role.ROLE_BUYER);
+      roles.add(com.hohomalls.app.graphql.types.Role.ROLE_BUYER);
     }
 
     if (this.userService.findByEmail(createUserDto.getEmail()).toFuture().get() != null) {
@@ -123,7 +122,7 @@ public class UserDataFetcher {
   }
 
   @DgsMutation
-  @HasAnyRoles({ROLE_SELLER, ROLE_BUYER})
+  @HasAnyRoles({Role.ROLE_SELLER, Role.ROLE_BUYER})
   public Mono<UserDto> updateUser(
       @RequestHeader String authorization, @InputArgument("user") UpdateUserDto updateUserDto) {
     UserDataFetcher.log.info("Received a request to update user. Authorization={}", authorization);

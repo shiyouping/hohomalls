@@ -46,6 +46,6 @@ public interface FileUtil {
   }
 
   private static InputStream readFrom(String fileName) {
-    return FileUtil.class.getClassLoader().getResourceAsStream(fileName);
+    return Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
   }
 }

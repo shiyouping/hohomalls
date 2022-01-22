@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthenticationFilter implements WebFilter {
 
-  private final AuthenticationWebFilter authenticationWebFilter;
+  private final transient AuthenticationWebFilter authenticationWebFilter;
 
   @Autowired
   public AuthenticationFilter(

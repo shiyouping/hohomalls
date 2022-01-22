@@ -14,7 +14,7 @@ public interface PhoneUtil {
 
   @SneakyThrows
   static boolean isValid(@Nullable String number) {
-    if (number == null || !number.startsWith("+")) {
+    if (number == null || number.charAt(0) != '+') {
       return false;
     }
 

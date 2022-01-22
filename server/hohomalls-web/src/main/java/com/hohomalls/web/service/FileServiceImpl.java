@@ -1,5 +1,6 @@
 package com.hohomalls.web.service;
 
+import com.hohomalls.core.common.Global;
 import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.core.service.StorageService;
 import com.hohomalls.core.util.FileUtil;
@@ -16,8 +17,6 @@ import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
 import java.util.StringJoiner;
-
-import static com.hohomalls.core.common.Global.*;
 
 /**
  * FileServiceImpl.
@@ -42,12 +41,12 @@ public class FileServiceImpl implements FileService {
         "Saving a file... rootDir={}, subDir={}, fileName={}", rootDir, subDir, fileName);
 
     var hash = HashUtil.getMurmur3(data);
-    var path = String.join(SIGN_SLASH, rootDir, subDir);
+    var path = String.join(Global.SIGN_SLASH, rootDir, subDir);
     var extension =
         FileUtil.getExtension(fileName)
             .orElseThrow(() -> new InvalidInputException("No file extension."));
 
-    var nameJoiner = new StringJoiner(SIGN_PERIOD).add(hash);
+    var nameJoiner = new StringJoiner(Global.SIGN_PERIOD).add(hash);
     if (StringUtils.hasText(extension)) {
       nameJoiner.add(extension);
     }
@@ -60,6 +59,7 @@ public class FileServiceImpl implements FileService {
   }
 
   @Override
+  @SuppressWarnings("PMD")
   public void validate(long fileSize, @NotNull MediaType mediaType) {
     if (mediaType == null || fileSize <= 0) {
       throw new InvalidInputException("No file uploaded");
@@ -72,12 +72,12 @@ public class FileServiceImpl implements FileService {
     var imageMaxSize = this.webProperties.multipart().maxFileSize().image() * 1024;
     var videoMaxSize = this.webProperties.multipart().maxFileSize().video() * 1024;
 
-    if (MEDIA_TYPE_IMAGE.equals(mediaType.getType()) && fileSize > imageMaxSize) {
+    if (Global.MEDIA_TYPE_IMAGE.equals(mediaType.getType()) && fileSize > imageMaxSize) {
       throw new InvalidInputException(
           "File size exceeds the limit of %d bytes for images".formatted(imageMaxSize));
     }
 
-    if (MEDIA_TYPE_VIDEO.equals(mediaType.getType()) && fileSize > videoMaxSize) {
+    if (Global.MEDIA_TYPE_VIDEO.equals(mediaType.getType()) && fileSize > videoMaxSize) {
       throw new InvalidInputException(
           "File size  exceeds the limit of %d bytes for video".formatted(videoMaxSize));
     }
@@ -85,7 +85,7 @@ public class FileServiceImpl implements FileService {
 
   private String generateUrl(Metadata metadata) {
     return String.join(
-        SIGN_SLASH,
+        Global.SIGN_SLASH,
         this.webProperties.multipart().baseStorageUrl(),
         metadata.getPath(),
         metadata.getName());

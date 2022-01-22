@@ -5,6 +5,7 @@ import com.hohomalls.app.document.Category;
 import com.hohomalls.app.graphql.types.CategoryDto;
 import com.hohomalls.app.mapper.CategoryMapper;
 import com.hohomalls.app.service.CategoryService;
+import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.web.aop.HasAnyRoles;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
@@ -15,8 +16,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.stream.Stream;
-
-import static com.hohomalls.core.enumeration.Role.*;
 
 /**
  * CategoryDataFetcher.
@@ -33,7 +32,7 @@ public class CategoryDataFetcher {
   private final CategoryService categoryService;
 
   @DgsQuery
-  @HasAnyRoles({ROLE_ANONYMOUS, ROLE_BUYER, ROLE_SELLER})
+  @HasAnyRoles({Role.ROLE_ANONYMOUS, Role.ROLE_BUYER, Role.ROLE_SELLER})
   public Mono<List<CategoryDto>> findAllCategories() {
     CategoryDataFetcher.log.info("Received a request to find all categories");
     return this.categoryService

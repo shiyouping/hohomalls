@@ -35,6 +35,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
   private final TokenService tokenService;
 
   @Override
+  @SuppressWarnings("PMD")
   public Mono<Authentication> convert(ServerWebExchange exchange) {
     return Mono.fromSupplier(
         () -> {
