@@ -1,6 +1,6 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.core.common.Global;
+import com.hohomalls.core.common.Constant;
 import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.core.service.StorageService;
 import com.hohomalls.core.util.FileUtil;
@@ -41,12 +41,12 @@ public class FileServiceImpl implements FileService {
         "Saving a file... rootDir={}, subDir={}, fileName={}", rootDir, subDir, fileName);
 
     var hash = HashUtil.getMurmur3(data);
-    var path = String.join(Global.SIGN_SLASH, rootDir, subDir);
+    var path = String.join(Constant.SIGN_SLASH, rootDir, subDir);
     var extension =
         FileUtil.getExtension(fileName)
             .orElseThrow(() -> new InvalidInputException("No file extension."));
 
-    var nameJoiner = new StringJoiner(Global.SIGN_PERIOD).add(hash);
+    var nameJoiner = new StringJoiner(Constant.SIGN_PERIOD).add(hash);
     if (StringUtils.hasText(extension)) {
       nameJoiner.add(extension);
     }
@@ -72,12 +72,12 @@ public class FileServiceImpl implements FileService {
     var imageMaxSize = this.webProperties.multipart().maxFileSize().image() * 1024;
     var videoMaxSize = this.webProperties.multipart().maxFileSize().video() * 1024;
 
-    if (Global.MEDIA_TYPE_IMAGE.equals(mediaType.getType()) && fileSize > imageMaxSize) {
+    if (Constant.MEDIA_TYPE_IMAGE.equals(mediaType.getType()) && fileSize > imageMaxSize) {
       throw new InvalidInputException(
           "File size exceeds the limit of %d bytes for images".formatted(imageMaxSize));
     }
 
-    if (Global.MEDIA_TYPE_VIDEO.equals(mediaType.getType()) && fileSize > videoMaxSize) {
+    if (Constant.MEDIA_TYPE_VIDEO.equals(mediaType.getType()) && fileSize > videoMaxSize) {
       throw new InvalidInputException(
           "File size  exceeds the limit of %d bytes for video".formatted(videoMaxSize));
     }
@@ -85,7 +85,7 @@ public class FileServiceImpl implements FileService {
 
   private String generateUrl(Metadata metadata) {
     return String.join(
-        Global.SIGN_SLASH,
+        Constant.SIGN_SLASH,
         this.webProperties.multipart().baseStorageUrl(),
         metadata.getPath(),
         metadata.getName());

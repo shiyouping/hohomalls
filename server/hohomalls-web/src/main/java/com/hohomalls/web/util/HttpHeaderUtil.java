@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import static com.hohomalls.core.common.Global.AUTH_PREFIX;
+import static com.hohomalls.core.common.Constant.AUTH_PREFIX;
 
 /**
  * The class of HttpHeaderUtil.

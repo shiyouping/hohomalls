@@ -17,7 +17,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-import static com.hohomalls.core.common.Global.CONFIG_BASE_PACKAGE;
+import static com.hohomalls.core.common.Constant.CONFIG_BASE_PACKAGE;
 
 /**
  * The class of RedisConfig.

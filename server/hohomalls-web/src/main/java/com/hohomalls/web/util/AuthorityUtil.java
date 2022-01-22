@@ -1,6 +1,6 @@
 package com.hohomalls.web.util;
 
-import com.hohomalls.core.common.Global;
+import com.hohomalls.core.common.Constant;
 import com.hohomalls.core.enumeration.Role;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,6 +31,6 @@ public interface AuthorityUtil {
     }
 
     return AuthorityUtils.commaSeparatedStringToAuthorityList(
-        roles.stream().map(Role::name).collect(Collectors.joining(Global.SIGN_COMMA)));
+        roles.stream().map(Role::name).collect(Collectors.joining(Constant.SIGN_COMMA)));
   }
 }

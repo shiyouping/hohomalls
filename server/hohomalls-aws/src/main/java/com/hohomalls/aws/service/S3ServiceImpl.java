@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.hohomalls.aws.config.AwsProperties;
-import com.hohomalls.core.common.Global;
+import com.hohomalls.core.common.Constant;
 import com.hohomalls.core.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class S3ServiceImpl implements StorageService {
   public Mono<Void> save(byte[] data, @NotNull String filePath, @NotNull String fileName) {
     return Mono.fromRunnable(
         () -> {
-          var key = String.join(Global.SIGN_SLASH, filePath, fileName);
+          var key = String.join(Constant.SIGN_SLASH, filePath, fileName);
           var bucketName = this.awsProperties.s3().bucketName();
           S3ServiceImpl.log.info("Uploading a file to S3. BucketName={}, Key={}", bucketName, key);
           this.amazonS3Client.putObject(this.createPutObjectRequest(data, key, bucketName));

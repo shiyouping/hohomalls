@@ -1,6 +1,6 @@
 package com.hohomalls.web.service;
 
-import com.hohomalls.core.common.Global;
+import com.hohomalls.core.common.Constant;
 import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.core.exception.InvalidTokenException;
 import com.hohomalls.core.util.ArrayUtil;
@@ -55,7 +55,7 @@ public class TokenServiceImpl implements TokenService {
       return Optional.empty();
     }
 
-    var email = claims.get().getBody().get(Global.JWT_EMAIL, String.class);
+    var email = claims.get().getBody().get(Constant.JWT_EMAIL, String.class);
     if (!EmailValidator.getInstance().isValid(email)) {
       throw new InvalidTokenException("Invalid email");
     }
@@ -70,12 +70,12 @@ public class TokenServiceImpl implements TokenService {
       return List.of();
     }
 
-    var roles = claims.get().getBody().get(Global.JWT_ROLES, String.class);
+    var roles = claims.get().getBody().get(Constant.JWT_ROLES, String.class);
     if (!StringUtils.hasText(roles)) {
       throw new InvalidTokenException("Invalid role");
     }
 
-    return Arrays.stream(roles.split(Global.SIGN_COMMA))
+    return Arrays.stream(roles.split(Constant.SIGN_COMMA))
         .map(Role::valueOf)
         .collect(Collectors.toList());
   }
@@ -93,18 +93,18 @@ public class TokenServiceImpl implements TokenService {
 
     var roleList =
         Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
-    var roleString = String.join(Global.SIGN_COMMA, roleList);
+    var roleString = String.join(Constant.SIGN_COMMA, roleList);
     var expiration =
         Date.from(Instant.now().plus(this.webProperties.token().lifespan(), ChronoUnit.HOURS));
     Map<String, Object> claims =
         Map.of(
-            Global.JWT_SUBJECT,
+            Constant.JWT_SUBJECT,
             TokenServiceImpl.SUBJECT,
-            Global.JWT_EMAIL,
+            Constant.JWT_EMAIL,
             email,
-            Global.JWT_NICKNAME,
+            Constant.JWT_NICKNAME,
             nickname,
-            Global.JWT_ROLES,
+            Constant.JWT_ROLES,
             roleString);
     return Optional.of(JwtUtil.generate(TokenServiceImpl.privateKey, claims, expiration));
   }

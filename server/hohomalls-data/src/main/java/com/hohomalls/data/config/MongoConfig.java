@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
-import static com.hohomalls.core.common.Global.CONFIG_BASE_PACKAGE;
+import static com.hohomalls.core.common.Constant.CONFIG_BASE_PACKAGE;
 
 /**
  * MongoDB configurations.

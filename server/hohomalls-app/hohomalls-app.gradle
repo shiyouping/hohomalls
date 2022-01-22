@@ -8,7 +8,9 @@ dependencies {
 
     implementation project(':hohomalls-aws')
     implementation project(':hohomalls-web')
+    implementation 'com.github.ben-manes.caffeine:caffeine'
     implementation 'org.mapstruct:mapstruct'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
 
     runtimeOnly 'io.jsonwebtoken:jjwt-impl'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson'

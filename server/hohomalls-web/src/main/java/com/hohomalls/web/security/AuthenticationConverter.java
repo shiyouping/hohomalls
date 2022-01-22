@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hohomalls.core.common.Global.AUTH_ANONYMOUS;
+import static com.hohomalls.core.common.Constant.AUTH_ANONYMOUS;
 
 /**
  * Converts JWT token to an Authentication.

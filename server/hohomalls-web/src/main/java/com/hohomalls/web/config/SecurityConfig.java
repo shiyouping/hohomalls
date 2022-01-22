@@ -12,8 +12,8 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-import static com.hohomalls.core.common.Global.PROFILE_NON_PROD;
-import static com.hohomalls.core.common.Global.PROFILE_PROD;
+import static com.hohomalls.core.common.Constant.PROFILE_NON_PROD;
+import static com.hohomalls.core.common.Constant.PROFILE_PROD;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 /**

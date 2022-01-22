@@ -1,12 +1,12 @@
 package com.hohomalls.core.common;
 
 /**
- * The interface of Global.
+ * The class of Constant.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 24/6/2021
  */
-public final class Global {
+public final class Constant {
 
   public static final String SIGN_COMMA = ",";
   public static final String SIGN_PERIOD = ".";
@@ -29,5 +29,5 @@ public final class Global {
   public static final String AUTH_PREFIX = "Bearer";
   public static final String AUTH_ANONYMOUS = "ANONYMOUS";
 
-  private Global() {}
+  private Constant() {}
 }

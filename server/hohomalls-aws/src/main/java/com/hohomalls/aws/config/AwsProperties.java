@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import static com.hohomalls.core.common.Global.CONFIG_PROPERTY_PREFIX;
+import static com.hohomalls.core.common.Constant.CONFIG_PROPERTY_PREFIX;
 
 /**
  * AwsProperties.
