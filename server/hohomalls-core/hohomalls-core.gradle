@@ -10,7 +10,6 @@ dependencies {
     api 'commons-beanutils:commons-beanutils'
     api 'io.jsonwebtoken:jjwt-api'
     api 'io.projectreactor:reactor-core'
-    api 'io.projectreactor.addons:reactor-extra'
     api 'org.jetbrains:annotations'
     api 'org.passay:passay'
 

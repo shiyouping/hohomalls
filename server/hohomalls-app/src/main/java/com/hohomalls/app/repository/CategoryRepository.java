@@ -12,5 +12,7 @@ import reactor.core.publisher.Flux;
  */
 public interface CategoryRepository extends BaseDocRepository<Category> {
 
+  Flux<Category> findAllByParentId(String parentId);
+
   Flux<Category> findAllByParentIdIsNull();
 }

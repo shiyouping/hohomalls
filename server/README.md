@@ -6,6 +6,7 @@ and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running
 
 ## Modules
 
+- `hohomalls-bom`: A BOM subproject that provides dependency version management for other subprojects.
 - `hohomalls-core`: A library subproject that provides the core functionalities which are the foundation of other
   subprojects. No business logic is included.
 - `hohomalls-data`: A library subproject that provides the core functionalities for MongoDB and Redis. No business logic

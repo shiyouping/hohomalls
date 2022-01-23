@@ -2,6 +2,7 @@ package com.hohomalls.web.service;
 
 import com.hohomalls.core.common.Constant;
 import com.hohomalls.core.exception.InvalidInputException;
+import com.hohomalls.core.service.DirectoryService;
 import com.hohomalls.core.service.StorageService;
 import com.hohomalls.core.util.FileUtil;
 import com.hohomalls.core.util.HashUtil;
@@ -32,13 +33,22 @@ public class FileServiceImpl implements FileService {
   private final WebProperties webProperties;
   private final StorageService storageService;
   private final MetadataService metadataService;
+  private final DirectoryService directoryService;
 
   @Override
   public @NotNull Mono<String> save(
       @NotNull String rootDir, @NotNull String subDir, @NotNull String fileName, byte[] data) {
-
     FileServiceImpl.log.info(
         "Saving a file... rootDir={}, subDir={}, fileName={}", rootDir, subDir, fileName);
+
+    if (this.directoryService.getRootDirectories().stream()
+        .noneMatch(root -> root.equals(rootDir))) {
+      return Mono.error(new InvalidInputException("Invalid rootDir"));
+    }
+
+    if (this.directoryService.getSubDirectories().stream().noneMatch(dir -> dir.equals(subDir))) {
+      return Mono.error(new InvalidInputException("Invalid subDir"));
+    }
 
     var hash = HashUtil.getMurmur3(data);
     var path = String.join(Constant.SIGN_SLASH, rootDir, subDir);

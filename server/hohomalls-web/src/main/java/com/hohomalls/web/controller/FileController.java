@@ -1,6 +1,7 @@
 package com.hohomalls.web.controller;
 
 import com.hohomalls.core.exception.InvalidRequestException;
+import com.hohomalls.core.service.DirectoryService;
 import com.hohomalls.web.common.Auth;
 import com.hohomalls.web.service.FileService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ import java.util.Objects;
 public class FileController {
 
   private final FileService fileService;
+  private final DirectoryService directoryService;
 
   @PreAuthorize(Auth.SELLER)
   @PostMapping(path = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

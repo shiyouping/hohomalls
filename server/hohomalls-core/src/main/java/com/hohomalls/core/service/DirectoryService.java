@@ -1,7 +1,8 @@
 package com.hohomalls.core.service;
 
 import org.jetbrains.annotations.NotNull;
-import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * DirectoryService.
@@ -12,8 +13,8 @@ import reactor.core.publisher.Flux;
 public interface DirectoryService {
 
   @NotNull
-  Flux<String> getRootDirectories();
+  List<String> getRootDirectories();
 
   @NotNull
-  Flux<String> getSubDirectories();
+  List<String> getSubDirectories();
 }

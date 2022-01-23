@@ -13,6 +13,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CacheConfig {
   // There is no fluent integration between @Cacheable and reactive frameworks.
-  // So the cache implementation using Caffeine is not as usual.
   // See the example in the class of DirectoryServiceImpl
 }

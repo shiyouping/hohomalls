@@ -1,18 +1,19 @@
 package com.hohomalls.app.service;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import com.hohomalls.app.document.Category;
 import com.hohomalls.app.repository.CategoryRepository;
 import com.hohomalls.core.common.CacheName;
 import com.hohomalls.core.service.DirectoryService;
 import com.hohomalls.data.pojo.BaseDoc;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import reactor.cache.CacheFlux;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * DirectoryServiceImpl.
@@ -26,20 +27,34 @@ import reactor.core.publisher.Flux;
 public class DirectoryServiceImpl implements DirectoryService {
 
   private final CategoryRepository categoryRepository;
-  private final Cache<String, Object> cache = Caffeine.newBuilder().build();
 
   @Override
+  @SneakyThrows
   @Cacheable(CacheName.ROOT_DIRECTORIES)
-  public @NotNull Flux<String> getRootDirectories() {
+  public @NotNull List<String> getRootDirectories() {
     DirectoryServiceImpl.log.info("Getting all root directories...");
-    return CacheFlux.lookup(this.cache.asMap(), CacheName.ROOT_DIRECTORIES, String.class)
-        .onCacheMissResume(this.categoryRepository.findAllByParentIdIsNull().map(BaseDoc::getId));
+    return this.categoryRepository
+        .findAllByParentIdIsNull()
+        .map(BaseDoc::getId)
+        .collectList()
+        .toFuture()
+        .get();
   }
 
   @Override
+  @SneakyThrows
   @Cacheable(CacheName.SUB_DIRECTORIES)
-  public @NotNull Flux<String> getSubDirectories() {
+  public @NotNull List<String> getSubDirectories() {
     DirectoryServiceImpl.log.info("Getting all sub directories...");
-    return null;
+    return this.categoryRepository
+        .findAllByParentIdIsNull()
+        .flatMap(this::getSubDirectories)
+        .collectList()
+        .toFuture()
+        .get();
+  }
+
+  private Flux<String> getSubDirectories(Category root) {
+    return this.categoryRepository.findAllByParentId(root.getId()).map(BaseDoc::getId);
   }
 }
