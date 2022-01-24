@@ -19,12 +19,6 @@ built on top of [Mongock](https://mongock.io/).
 ````bash
 cd hohomalls/server/hohomalls-mongo
 ../gradlew clean bootJar
-
-# Option 1: Java System Properties (VM Arguments)
-java -jar -Dspring.profiles.active=local build/libs/hohomalls-mongo-1.0.0-SNAPSHOT.jar
-
-# Option 2: Program arguments
-java -jar build/libs/hohomalls-mongo-1.0.0-SNAPSHOT.jar --spring.profiles.active=local 
 ````
 
 ## How to Run
