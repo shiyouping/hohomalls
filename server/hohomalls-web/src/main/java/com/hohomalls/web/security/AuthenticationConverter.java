@@ -35,7 +35,6 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
   private final TokenService tokenService;
 
   @Override
-  @SuppressWarnings("PMD")
   public Mono<Authentication> convert(ServerWebExchange exchange) {
     return Mono.fromSupplier(
         () -> {
@@ -50,7 +49,7 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
             try {
               roles = this.tokenService.getRoles(token.get());
               email = this.tokenService.getEmailFromJwt(token.get());
-            } catch (Exception ex) {
+            } catch (Exception ex) { // NOPMD
               throw new BadCredentialsException("Invalid jwt token", ex);
             }
 

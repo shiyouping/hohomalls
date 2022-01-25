@@ -42,7 +42,7 @@ public class S3ServiceImpl implements StorageService {
       }
 
       this.createBucket(bucketName);
-    } catch (Exception e) {
+    } catch (Exception e) { // NOPMD
       S3ServiceImpl.log.error("Failed to create the S3 bucket %s".formatted(bucketName), e);
       throw e; // Fail fast
     }

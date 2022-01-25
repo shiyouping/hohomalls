@@ -1,5 +1,5 @@
 plugins {
-    id 'hohomalls-spt'
+    id 'hohomalls-sba'
 }
 
 dependencies {

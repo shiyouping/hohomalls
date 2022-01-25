@@ -1,5 +1,5 @@
 plugins {
-    id 'hohomalls-gql'
+    id 'hohomalls-gqla'
 }
 
 dependencies {

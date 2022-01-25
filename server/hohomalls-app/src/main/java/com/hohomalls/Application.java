@@ -21,6 +21,7 @@ import static com.hohomalls.core.common.Constant.PROFILE_PROD;
 @Slf4j
 @SpringBootApplication
 @ConfigurationPropertiesScan
+@SuppressWarnings("PMD")
 public class Application {
 
   /** The entry of this application. */
