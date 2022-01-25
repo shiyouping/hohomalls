@@ -94,14 +94,18 @@ public class FileServiceImpl implements FileService {
   }
 
   private String generateUrl(Metadata metadata) {
-    return String.join(
-        Constant.SIGN_SLASH,
-        this.webProperties.multipart().baseStorageUrl(),
-        metadata.getPath(),
-        metadata.getName());
+    var url =
+        String.join(
+            Constant.SIGN_SLASH,
+            this.webProperties.multipart().baseStorageUrl(),
+            metadata.getPath(),
+            metadata.getName());
+    FileServiceImpl.log.info("Generated URL = {}", url);
+    return url;
   }
 
   private Mono<Metadata> saveFile(byte[] data, String path, String name) {
+    FileServiceImpl.log.info("No same file exists. Continue to save it");
     return this.storageService
         .save(data, path, name)
         .then(this.metadataService.save(Metadata.builder().name(name).path(path).build()));

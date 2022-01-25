@@ -16,6 +16,8 @@ spring:
       database: hohomalls
       auto-index-creation: true
       authentication-database: admin
+  cache:
+    type: SIMPLE
 
 com:
   hohomalls:
