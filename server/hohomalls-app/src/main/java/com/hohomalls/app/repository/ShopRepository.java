@@ -2,7 +2,6 @@ package com.hohomalls.app.repository;
 
 import com.hohomalls.app.document.Shop;
 import com.hohomalls.data.repository.BaseDocRepository;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -13,7 +12,7 @@ import reactor.core.publisher.Mono;
  */
 public interface ShopRepository extends BaseDocRepository<Shop> {
 
-  Flux<Shop> findAllBySellerId(String sellerId);
-
   Mono<Shop> findByName(String name);
+
+  Mono<Shop> findBySellerId(String sellerId);
 }

@@ -17,7 +17,7 @@ public interface ShopService {
   Mono<Shop> findById(@Nullable String id);
 
   @NotNull
-  Mono<Shop> findByName(@Nullable String name);
+  Mono<Shop> findBySellerId(@Nullable String sellerId);
 
   @NotNull
   Mono<Shop> save(@NotNull Shop shop);

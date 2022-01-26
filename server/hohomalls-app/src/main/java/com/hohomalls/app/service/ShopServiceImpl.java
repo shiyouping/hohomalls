@@ -38,14 +38,14 @@ public class ShopServiceImpl implements ShopService {
   }
 
   @Override
-  public @NotNull Mono<Shop> findByName(@Nullable String name) {
-    ShopServiceImpl.log.info("Finding a shop by name={}", name);
+  public @NotNull Mono<Shop> findBySellerId(@Nullable String sellerId) {
+    ShopServiceImpl.log.info("Finding a shop by sellerId={}", sellerId);
 
-    if (name == null) {
+    if (sellerId == null) {
       return Mono.empty();
     }
 
-    return this.shopRepository.findByName(name);
+    return this.shopRepository.findBySellerId(sellerId);
   }
 
   @Override

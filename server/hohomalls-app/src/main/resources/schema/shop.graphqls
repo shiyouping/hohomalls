@@ -8,7 +8,7 @@ extend type Mutation {
 
 extend type Query {
     # Find a shop associated with current user
-    findShop(name: String!): ShopDto
+    findShop: ShopDto
 }
 
 input CreateShopDto {
@@ -20,9 +20,9 @@ input CreateShopDto {
 input UpdateShopDto {
     id: ID!
     # A unique shop name
-    name: String!
-    description: String!
-    status: ShopStatus!
+    name: String
+    description: String
+    status: ShopStatus
 }
 
 type ShopDto {

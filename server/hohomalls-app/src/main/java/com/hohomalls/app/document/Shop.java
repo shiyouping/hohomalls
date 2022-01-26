@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = true)
 public class Shop extends BaseDoc {
 
+  @Indexed(unique = true)
   private String sellerId;
 
   @Indexed(unique = true)

@@ -13,6 +13,7 @@ import graphql.execution.DataFetcherExceptionHandlerParameters;
 import graphql.execution.DataFetcherExceptionHandlerResult;
 import graphql.execution.ResultPath;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
@@ -67,7 +68,7 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
 
     // The data structure should be consistent with HttpError
     return builder
-        .message(exception.getMessage())
+        .message(this.getMessage(exception))
         .debugInfo(
             Map.of(
                 HttpError.DEBUG_INFO_EXCEPTION_ID,
@@ -77,5 +78,13 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
         .path(path)
         .origin(HttpError.Origin.WEB.name())
         .build();
+  }
+
+  private String getMessage(Throwable exception) {
+    if (exception instanceof DuplicateKeyException) {
+      return "The uniqueness was violated when saving database data";
+    }
+
+    return exception.getMessage();
   }
 }

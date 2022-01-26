@@ -15,6 +15,7 @@ import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
+import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -60,10 +61,8 @@ public class ShopDataFetcher {
 
   @DgsQuery
   @HasAnyRoles({Role.ROLE_SELLER})
-  public Mono<ShopDto> findShop(
-      @RequestHeader String authorization, @InputArgument("name") String name) {
-    ShopDataFetcher.log.info(
-        "Received a request to find a shop. Authorization={}, name={}", authorization, name);
+  public Mono<ShopDto> findShop(@RequestHeader String authorization) {
+    ShopDataFetcher.log.info("Received a request to find a shop. Authorization={}", authorization);
 
     var userId = this.tokenService.getUserIdFromAuth(authorization);
     if (userId.isEmpty()) {
@@ -71,17 +70,10 @@ public class ShopDataFetcher {
     }
 
     return this.shopService
-        .findByName(name)
-        .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid name %s".formatted(name))))
-        .map(
-            shop -> {
-              if (!userId.get().equals(shop.getSellerId())) {
-                throw new DgsBadRequestException(
-                    "Current user doesn't have the shop with name %s".formatted(name));
-              }
-
-              return this.shopMapper.toDto(shop);
-            });
+        .findBySellerId(userId.get())
+        .switchIfEmpty(
+            Mono.error(new DgsEntityNotFoundException("Current user doesn't have a shop")))
+        .map(this.shopMapper::toDto);
   }
 
   @DgsMutation
@@ -101,7 +93,7 @@ public class ShopDataFetcher {
         .flatMap(
             oldShop -> {
               var newShop = this.shopMapper.toDoc(updateShopDto);
-              BeanUtil.copyNonnullProperties(oldShop, newShop);
+              BeanUtil.copyNonnullProperties(newShop, oldShop);
               return this.shopService.save(oldShop).map(this.shopMapper::toDto);
             });
   }

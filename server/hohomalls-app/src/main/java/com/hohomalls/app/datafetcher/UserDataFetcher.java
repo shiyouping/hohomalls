@@ -133,7 +133,7 @@ public class UserDataFetcher {
         .switchIfEmpty(Mono.error(new DgsBadRequestException("Invalid credentials")))
         .flatMap(
             user -> {
-              BeanUtil.copyNonnullProperties(user, this.userMapper.toDoc(updateUserDto));
+              BeanUtil.copyNonnullProperties(this.userMapper.toDoc(updateUserDto), user);
               return this.userService.save(user).map(this.userMapper::toDto);
             });
   }

@@ -36,7 +36,7 @@ public final class BeanUtil {
    * @param source Source bean whose properties are retrieved
    */
   @SneakyThrows
-  public static void copyNonnullProperties(Object destination, Object source) {
+  public static void copyNonnullProperties(Object source, Object destination) {
     BeanUtil.nonNullBean.copyProperties(destination, source);
   }
 

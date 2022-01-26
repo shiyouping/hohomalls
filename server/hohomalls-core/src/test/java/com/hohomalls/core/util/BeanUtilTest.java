@@ -20,7 +20,7 @@ public class BeanUtilTest {
     assertThat(source.name).isNull();
     assertThat(destination.getAddress()).isNull();
 
-    BeanUtil.copyNonnullProperties(destination, source);
+    BeanUtil.copyNonnullProperties(source, destination);
     assertThat(destination.getAddress()).isEqualTo(source.getAddress());
     assertThat(destination.getAge()).isEqualTo(source.getAge());
     assertThat(destination.getName()).isNotNull();
