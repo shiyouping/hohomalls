@@ -1,0 +1,88 @@
+scalar Void
+
+extend type Mutation {
+    # Sign up a user and get an access token in jws
+    signUp(user: CreateUserDto): String!
+
+    # Sign in a user and get an access token in jws
+    signIn(credentials: CredentialsDto): String!
+
+    # Sign out the current user
+    signOut: Void
+
+    # Change the password of a user
+    changePassword(password: ChangePasswordDto!): Void
+
+    # Update the details of a user
+    updateUser(user: UpdateUserDto!): UserDto!
+}
+
+extend type Query {
+    findUser: UserDto
+}
+
+input CreateUserDto {
+    # A unique nickname
+    nickname: String!
+    # A unique email
+    email: ID!
+    password: String!
+    roles: [Role]!
+    mobile: String
+    addresses: [CreateAddressDto!]
+}
+
+input CreateAddressDto {
+    postCode: String
+    country: String!
+    city: String!
+    street: String!
+    contact: String
+    addressee: String!
+}
+
+input CredentialsDto {
+    email: ID!
+    password: String!
+}
+
+input ChangePasswordDto {
+    before: String!
+    after: String!
+}
+
+input UpdateUserDto {
+    # A unique nickname
+    nickname: String!
+    roles: [Role]!
+    mobile: String
+    addresses: [CreateAddressDto!]
+}
+
+type UserDto {
+    email: ID!
+    mobile: String
+    nickname: String!
+    addresses: [AddressDto!]
+    rating: Float
+}
+
+type AddressDto {
+    postCode: String
+    country: String!
+    city: String!
+    street: String!
+    contact: String
+    addressee: String!
+}
+
+enum UserStatus {
+    ACTIVE
+    INACTIVE
+    TERMINATED
+}
+
+enum Role {
+    ROLE_SELLER
+    ROLE_BUYER
+}

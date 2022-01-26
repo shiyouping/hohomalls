@@ -4,5 +4,8 @@ type Mutation {
     # Upload a file and return the URL on the server
     # This API doesn't work for the time being.
     # See the issue reported at https://github.com/Netflix/dgs-framework/issues/819
-    uploadFile(file: Upload!, rootDir: String!, subDir: String!): String
+    # uploadFile(file: Upload!, rootDir: String!, subDir: String!): String
+}
+
+type Query {
 }

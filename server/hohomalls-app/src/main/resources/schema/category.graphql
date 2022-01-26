@@ -1,0 +1,9 @@
+extend type Query {
+    findAllCategories: [CategoryDto!]!
+}
+
+type CategoryDto {
+    id: String!
+    description: String!
+    ancestors: [CategoryDto!]
+}
