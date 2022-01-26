@@ -1,0 +1,42 @@
+extend type Mutation {
+    # Create a shop
+    createShop(shop: CreateShopDto!): ShopDto!
+
+    # Update a shop
+    updateShop(shop: UpdateShopDto!): ShopDto!
+}
+
+extend type Query {
+    # Find a shop associated with current user
+    findShop(name: String!): ShopDto
+}
+
+input CreateShopDto {
+    # A unique shop name
+    name: String!
+    description: String!
+}
+
+input UpdateShopDto {
+    id: ID!
+    # A unique shop name
+    name: String!
+    description: String!
+    status: ShopStatus!
+}
+
+type ShopDto {
+    id: ID!
+    # A unique shop name
+    name: String!
+    description: String!
+    # Null for a new shop
+    rating: Float
+    status: ShopStatus!
+}
+
+enum ShopStatus {
+    OPEN
+    CLOSED
+}
+

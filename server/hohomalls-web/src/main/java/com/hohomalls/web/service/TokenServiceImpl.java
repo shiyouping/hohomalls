@@ -39,6 +39,49 @@ public class TokenServiceImpl implements TokenService {
   private final WebProperties webProperties;
 
   @Override
+  public @NotNull Optional<String> generateToken(
+      @Nullable String userId,
+      @Nullable String email,
+      @Nullable String nickname,
+      @Nullable Role... roles) {
+    if (userId == null || email == null || nickname == null || roles == null || roles.length == 0) {
+      return Optional.empty();
+    }
+
+    if (TokenServiceImpl.privateKey == null) {
+      TokenServiceImpl.privateKey = KeyUtil.toPrivateKey(this.webProperties.token().privateKey());
+    }
+
+    var roleList =
+        Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
+    var roleString = String.join(Constant.SIGN_COMMA, roleList);
+    var expiration =
+        Date.from(Instant.now().plus(this.webProperties.token().lifespan(), ChronoUnit.HOURS));
+    Map<String, Object> claims =
+        Map.of(
+            Constant.JWT_USER_ID,
+            userId,
+            Constant.JWT_SUBJECT,
+            TokenServiceImpl.SUBJECT,
+            Constant.JWT_EMAIL,
+            email,
+            Constant.JWT_NICKNAME,
+            nickname,
+            Constant.JWT_ROLES,
+            roleString);
+    return Optional.of(JwtUtil.generate(TokenServiceImpl.privateKey, claims, expiration));
+  }
+
+  @Override
+  public @NotNull Optional<String> generateToken(
+      @Nullable String userId,
+      @Nullable String email,
+      @Nullable String nickname,
+      @Nullable List<Role> roles) {
+    return this.generateToken(userId, email, nickname, ArrayUtil.fromList(roles));
+  }
+
+  @Override
   public @NotNull Optional<String> getEmailFromAuth(@Nullable String auth) {
     if (auth == null) {
       return Optional.empty();
@@ -81,38 +124,24 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
-  public @NotNull Optional<String> getToken(
-      @Nullable String email, @Nullable String nickname, @Nullable Role... roles) {
-    if (email == null || nickname == null || roles == null || roles.length == 0) {
+  public @NotNull Optional<String> getUserIdFromAuth(@Nullable String auth) {
+    if (auth == null) {
       return Optional.empty();
     }
 
-    if (TokenServiceImpl.privateKey == null) {
-      TokenServiceImpl.privateKey = KeyUtil.toPrivateKey(this.webProperties.token().privateKey());
-    }
-
-    var roleList =
-        Arrays.stream(roles).filter(Objects::nonNull).map(Enum::name).collect(Collectors.toList());
-    var roleString = String.join(Constant.SIGN_COMMA, roleList);
-    var expiration =
-        Date.from(Instant.now().plus(this.webProperties.token().lifespan(), ChronoUnit.HOURS));
-    Map<String, Object> claims =
-        Map.of(
-            Constant.JWT_SUBJECT,
-            TokenServiceImpl.SUBJECT,
-            Constant.JWT_EMAIL,
-            email,
-            Constant.JWT_NICKNAME,
-            nickname,
-            Constant.JWT_ROLES,
-            roleString);
-    return Optional.of(JwtUtil.generate(TokenServiceImpl.privateKey, claims, expiration));
+    var token = HttpHeaderUtil.getAuth(auth);
+    return this.getUserIdFromJwt(token.orElse(null));
   }
 
   @Override
-  public @NotNull Optional<String> getToken(
-      @Nullable String email, @Nullable String nickname, @Nullable List<Role> roles) {
-    return this.getToken(email, nickname, ArrayUtil.fromList(roles));
+  public @NotNull Optional<String> getUserIdFromJwt(@Nullable String jwt) {
+    var claims = this.getJwsClaims(jwt);
+    if (claims.isEmpty()) {
+      return Optional.empty();
+    }
+
+    var userId = claims.get().getBody().get(Constant.JWT_USER_ID, String.class);
+    return Optional.of(userId);
   }
 
   private Optional<Jws<Claims>> getJwsClaims(@Nullable String token) {

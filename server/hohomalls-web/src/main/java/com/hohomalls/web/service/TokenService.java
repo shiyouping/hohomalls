@@ -16,6 +16,20 @@ import java.util.Optional;
 public interface TokenService {
 
   @NotNull
+  Optional<String> generateToken(
+      @Nullable String userId,
+      @Nullable String email,
+      @Nullable String nickname,
+      @Nullable Role... roles);
+
+  @NotNull
+  Optional<String> generateToken(
+      @Nullable String userId,
+      @Nullable String email,
+      @Nullable String nickname,
+      @Nullable List<Role> roles);
+
+  @NotNull
   Optional<String> getEmailFromAuth(@Nullable String auth);
 
   @NotNull
@@ -25,10 +39,8 @@ public interface TokenService {
   List<Role> getRoles(@Nullable String jwt);
 
   @NotNull
-  Optional<String> getToken(
-      @Nullable String email, @Nullable String nickname, @Nullable Role... roles);
+  Optional<String> getUserIdFromAuth(@Nullable String auth);
 
   @NotNull
-  Optional<String> getToken(
-      @Nullable String email, @Nullable String nickname, @Nullable List<Role> roles);
+  Optional<String> getUserIdFromJwt(@Nullable String jwt);
 }

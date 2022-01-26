@@ -5,6 +5,7 @@ import com.hohomalls.app.repository.UserRepository;
 import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.core.util.PasswordUtil;
 import com.hohomalls.core.util.PhoneUtil;
+import com.hohomalls.data.util.DocUtil;
 import com.hohomalls.web.service.SessionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.time.Instant;
 
 import static com.hohomalls.app.document.User.UserStatus.ACTIVE;
 
@@ -124,13 +123,7 @@ public class UserServiceImpl implements UserService {
       user.setPassword(this.passwordEncoder.encode(user.getPassword()));
     }
 
-    Instant now = Instant.now();
-
-    if (user.getCreatedAt() == null) {
-      user.setCreatedAt(now);
-    }
-
-    user.setUpdatedAt(now);
+    DocUtil.updateDateTime(user);
     user.setStatus(ACTIVE);
 
     return this.userRepository.save(user);

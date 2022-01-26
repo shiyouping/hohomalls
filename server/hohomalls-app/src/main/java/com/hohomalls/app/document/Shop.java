@@ -2,6 +2,7 @@ package com.hohomalls.app.document;
 
 import com.hohomalls.data.pojo.BaseDoc;
 import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -19,8 +20,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Shop extends BaseDoc {
 
   private String sellerId;
+
+  @Indexed(unique = true)
   private String name;
+
   private String description;
+
   /** Based on all items sold by this shop. */
   private Float rating;
+
+  private ShopStatus status;
+
+  public enum ShopStatus {
+    OPEN,
+    CLOSED
+  }
 }

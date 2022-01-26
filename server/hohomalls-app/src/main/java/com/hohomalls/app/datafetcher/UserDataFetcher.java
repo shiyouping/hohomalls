@@ -140,7 +140,9 @@ public class UserDataFetcher {
 
   @NotNull
   private Mono<String> createSession(@NotNull User user) {
-    var token = this.tokenService.getToken(user.getEmail(), user.getNickname(), user.getRoles());
+    var token =
+        this.tokenService.generateToken(
+            user.getId(), user.getEmail(), user.getNickname(), user.getRoles());
     if (token.isEmpty()) {
       return Mono.error(new RuntimeException("Failed to generate JWT"));
     }

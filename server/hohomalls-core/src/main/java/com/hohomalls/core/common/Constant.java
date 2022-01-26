@@ -15,6 +15,7 @@ public final class Constant {
   public static final String MEDIA_TYPE_IMAGE = "image";
   public static final String MEDIA_TYPE_VIDEO = "video";
 
+  public static final String JWT_USER_ID = "userId";
   public static final String JWT_EMAIL = "email";
   public static final String JWT_ROLES = "roles";
   public static final String JWT_NICKNAME = "nickname";

@@ -50,10 +50,12 @@ class TokenServiceImplTest {
     var properties = this.getProperties();
     var service = new TokenServiceImpl(properties);
 
-    var token = service.getToken(null, null);
+    var token = service.generateToken(null, null, null);
     assertThat(token.isEmpty()).as("token is empty").isTrue();
 
-    token = service.getToken("ricky@gmail.com", "ricky", ROLE_BUYER, ROLE_SELLER);
+    token =
+        service.generateToken(
+            "61c7e840e300e9290aa7bf19", "ricky@gmail.com", "ricky", ROLE_BUYER, ROLE_SELLER);
     assertThat(token.isPresent()).as("token is present").isTrue();
 
     TokenServiceImplTest.token = token.get();

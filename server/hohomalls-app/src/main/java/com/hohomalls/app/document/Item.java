@@ -31,6 +31,7 @@ public class Item extends BaseDoc {
   private Integer quantity;
   private String description;
   private Condition condition;
+  private ItemStatus status;
   private List<Price> prices;
   private List<String> highlights;
   private List<Shipping> shippings;
@@ -40,6 +41,12 @@ public class Item extends BaseDoc {
     NEW,
     RENEWED,
     USED
+  }
+
+  public enum ItemStatus {
+    UNAVAILABLE,
+    AVAILABLE,
+    SOLD,
   }
 
   @Data
