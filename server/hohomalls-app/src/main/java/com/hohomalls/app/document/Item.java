@@ -3,6 +3,7 @@ package com.hohomalls.app.document;
 import com.hohomalls.core.pojo.Shipping;
 import com.hohomalls.data.pojo.BaseDoc;
 import lombok.*;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -22,14 +23,17 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 public class Item extends BaseDoc {
 
+  @TextIndexed(weight = 10)
   private String title;
+
+  @TextIndexed(weight = 3)
+  private String description;
+
   private String brand;
   private Float rating;
   private String shopId;
-  private String sellerId;
   private String categoryId;
   private Integer quantity;
-  private String description;
   private Condition condition;
   private ItemStatus status;
   private List<Price> prices;
