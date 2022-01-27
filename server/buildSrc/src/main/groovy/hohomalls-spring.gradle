@@ -1,6 +1,6 @@
 // Custom plugin for SpringBoot application
 plugins {
-    id 'hohomalls-core'
+    id 'hohomalls-library'
     id 'org.springframework.boot'
 }
 

@@ -1,6 +1,6 @@
 // Custom plugin for GraphQL library
 plugins {
-    id 'hohomalls-core'
+    id 'hohomalls-library'
     id 'com.netflix.dgs.codegen'
 }
 
