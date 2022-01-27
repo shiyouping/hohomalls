@@ -1,6 +1,6 @@
 // Custom plugin for SpringBoot and GraphQL application
 plugins {
-    id 'hohomalls-lib'
+    id 'hohomalls-core'
     id 'com.netflix.dgs.codegen'
     id 'org.springframework.boot'
 }
