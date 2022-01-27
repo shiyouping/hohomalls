@@ -40,7 +40,7 @@ public class User extends BaseDoc {
   /** A hashed password. */
   private String password;
 
-  private Float rating;
+  private Double rating;
 
   /** The user status. */
   public enum UserStatus {

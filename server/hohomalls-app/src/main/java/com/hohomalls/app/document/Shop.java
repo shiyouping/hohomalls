@@ -28,7 +28,7 @@ public class Shop extends BaseDoc {
   private String description;
 
   /** Based on all items sold by this shop. */
-  private Float rating;
+  private Double rating;
 
   private ShopStatus status;
 

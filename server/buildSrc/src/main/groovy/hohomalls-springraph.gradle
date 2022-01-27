@@ -1,0 +1,5 @@
+// Custom plugin for SpringBoot and GraphQL application
+plugins {
+    id 'hohomalls-spring'
+    id 'hohomalls-graph'
+}

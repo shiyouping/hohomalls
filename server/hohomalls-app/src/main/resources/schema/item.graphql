@@ -1,0 +1,79 @@
+scalar JSON
+scalar NonNegativeInt
+
+extend type Mutation {
+    createItem(item: CreateItemDto): ItemDto
+    updateItem(item: UpdateItemDto): ItemDto
+}
+
+extend type Query {
+    findItem(id: ID!): ItemDto
+}
+
+input CreateItemDto {
+    shopId: String!
+    title: String!
+    description: String!
+    brand: String
+    categoryId: String!
+    quantity: NonNegativeInt!
+    condition: Condition!
+    status: ItemStatus!
+    prices: [PriceDto!]!
+    highlights: [String]
+    shippings: [ShippingDto!]!
+    attributes: JSON
+}
+
+input UpdateItemDto {
+    title: String!
+    description: String!
+    brand: String
+    categoryId: String!
+    quantity: NonNegativeInt!
+    condition: Condition!
+    status: ItemStatus!
+    prices: [PriceDto!]!
+    highlights: [String]
+    shippings: [ShippingDto!]!
+    attributes: JSON
+}
+
+input PriceDto {
+    name: String!
+    amount: NonNegativeFloat!
+}
+
+type ItemDto {
+    id: ID!
+    shopId: String!
+    title: String!
+    description: String!
+    brand: String
+    rating: Float
+    categoryId: String!
+    quantity: NonNegativeInt!
+    condition: Condition!
+    status: ItemStatus!
+    prices: [PriceOutputDto!]!
+    highlights: [String]
+    shippings: [ShippingOutputDto!]!
+    attributes: JSON
+}
+
+type PriceOutputDto {
+    name: String!
+    amount: NonNegativeFloat!
+}
+
+enum Condition {
+    NEW,
+    RENEWED,
+    USED
+}
+
+enum ItemStatus {
+    UNAVAILABLE,
+    AVAILABLE,
+    SOLD,
+}

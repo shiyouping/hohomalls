@@ -1,0 +1,18 @@
+scalar NonNegativeFloat
+
+input ShippingDto {
+    fee: NonNegativeFloat!
+    option: ShippingOption!
+    description: String!
+}
+
+type ShippingOutputDto {
+    fee: NonNegativeFloat!
+    option: ShippingOption!
+    description: String!
+}
+
+enum ShippingOption {
+    MEETUP
+    MAILING
+}

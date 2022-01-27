@@ -1,5 +1,5 @@
 plugins {
-    id 'hohomalls-sbga'
+    id 'hohomalls-springraph'
 }
 
 dependencies {

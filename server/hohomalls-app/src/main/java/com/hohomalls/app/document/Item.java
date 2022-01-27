@@ -30,7 +30,7 @@ public class Item extends BaseDoc {
   private String description;
 
   private String brand;
-  private Float rating;
+  private Double rating;
   private String shopId;
   private String categoryId;
   private Integer quantity;

@@ -1,0 +1,41 @@
+// Custom plugin for GraphQL library
+plugins {
+    id 'hohomalls-core'
+    id 'com.netflix.dgs.codegen'
+}
+
+generateJava {
+    // See GraphQL configurations at:
+    // https://netflix.github.io/dgs/generating-code-from-schema/
+    packageName = 'com.hohomalls.app.graphql'
+    generateClient = false
+    generateBoxedTypes = true
+    // See the mapping configurations at:
+    // https://netflix.github.io/dgs/scalars/#registering-custom-scalars
+    // https://github.com/graphql-java/graphql-java-extended-scalars
+    typeMapping = ["PositiveFloat"    : "java.lang.Double",
+                   "NegativeFloat"    : "java.lang.Double",
+                   "NonPositiveFloat" : "java.lang.Double",
+                   "NonNegativeFloat" : "java.lang.Double",
+
+                   "PositiveInt"      : "java.lang.Integer",
+                   "NegativeInt"      : "java.lang.Integer",
+                   "NonPositiveInt"   : "java.lang.Integer",
+                   "NonNegativeInt"   : "java.lang.Integer",
+
+                   "JSON"             : "java.lang.Object",
+                   "Object"           : "java.lang.Object",
+                   "Url"              : "java.net.URL",
+
+                   "DateTime"         : "java.time.OffsetDateTime",
+                   "Time"             : "java.time.OffsetTime",
+                   "LocalTime"        : "java.time.LocalTime",
+                   "Date"             : "java.time.LocalDate",
+
+                   "GraphQLLong"      : "java.lang.Long",
+                   "GraphQLShort"     : "java.lang.Short",
+                   "GraphQLByte"      : "java.lang.Byte",
+                   "GraphQLBigDecimal": "java.math.BigDecimal",
+                   "GraphQLBigInteger": "java.math.BigInteger",
+                   "GraphQLChar"      : "java.lang.Character"]
+}

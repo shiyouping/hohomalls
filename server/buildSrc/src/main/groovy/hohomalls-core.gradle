@@ -1,12 +1,13 @@
-// Custom plugin for Java
+// Custom plugin for Java library
 plugins {
     // Plugin order matters
-    id 'java'
+    id 'java-library'
     id 'io.freefair.lombok'
     id 'jacoco'
     id 'pmd'
     id 'checkstyle'
     id 'maven-publish'
+    id 'idea'
 }
 
 java {
@@ -113,5 +114,12 @@ publishing {
         maven(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
     }
 }

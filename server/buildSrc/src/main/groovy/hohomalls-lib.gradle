@@ -1,5 +1,0 @@
-// Custom plugin for Java library
-plugins {
-    id 'java-library'
-    id 'hohomalls-core'
-}

@@ -16,16 +16,16 @@ import lombok.*;
 public class Shipping extends BasePojo {
 
   private Double fee;
-  private Option option;
+  private ShippingOption option;
   private String description;
 
-  public enum Option {
+  public enum ShippingOption {
     MEETUP("Meetup"),
     MAILING("Mailing");
 
     private final String name;
 
-    Option(String name) {
+    ShippingOption(String name) {
       this.name = name;
     }
 
