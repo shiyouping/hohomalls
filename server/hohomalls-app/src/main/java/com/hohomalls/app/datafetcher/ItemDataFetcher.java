@@ -3,6 +3,7 @@ package com.hohomalls.app.datafetcher;
 import com.hohomalls.app.graphql.types.CreateItemDto;
 import com.hohomalls.app.graphql.types.ItemDto;
 import com.hohomalls.app.graphql.types.UpdateItemDto;
+import com.hohomalls.app.mapper.ItemMapper;
 import com.hohomalls.app.service.ItemService;
 import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.web.aop.HasAnyRoles;
@@ -26,13 +27,15 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ItemDataFetcher {
 
-  // private final ItemMapper itemMapper;
+  private final ItemMapper itemMapper;
   private final ItemService itemService;
 
   @DgsMutation
   @HasAnyRoles({Role.ROLE_SELLER})
   public Mono<ItemDto> createItem(
       @RequestHeader String authorization, @InputArgument("item") CreateItemDto createItemDto) {
+
+    var item = this.itemMapper.toDoc(createItemDto);
     return Mono.empty();
   }
 
