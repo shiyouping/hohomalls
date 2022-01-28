@@ -28,5 +28,5 @@ public interface ItemService {
   Mono<Item> findById(@Nullable String id);
 
   @NotNull
-  Mono<Item> save(@NotNull Item item);
+  Mono<Item> save(@NotNull Item item, @NotNull String sellerId);
 }

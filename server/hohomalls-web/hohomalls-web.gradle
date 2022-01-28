@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api project(':hohomalls-data')
+    api 'com.graphql-java:graphql-java-extended-validation'
     api 'com.netflix.graphql.dgs:graphql-dgs-extended-scalars'
     api 'com.netflix.graphql.dgs:graphql-dgs-webflux-starter'
     api 'commons-validator:commons-validator'

@@ -17,7 +17,7 @@ import java.time.Instant;
 @EqualsAndHashCode(callSuper = true)
 public class BaseDoc extends BasePojo {
 
-  @NotNull private String id;
+  private String id;
 
   @NotNull private Instant createdAt;
 

@@ -1,7 +1,9 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.Item;
+import com.hohomalls.app.repository.CategoryRepository;
 import com.hohomalls.app.repository.ItemRepository;
+import com.hohomalls.app.repository.ShopRepository;
 import com.hohomalls.core.exception.InvalidInputException;
 import com.hohomalls.data.util.DocUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ import reactor.core.publisher.Mono;
 public class ItemServiceImpl implements ItemService {
 
   private final ItemRepository itemRepository;
+  private final ShopRepository shopRepository;
+  private final CategoryRepository categoryRepository;
 
   @Override
   public @NotNull Flux<Item> findAllByCategoryId(
@@ -86,14 +90,39 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public @NotNull Mono<Item> save(@NotNull Item item) {
-    ItemServiceImpl.log.info("Saving an item={}", item);
+  public @NotNull Mono<Item> save(@NotNull Item item, @NotNull String sellerId) {
+    ItemServiceImpl.log.info("Saving an item={}, sellerId={}", item, sellerId);
 
-    if (item == null) {
-      return Mono.error(new InvalidInputException("Item is null"));
+    if (item == null || sellerId == null) {
+      return Mono.error(new InvalidInputException("Item or sellerId is null"));
     }
 
     DocUtil.updateDateTime(item);
-    return this.itemRepository.save(item);
+
+    return this.validateShopId(item.getShopId(), sellerId)
+        .and(this.validateCategoryId(item.getCategoryId()))
+        .then(this.itemRepository.save(item));
+  }
+
+  private Mono<Void> validateCategoryId(String id) {
+    return this.categoryRepository
+        .findById(id)
+        .switchIfEmpty(Mono.error(new InvalidInputException("Invalid categoryId %s".formatted(id))))
+        .then();
+  }
+
+  private Mono<Void> validateShopId(String shopId, String sellerId) {
+    return this.shopRepository
+        .findById(shopId)
+        .switchIfEmpty(Mono.error(new InvalidInputException("Invalid shopId %s".formatted(shopId))))
+        .map(
+            shop -> {
+              if (sellerId.equals(shop.getSellerId())) {
+                return shop;
+              }
+
+              throw new InvalidInputException("");
+            })
+        .then();
   }
 }
