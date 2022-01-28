@@ -1,5 +1,6 @@
 package com.hohomalls.app.datafetcher;
 
+import com.hohomalls.app.document.Item;
 import com.hohomalls.app.graphql.types.CreateItemDto;
 import com.hohomalls.app.graphql.types.ItemDto;
 import com.hohomalls.app.graphql.types.UpdateItemDto;
@@ -15,9 +16,13 @@ import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsBadRequestException;
+import graphql.relay.Connection;
+import graphql.relay.SimpleListConnection;
+import graphql.schema.DataFetchingEnvironment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestHeader;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -56,6 +61,38 @@ public class ItemDataFetcher {
 
   @DgsQuery
   @HasAnyRoles({Role.ROLE_ANONYMOUS})
+  public Mono<Connection<ItemDto>> findAllItemsByCategoryId(
+      DataFetchingEnvironment env,
+      @InputArgument("categoryId") String categoryId,
+      @InputArgument("first") int first,
+      @InputArgument("after") String after) {
+    ItemDataFetcher.log.info(
+        "Received a request to find all items. categoryId={}, first={}, after={}",
+        categoryId,
+        first,
+        after);
+
+    return this.getConnection(this.itemService.findAllByCategoryId(categoryId), env);
+  }
+
+  @DgsQuery
+  @HasAnyRoles({Role.ROLE_ANONYMOUS})
+  public Mono<Connection<ItemDto>> findAllItemsByKeyword(
+      DataFetchingEnvironment env,
+      @InputArgument("keyword") String keyword,
+      @InputArgument("first") int first,
+      @InputArgument("after") String after) {
+    ItemDataFetcher.log.info(
+        "Received a request to find all items. keyword={}, first={}, after={}",
+        keyword,
+        first,
+        after);
+
+    return this.getConnection(this.itemService.findAllByPhrase(keyword), env);
+  }
+
+  @DgsQuery
+  @HasAnyRoles({Role.ROLE_ANONYMOUS})
   public Mono<ItemDto> findItem(@InputArgument("id") String id) {
     ItemDataFetcher.log.info("Received a request to find an item. id={}", id);
     return this.itemService.findById(id).map(this.itemMapper::toDto);
@@ -90,5 +127,10 @@ public class ItemDataFetcher {
               DocUtil.updateDateTime(updateItemDoc);
               return this.itemService.save(updateItemDoc, userId.get()).map(this.itemMapper::toDto);
             });
+  }
+
+  private Mono<Connection<ItemDto>> getConnection(Flux<Item> flux, DataFetchingEnvironment env) {
+    return flux.collectList()
+        .map(items -> new SimpleListConnection<>(this.itemMapper.toDtos(items)).get(env));
   }
 }

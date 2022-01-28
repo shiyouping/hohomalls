@@ -8,12 +8,16 @@ import com.hohomalls.web.mapper.BaseMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * ItemMapper.
  *
  * @author ricky.shiyouping@gmail.com
  * @since 28/12/2021
  */
+@SuppressWarnings("PMD")
 @Mapper(uses = {BaseMapper.class})
 public interface ItemMapper {
 
@@ -33,4 +37,12 @@ public interface ItemMapper {
   Item toDoc(UpdateItemDto dto);
 
   ItemDto toDto(Item doc);
+
+  default List<ItemDto> toDtos(List<Item> docs) {
+    if (docs == null || docs.isEmpty()) {
+      return null;
+    }
+
+    return docs.stream().map(this::toDto).collect(Collectors.toList());
+  }
 }

@@ -3,8 +3,7 @@ package com.hohomalls.app.service;
 import com.hohomalls.app.document.Item;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -16,13 +15,13 @@ import reactor.core.publisher.Mono;
 public interface ItemService {
 
   @NotNull
-  Mono<Page<Item>> findAllByCategoryId(@Nullable String categoryId, @NotNull Pageable pageable);
+  Flux<Item> findAllByCategoryId(@Nullable String categoryId);
 
   @NotNull
-  Mono<Page<Item>> findAllByPhrase(@Nullable String phrase, @NotNull Pageable pageable);
+  Flux<Item> findAllByPhrase(@Nullable String phrase);
 
   @NotNull
-  Mono<Page<Item>> findAllByShopId(@Nullable String shopId, @NotNull Pageable pageable);
+  Flux<Item> findAllByShopId(@Nullable String shopId);
 
   @NotNull
   Mono<Item> findById(@Nullable String id);
