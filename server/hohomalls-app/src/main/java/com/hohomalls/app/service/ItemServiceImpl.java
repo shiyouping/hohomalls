@@ -10,11 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * ItemServiceImpl.
@@ -32,50 +36,57 @@ public class ItemServiceImpl implements ItemService {
   private final CategoryRepository categoryRepository;
 
   @Override
-  public @NotNull Flux<Item> findAllByCategoryId(
-      @Nullable String categoryId, @Nullable Pageable pageable) {
+  public @NotNull Mono<Page<Item>> findAllByCategoryId(
+      @Nullable String categoryId, @NotNull Pageable pageable) {
     ItemServiceImpl.log.info("Finding an item by categoryId={}, pageable={}", categoryId, pageable);
+    checkNotNull(pageable, "pageable cannot be null");
 
     if (categoryId == null) {
-      return Flux.empty();
+      return Mono.empty();
     }
 
-    if (pageable == null) {
-      return this.itemRepository.findAllByCategoryId(categoryId);
-    }
-
-    return this.itemRepository.findAllByCategoryId(categoryId, pageable);
+    var example = Example.of(Item.builder().categoryId(categoryId).build());
+    return this.itemRepository
+        .findAllByCategoryId(categoryId, pageable)
+        .collectList()
+        .zipWith(this.itemRepository.count(example))
+        .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
   }
 
   @Override
-  public @NotNull Flux<Item> findAllByPhrase(@Nullable String phrase, @Nullable Pageable pageable) {
+  public @NotNull Mono<Page<Item>> findAllByPhrase(
+      @Nullable String phrase, @NotNull Pageable pageable) {
     ItemServiceImpl.log.info("Finding all items by phrase={}, pageable={}", phrase, pageable);
+    checkNotNull(pageable, "pageable cannot be null");
 
     if (phrase == null) {
-      return Flux.empty();
+      return Mono.empty();
     }
 
     var criteria = TextCriteria.forDefaultLanguage().caseSensitive(false).matchingPhrase(phrase);
-    if (pageable == null) {
-      return this.itemRepository.findAllBy(criteria);
-    }
-
-    return this.itemRepository.findAllBy(criteria, pageable);
+    return this.itemRepository
+        .findAllBy(criteria, pageable)
+        .collectList()
+        .zipWith(this.itemRepository.count(criteria))
+        .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
   }
 
   @Override
-  public @NotNull Flux<Item> findAllByShopId(@Nullable String shopId, @Nullable Pageable pageable) {
+  public @NotNull Mono<Page<Item>> findAllByShopId(
+      @Nullable String shopId, @NotNull Pageable pageable) {
     ItemServiceImpl.log.info("Finding an item by shopId={}, pageable={}", shopId, pageable);
+    checkNotNull(pageable, "pageable cannot be null");
 
     if (shopId == null) {
-      return Flux.empty();
+      return Mono.empty();
     }
 
-    if (pageable == null) {
-      return this.itemRepository.findAllByShopId(shopId);
-    }
-
-    return this.itemRepository.findAllByShopId(shopId, pageable);
+    var example = Example.of(Item.builder().shopId(shopId).build());
+    return this.itemRepository
+        .findAllByShopId(shopId, pageable)
+        .collectList()
+        .zipWith(this.itemRepository.count(example))
+        .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
   }
 
   @Override

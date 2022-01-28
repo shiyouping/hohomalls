@@ -8,6 +8,7 @@ extend type Mutation {
 
 extend type Query {
     findItem(id: ID!): ItemDto
+    findAllItems()
 }
 
 input CreateItemDto {

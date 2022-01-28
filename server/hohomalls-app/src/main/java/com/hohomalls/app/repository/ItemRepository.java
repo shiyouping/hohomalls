@@ -5,6 +5,7 @@ import com.hohomalls.data.repository.BaseDocRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * The repository of Item documents.
@@ -14,15 +15,17 @@ import reactor.core.publisher.Flux;
  */
 public interface ItemRepository extends BaseDocRepository<Item> {
 
-  Flux<Item> findAllBy(TextCriteria criteria, Pageable pageable);
+  Mono<Long> count(TextCriteria criteria);
 
   Flux<Item> findAllBy(TextCriteria criteria);
 
-  Flux<Item> findAllByCategoryId(String categoryId, Pageable pageable);
+  Flux<Item> findAllBy(TextCriteria criteria, Pageable pageable);
 
   Flux<Item> findAllByCategoryId(String categoryId);
 
-  Flux<Item> findAllByShopId(String shopId, Pageable pageable);
+  Flux<Item> findAllByCategoryId(String categoryId, Pageable pageable);
 
   Flux<Item> findAllByShopId(String shopId);
+
+  Flux<Item> findAllByShopId(String shopId, Pageable pageable);
 }
