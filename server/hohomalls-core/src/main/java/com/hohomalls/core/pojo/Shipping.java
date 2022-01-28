@@ -1,6 +1,10 @@
 package com.hohomalls.core.pojo;
 
+import com.hohomalls.core.enumeration.Currency;
 import lombok.*;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * Shipping.
@@ -15,9 +19,10 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 public class Shipping extends BasePojo {
 
-  private Double fee;
-  private ShippingOption option;
-  private String description;
+  @Nonnegative private Double fee;
+  @Nonnull private ShippingOption option;
+  @Nonnull private String description;
+  @Nonnull private Currency currency;
 
   public enum ShippingOption {
     MEETUP("Meetup"),

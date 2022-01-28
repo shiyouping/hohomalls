@@ -93,6 +93,7 @@ public class ItemServiceImpl implements ItemService {
   public @NotNull Mono<Item> save(@NotNull Item item, @NotNull String sellerId) {
     ItemServiceImpl.log.info("Saving an item={}, sellerId={}", item, sellerId);
 
+    // noinspection ConstantConditions
     if (item == null || sellerId == null) {
       return Mono.error(new InvalidInputException("Item or sellerId is null"));
     }
@@ -121,7 +122,7 @@ public class ItemServiceImpl implements ItemService {
                 return shop;
               }
 
-              throw new InvalidInputException("");
+              throw new InvalidInputException("Current user doesn't own this item");
             })
         .then();
   }

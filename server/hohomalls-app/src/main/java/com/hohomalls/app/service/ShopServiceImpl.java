@@ -52,6 +52,7 @@ public class ShopServiceImpl implements ShopService {
   public @NotNull Mono<Shop> save(@NotNull Shop shop) {
     ShopServiceImpl.log.info("Saving a shop={}", shop);
 
+    // noinspection ConstantConditions
     if (shop == null || shop.getSellerId() == null) {
       return Mono.error(new InvalidInputException("Invalid shop"));
     }

@@ -26,6 +26,7 @@ input CreateItemDto {
 }
 
 input UpdateItemDto {
+    id: ID!
     title: String!
     description: String!
     brand: String
@@ -42,6 +43,7 @@ input UpdateItemDto {
 input PriceDto {
     name: String!
     amount: NonNegativeFloat!
+    currency: String
 }
 
 type ItemDto {
@@ -64,6 +66,7 @@ type ItemDto {
 type PriceOutputDto {
     name: String!
     amount: NonNegativeFloat!
+    currency: String!
 }
 
 enum Condition {

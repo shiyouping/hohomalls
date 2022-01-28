@@ -1,7 +1,7 @@
 package com.hohomalls.web.mapper;
 
+import org.mapstruct.Mapper;
 import org.mapstruct.Named;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -11,13 +11,13 @@ import java.util.Map;
  * @author ricky.shiyouping@gmail.com
  * @since 28/1/2022
  */
-@Component
+@Mapper
 @Named("BaseMapper")
-public class BaseMapper {
+public interface BaseMapper {
 
   @Named("jsonToStringMap")
   @SuppressWarnings("all")
-  public Map jsonToStringMap(Object json) {
+  static Map jsonToStringMap(Object json) {
     return json == null ? null : (Map) json;
   }
 }

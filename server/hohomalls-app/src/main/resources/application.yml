@@ -33,3 +33,11 @@ com:
           - image/png
       token:
         lifespan: 240
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          convert:
+            CustomConversions: ERROR

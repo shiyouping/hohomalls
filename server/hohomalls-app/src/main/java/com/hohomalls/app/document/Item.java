@@ -1,5 +1,6 @@
 package com.hohomalls.app.document;
 
+import com.hohomalls.core.enumeration.Currency;
 import com.hohomalls.core.pojo.Shipping;
 import com.hohomalls.data.pojo.BaseDoc;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -72,7 +74,8 @@ public class Item extends BaseDoc {
 
   @Data
   public static class Price {
-    private String name;
-    private Double amount;
+    @Nonnull private String name;
+    @Nonnegative private Double amount;
+    @Nonnull private Currency currency;
   }
 }
