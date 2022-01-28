@@ -7,6 +7,9 @@ import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.annotation.Nonnegative;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -23,24 +26,27 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseDoc {
 
+  @NotNull
   @Indexed(unique = true)
   private String email;
 
+  @NotNull
   @Indexed(unique = true)
   private String nickname;
 
+  @Size(min = 1)
   private List<Role> roles;
 
   private String mobile;
 
-  private UserStatus status;
+  @NotNull private UserStatus status;
 
   private List<Address> addresses;
 
   /** A hashed password. */
-  private String password;
+  @NotNull private String password;
 
-  private Double rating;
+  @Nonnegative private Double rating;
 
   /** The user status. */
   public enum UserStatus {

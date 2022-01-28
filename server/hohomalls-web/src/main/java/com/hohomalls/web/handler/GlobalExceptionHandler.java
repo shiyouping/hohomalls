@@ -17,6 +17,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -47,7 +48,8 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
       error = this.getGraphqlError(TypedGraphQLError.newNotFoundBuilder(), path, exception);
     } else if (exception instanceof DgsBadRequestException
         || exception instanceof DgsInvalidInputArgumentException
-        || exception instanceof InvalidInputException) {
+        || exception instanceof InvalidInputException
+        || exception instanceof ConstraintViolationException) {
       error = this.getGraphqlError(TypedGraphQLError.newBadRequestBuilder(), path, exception);
     } else {
       error = this.getGraphqlError(TypedGraphQLError.newInternalErrorBuilder(), path, exception);

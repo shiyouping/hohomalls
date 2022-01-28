@@ -5,6 +5,9 @@ import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.annotation.Nonnegative;
+import javax.validation.constraints.NotNull;
+
 /**
  * Shop.
  *
@@ -19,18 +22,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = true)
 public class Shop extends BaseDoc {
 
+  @NotNull
   @Indexed(unique = true)
   private String sellerId;
 
+  @NotNull
   @Indexed(unique = true)
   private String name;
 
-  private String description;
+  @NotNull private String description;
 
   /** Based on all items sold by this shop. */
-  private Double rating;
+  @Nonnegative private Double rating;
 
-  private ShopStatus status;
+  @NotNull private ShopStatus status;
 
   public enum ShopStatus {
     OPEN,

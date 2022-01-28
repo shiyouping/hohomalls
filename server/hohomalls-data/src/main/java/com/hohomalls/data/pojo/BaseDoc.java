@@ -4,6 +4,7 @@ import com.hohomalls.core.pojo.BasePojo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 /**
@@ -15,7 +16,10 @@ import java.time.Instant;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class BaseDoc extends BasePojo {
-  private String id;
-  private Instant createdAt;
-  private Instant updatedAt;
+
+  @NotNull private String id;
+
+  @NotNull private Instant createdAt;
+
+  @NotNull private Instant updatedAt;
 }

@@ -4,6 +4,7 @@ import com.hohomalls.data.pojo.BaseDoc;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -21,7 +22,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Category extends BaseDoc {
 
-  private String description;
+  @NotNull private String description;
+
   private String parentId;
+
   private List<String> ancestorIds;
 }
