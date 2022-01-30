@@ -87,6 +87,8 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
       return "The uniqueness was violated when saving database data";
     }
 
-    return exception.getMessage();
+    return exception.getMessage() == null
+        ? "No exception message available"
+        : exception.getMessage();
   }
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -33,19 +34,22 @@ public class ItemServiceImpl implements ItemService {
   @Override
   public @NotNull Flux<Item> findAllByCategoryId(@Nullable String categoryId) {
     ItemServiceImpl.log.info("Finding an item by categoryId={}", categoryId);
-    return categoryId == null ? Flux.empty() : this.itemRepository.findAllByCategoryId(categoryId);
+    return categoryId == null
+        ? Flux.empty()
+        : this.itemRepository.findAllByCategoryId(
+            categoryId, Sort.by(Sort.Direction.DESC, "updatedAt"));
   }
 
   @Override
-  public @NotNull Flux<Item> findAllByPhrase(@Nullable String phrase) {
-    ItemServiceImpl.log.info("Finding all items by phrase={}", phrase);
+  public @NotNull Flux<Item> findAllByKeyword(@Nullable String keyword) {
+    ItemServiceImpl.log.info("Finding all items by keyword={}", keyword);
 
-    if (phrase == null) {
+    if (keyword == null) {
       return Flux.empty();
     }
 
-    var criteria = TextCriteria.forDefaultLanguage().caseSensitive(false).matchingPhrase(phrase);
-    return this.itemRepository.findAllBy(criteria);
+    var criteria = TextCriteria.forDefaultLanguage().caseSensitive(false).matchingPhrase(keyword);
+    return this.itemRepository.findAllBy(criteria, Sort.by(Sort.Direction.DESC, "updatedAt"));
   }
 
   @Override
@@ -56,7 +60,7 @@ public class ItemServiceImpl implements ItemService {
       return Flux.empty();
     }
 
-    return this.itemRepository.findAllByShopId(shopId);
+    return this.itemRepository.findAllByShopId(shopId, Sort.by(Sort.Direction.DESC, "updatedAt"));
   }
 
   @Override

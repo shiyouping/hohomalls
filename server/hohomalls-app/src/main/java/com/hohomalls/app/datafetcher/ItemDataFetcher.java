@@ -88,7 +88,7 @@ public class ItemDataFetcher {
         first,
         after);
 
-    return this.getConnection(this.itemService.findAllByPhrase(keyword), env);
+    return this.getConnection(this.itemService.findAllByKeyword(keyword), env);
   }
 
   @DgsQuery

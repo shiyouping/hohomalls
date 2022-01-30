@@ -18,7 +18,7 @@ public interface ItemService {
   Flux<Item> findAllByCategoryId(@Nullable String categoryId);
 
   @NotNull
-  Flux<Item> findAllByPhrase(@Nullable String phrase);
+  Flux<Item> findAllByKeyword(@Nullable String phrase);
 
   @NotNull
   Flux<Item> findAllByShopId(@Nullable String shopId);

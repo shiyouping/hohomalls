@@ -25,7 +25,7 @@ public interface ItemMapper {
   @Mapping(
       target = "attributes",
       source = "attributes",
-      qualifiedByName = {"BaseMapper", "jsonToStringMap"})
+      qualifiedByName = {"BaseMapper", "toStringMap"})
   Item toDoc(CreateItemDto dto);
 
   @Mapping(target = "shopId", ignore = true)
@@ -33,9 +33,13 @@ public interface ItemMapper {
   @Mapping(
       target = "attributes",
       source = "attributes",
-      qualifiedByName = {"BaseMapper", "jsonToStringMap"})
+      qualifiedByName = {"BaseMapper", "toStringMap"})
   Item toDoc(UpdateItemDto dto);
 
+  @Mapping(
+      target = "updatedAt",
+      source = "updatedAt",
+      qualifiedByName = {"BaseMapper", "toOffsetDateTime"})
   ItemDto toDto(Item doc);
 
   default List<ItemDto> toDtos(List<Item> docs) {
