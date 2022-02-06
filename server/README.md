@@ -6,7 +6,12 @@ and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running
 
 ## Modules
 
+### Bill of Materials
+
 - `hohomalls-bom`: A BOM subproject that provides dependency version management for other subprojects.
+
+### Libraries
+
 - `hohomalls-core`: A library subproject that provides the core functionalities which are the foundation of other
   subprojects. No business logic is included.
 - `hohomalls-data`: A library subproject that provides the core functionalities for MongoDB and Redis. No business logic
@@ -16,6 +21,9 @@ and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running
 - `hohomalls-aws`: A library subproject that provides the core functionalities for AWS services. All AWS related
   features must reside in this project to enable migration to other cloud platforms if necessary. No business logic is
   included.
+
+### Executable Applications
+
 - `hohomalls-app`: A monolithic, stateless and standalone application that can be scaled up and down with ease. It was
   designed and developed in the way that it can be divided into microservices without difficulties. A good article to
   read: [Don’t Start With Microservices – Monoliths Are Your Friend](https://arnoldgalovics.com/microservices-in-production/)
@@ -29,7 +37,7 @@ It's recommended to install the following IDE plugins to assist development:
   IDEs
 - [Google Java Format](https://github.com/google/google-java-format) reformats Java source code to comply with Google
   Java Style
-- [checkstyle](https://checkstyle.sourceforge.io/index.html) helps programmers write Java code that adheres to Google
+- [Checkstyle](https://checkstyle.sourceforge.io/index.html) helps programmers write Java code that adheres to Google
   Java Style
 - [PMD](https://pmd.github.io/#plugins) finds common programming flaws like unused variables, empty catch blocks,
   unnecessary object creation, and so forth.
