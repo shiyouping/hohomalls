@@ -25,8 +25,7 @@ and [GraphQL](https://graphql.org/) to provide a non-blocking and robust running
 ### Executable Applications
 
 - `hohomalls-app`: A monolithic, stateless and standalone application that can be scaled up and down with ease. It was
-  designed and developed in the way that it can be divided into microservices without difficulties. A good article to
-  read: [Don’t Start With Microservices – Monoliths Are Your Friend](https://arnoldgalovics.com/microservices-in-production/)
+  designed and developed in the way that it can be divided into microservices without difficulties.
 - `hohomalls-mongo`: A standalone project for tracking, versioning, and deploying database changes to MongoDB.
 
 ## Development
