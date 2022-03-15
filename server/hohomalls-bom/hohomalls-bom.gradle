@@ -7,16 +7,16 @@ ext {
     versions = ['caffeine'        : '3.0.5',
                 'commonsBeanutils': '1.9.4',
                 'commonsValidator': '1.7',
-                'dgsFramework'    : '4.9.20',
+                'dgsFramework'    : '4.9.22',
                 'jetbrains'       : '23.0.0',
                 'jjwt'            : '0.11.2',
                 'libphonenumber'  : '8.12.41',
                 'mapstruct'       : '1.4.2.Final',
-                'mongock'         : '5.0.35',
+                'mongock'         : '5.0.37',
                 'netty'           : '4.1.73.Final',
                 'passay'          : '1.6.1',
-                'springBoot'      : '2.6.3',
-                'springCloud'     : '2021.0.0']
+                'springBoot'      : '2.6.4',
+                'springCloud'     : '2021.0.1']
 }
 
 javaPlatform {
