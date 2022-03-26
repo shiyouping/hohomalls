@@ -7,7 +7,7 @@ ext {
     versions = ['caffeine'        : '3.0.5',
                 'commonsBeanutils': '1.9.4',
                 'commonsValidator': '1.7',
-                'dgsFramework'    : '4.9.22',
+                'dgsFramework'    : '4.9.24',
                 'jetbrains'       : '23.0.0',
                 'jjwt'            : '0.11.2',
                 'libphonenumber'  : '8.12.41',
