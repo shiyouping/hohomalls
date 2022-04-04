@@ -4,18 +4,18 @@ plugins {
 }
 
 ext {
-    versions = ['caffeine'        : '3.0.5',
+    versions = ['caffeine'        : '3.0.6',
                 'commonsBeanutils': '1.9.4',
                 'commonsValidator': '1.7',
                 'dgsFramework'    : '4.9.24',
                 'jetbrains'       : '23.0.0',
                 'jjwt'            : '0.11.2',
-                'libphonenumber'  : '8.12.41',
+                'libphonenumber'  : '8.12.46',
                 'mapstruct'       : '1.4.2.Final',
-                'mongock'         : '5.0.37',
-                'netty'           : '4.1.73.Final',
+                'mongock'         : '5.0.38',
+                'netty'           : '4.1.75.Final',
                 'passay'          : '1.6.1',
-                'springBoot'      : '2.6.4',
+                'springBoot'      : '2.6.5',
                 'springCloud'     : '2021.0.1']
 }
 
