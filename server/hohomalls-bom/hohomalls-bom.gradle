@@ -7,7 +7,7 @@ ext {
     versions = ['caffeine'        : '3.0.6',
                 'commonsBeanutils': '1.9.4',
                 'commonsValidator': '1.7',
-                'dgsFramework'    : '4.9.25',
+                'dgsFramework'    : '4.10.1',
                 'jetbrains'       : '23.0.0',
                 'jjwt'            : '0.11.2',
                 'libphonenumber'  : '8.12.46',
@@ -15,8 +15,8 @@ ext {
                 'mongock'         : '5.0.38',
                 'netty'           : '4.1.75.Final',
                 'passay'          : '1.6.1',
-                'springBoot'      : '2.6.5',
-                'springCloud'     : '2021.0.1']
+                'springBoot'      : '2.6.7',
+                'springCloud'     : '2021.0.2']
 }
 
 javaPlatform {

@@ -12,5 +12,5 @@ dependencies {
     // External plugins need to be added as implementation dependencies
     implementation 'com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:5.1.17'
     implementation 'io.freefair.gradle:lombok-plugin:5.3.3.3' // 6.x has some problem with gradle
-    implementation 'org.springframework.boot:spring-boot-gradle-plugin:2.6.6'
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:2.6.7'
 }
