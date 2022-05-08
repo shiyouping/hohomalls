@@ -6,7 +6,8 @@ dependencies {
     annotationProcessor platform(project(':hohomalls-bom'))
     annotationProcessor 'org.mapstruct:mapstruct-processor'
 
-    implementation project(':hohomalls-aws')
+    // FIXME uncomment the following dependency
+    // implementation project(':hohomalls-aws')
     implementation project(':hohomalls-web')
     implementation 'org.springframework.boot:spring-boot-starter-cache'
 
