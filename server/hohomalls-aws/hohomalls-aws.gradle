@@ -7,7 +7,7 @@ dependencies {
     api 'jakarta.annotation:jakarta.annotation-api'
     api 'jakarta.validation:jakarta.validation-api'
     api 'javax.xml.bind:jaxb-api'
-    api('org.springframework.cloud:spring-cloud-starter-aws') {
+    api('io.awspring.cloud:spring-cloud-starter-aws') {
         exclude group: 'com.amazonaws', module: 'aws-java-sdk-ec2'
         exclude group: 'com.amazonaws', module: 'aws-java-sdk-cloudformation'
     }

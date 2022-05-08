@@ -4,10 +4,12 @@ plugins {
 }
 
 ext {
-    versions = ['caffeine'        : '3.0.6',
+    versions = ['awspring'        : '2.4.1',
+                'caffeine'        : '3.0.6',
                 'commonsBeanutils': '1.9.4',
                 'commonsValidator': '1.7',
                 'dgsFramework'    : '4.10.1',
+                'guava'           : '31.1-jre',
                 'jetbrains'       : '23.0.0',
                 'jjwt'            : '0.11.2',
                 'libphonenumber'  : '8.12.46',
@@ -26,13 +28,15 @@ javaPlatform {
 
 dependencies {
     // Import versions from other BOMs
+    api platform("io.awspring.cloud:spring-cloud-aws-dependencies:$versions.awspring")
     api platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$versions.dgsFramework")
     api platform("org.springframework.boot:spring-boot-dependencies:$versions.springBoot")
     api platform("org.springframework.cloud:spring-cloud-dependencies:$versions.springCloud")
-
+    
     constraints {
         api "com.github.ben-manes.caffeine:caffeine:$versions.caffeine"
         api "com.googlecode.libphonenumber:libphonenumber:$versions.libphonenumber"
+        api "com.google.guava:guava:$versions.guava"
         api "commons-beanutils:commons-beanutils:$versions.commonsBeanutils"
         api "commons-validator:commons-validator:$versions.commonsValidator"
         api "io.jsonwebtoken:jjwt-api:$versions.jjwt"
