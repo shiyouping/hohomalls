@@ -2,6 +2,7 @@ package com.hohomalls.app.repository;
 
 import com.hohomalls.app.document.Shop;
 import com.hohomalls.data.repository.BaseDocRepository;
+import org.springframework.lang.NonNull;
 import reactor.core.publisher.Mono;
 
 /**
@@ -12,7 +13,9 @@ import reactor.core.publisher.Mono;
  */
 public interface ShopRepository extends BaseDocRepository<Shop> {
 
-  Mono<Shop> findByName(String name);
+  @NonNull
+  Mono<Shop> findByName(@NonNull String name);
 
-  Mono<Shop> findBySellerId(String sellerId);
+  @NonNull
+  Mono<Shop> findBySellerId(@NonNull String sellerId);
 }

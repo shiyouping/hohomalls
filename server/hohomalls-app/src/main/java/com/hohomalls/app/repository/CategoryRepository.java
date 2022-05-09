@@ -2,6 +2,7 @@ package com.hohomalls.app.repository;
 
 import com.hohomalls.app.document.Category;
 import com.hohomalls.data.repository.BaseDocRepository;
+import org.springframework.lang.NonNull;
 import reactor.core.publisher.Flux;
 
 /**
@@ -12,7 +13,9 @@ import reactor.core.publisher.Flux;
  */
 public interface CategoryRepository extends BaseDocRepository<Category> {
 
-  Flux<Category> findAllByParentId(String parentId);
+  @NonNull
+  Flux<Category> findAllByParentId(@NonNull String parentId);
 
+  @NonNull
   Flux<Category> findAllByParentIdIsNull();
 }

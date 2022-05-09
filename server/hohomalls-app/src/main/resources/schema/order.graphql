@@ -1,0 +1,28 @@
+scalar DateTime
+
+extend type Query {
+    findOrderByNumber(number: String!): OrderDto
+    findAllOrders(description: String, placementStart: DateTime, placementEnd: DateTime, status: OrderStatus, first:Int!, after:String): OrderDtoConnection
+}
+
+type OrderDto @connection {
+    description: String!
+    itemId: String!
+    number: String!
+    placeAt: DateTime!
+    updatedAt: DateTime!
+    createdAt: DateTime!
+    quantity: Int!
+    sellerId: String!
+    shipping: ShippingOption!
+    shippingAddress: AddressDto!
+    shopId: String
+    status: OrderStatus
+}
+
+enum OrderStatus {
+    PLACED,
+    PAID,
+    SHIPPED,
+    DELIVERED
+}
