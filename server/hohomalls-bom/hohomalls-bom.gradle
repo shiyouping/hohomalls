@@ -8,7 +8,7 @@ ext {
                 'caffeine'        : '3.0.6',
                 'commonsBeanutils': '1.9.4',
                 'commonsValidator': '1.7',
-                'dgsFramework'    : '4.10.1',
+                'dgsFramework'    : '4.10.2',
                 'guava'           : '31.1-jre',
                 'jetbrains'       : '23.0.0',
                 'jjwt'            : '0.11.2',
@@ -32,7 +32,7 @@ dependencies {
     api platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$versions.dgsFramework")
     api platform("org.springframework.boot:spring-boot-dependencies:$versions.springBoot")
     api platform("org.springframework.cloud:spring-cloud-dependencies:$versions.springCloud")
-    
+
     constraints {
         api "com.github.ben-manes.caffeine:caffeine:$versions.caffeine"
         api "com.googlecode.libphonenumber:libphonenumber:$versions.libphonenumber"
