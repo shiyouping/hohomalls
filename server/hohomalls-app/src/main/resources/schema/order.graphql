@@ -1,8 +1,28 @@
-scalar DateTime
+extend type Mutation {
+    createOrder(order: CreateOrderDto): OrderDto
+    updateOrder(order: UpdateOrderDto): OrderDto
+    deleteOrder(number: String!): Void
+}
 
 extend type Query {
     findOrderByNumber(number: String!): OrderDto
     findAllOrders(description: String, placementStart: DateTime, placementEnd: DateTime, status: OrderStatus, first:Int!, after:String): OrderDtoConnection
+}
+
+input CreateOrderDto {
+    description: String!
+    itemId: String!
+    placeAt: DateTime!
+    quantity: Int!
+    shipping: ShippingOption!
+    shippingAddress: AddressDto!
+}
+
+input UpdateOrderDto {
+    number: String!
+    quantity: Int!
+    shipping: ShippingOption!
+    shippingAddress: AddressDto!
 }
 
 type OrderDto @connection {
@@ -15,7 +35,7 @@ type OrderDto @connection {
     quantity: Int!
     sellerId: String!
     shipping: ShippingOption!
-    shippingAddress: AddressDto!
+    shippingAddress: AddressOutputDto!
     shopId: String
     status: OrderStatus
 }

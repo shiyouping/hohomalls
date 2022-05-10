@@ -1,5 +1,3 @@
-scalar Void
-
 extend type Mutation {
     # Sign up a user and get an access token in jws
     signUp(user: CreateUserDto): String!
@@ -29,16 +27,7 @@ input CreateUserDto {
     password: String!
     roles: [Role]!
     mobile: String
-    addresses: [CreateAddressDto!]
-}
-
-input CreateAddressDto {
-    postCode: String
-    country: String!
-    city: String!
-    street: String!
-    contact: String
-    addressee: String!
+    addresses: [AddressDto!]
 }
 
 input CredentialsDto {
@@ -56,24 +45,15 @@ input UpdateUserDto {
     nickname: String!
     roles: [Role]!
     mobile: String
-    addresses: [CreateAddressDto!]
+    addresses: [AddressDto!]
 }
 
 type UserDto {
     email: ID!
     mobile: String
     nickname: String!
-    addresses: [AddressDto!]
+    addresses: [AddressOutputDto!]
     rating: Float
-}
-
-type AddressDto {
-    postCode: String
-    country: String!
-    city: String!
-    street: String!
-    contact: String
-    addressee: String!
 }
 
 enum UserStatus {

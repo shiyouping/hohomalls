@@ -32,7 +32,7 @@ import java.util.UUID;
  */
 @Slf4j
 @Component
-@SuppressWarnings("all")
+@SuppressWarnings("deprecated")
 public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
 
   @Override

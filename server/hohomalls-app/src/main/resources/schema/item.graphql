@@ -1,7 +1,3 @@
-scalar JSON
-scalar DateTime
-scalar NonNegativeInt
-
 extend type Mutation {
     createItem(item: CreateItemDto): ItemDto
     updateItem(item: UpdateItemDto): ItemDto

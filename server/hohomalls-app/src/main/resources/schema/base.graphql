@@ -1,0 +1,42 @@
+scalar NonNegativeFloat
+scalar JSON
+scalar DateTime
+scalar NonNegativeInt
+scalar Void
+
+input ShippingDto {
+    fee: NonNegativeFloat!
+    option: ShippingOption!
+    description: String!
+    currency: String!
+}
+
+input AddressDto {
+    postCode: String
+    country: String!
+    city: String!
+    street: String!
+    contact: String
+    addressee: String!
+}
+
+type AddressOutputDto {
+    postCode: String
+    country: String!
+    city: String!
+    street: String!
+    contact: String
+    addressee: String!
+}
+
+type ShippingOutputDto {
+    fee: NonNegativeFloat!
+    option: ShippingOption!
+    description: String!
+    currency: String!
+}
+
+enum ShippingOption {
+    MEETUP
+    MAILING
+}
