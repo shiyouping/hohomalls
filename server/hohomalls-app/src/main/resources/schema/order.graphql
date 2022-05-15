@@ -1,7 +1,7 @@
 extend type Mutation {
-    createOrder(order: CreateOrderDto): OrderDto
-    updateOrder(order: UpdateOrderDto): OrderDto
-    deleteOrder(number: String!): Void
+    createOrder(order: CreateOrderDto!): OrderDto!
+    updateOrder(order: UpdateOrderDto!): OrderDto!
+    cancelOrder(number: String!): Void
 }
 
 extend type Query {
@@ -21,6 +21,7 @@ input CreateOrderDto {
 input UpdateOrderDto {
     number: String!
     quantity: Int!
+    status: OrderStatus!
     shipping: ShippingOption!
     shippingAddress: AddressDto!
 }

@@ -5,6 +5,7 @@ import com.hohomalls.app.document.Order.OrderStatus;
 import com.hohomalls.app.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -32,12 +33,18 @@ public class OrderServiceImpl implements OrderService {
       @Nullable Instant placementEnd,
       @Nullable String buyerId,
       @Nullable OrderStatus status) {
-
     return null;
   }
 
   @Override
-  public Mono<Order> findByNumber(@Nullable String number) {
+  public @NotNull Mono<Order> findByNumber(@Nullable String number) {
+    OrderServiceImpl.log.info("Finding an order by number={}", number);
+    return number == null ? Mono.empty() : this.orderRepository.findByNumber(number);
+  }
+
+  @Override
+  public @NotNull Mono<Order> save(@NotNull Order order) {
+
     return null;
   }
 }

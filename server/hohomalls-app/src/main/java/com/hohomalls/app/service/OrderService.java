@@ -1,6 +1,7 @@
 package com.hohomalls.app.service;
 
 import com.hohomalls.app.document.Order;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,5 +25,9 @@ public interface OrderService {
       @Nullable String buyerId,
       @Nullable OrderStatus status);
 
+  @NotNull
   Mono<Order> findByNumber(@Nullable String number);
+
+  @NotNull
+  Mono<Order> save(@NotNull Order order);
 }

@@ -44,7 +44,7 @@ public class Item extends BaseDoc {
 
   @NotNull private String categoryId;
 
-  @Nonnegative private Integer quantity;
+  @NotNull @Nonnegative private Integer quantity;
 
   @NotNull private Condition condition;
 
