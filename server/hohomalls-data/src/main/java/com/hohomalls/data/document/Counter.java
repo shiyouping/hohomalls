@@ -26,7 +26,7 @@ public class Counter extends BaseDoc {
   @Indexed(unique = true)
   private Type type;
 
-  @NotNull @Nonnegative private Long value;
+  @Nonnegative private long value;
 
   public enum Type {
     ORDER,

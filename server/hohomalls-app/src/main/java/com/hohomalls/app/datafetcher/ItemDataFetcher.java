@@ -8,6 +8,7 @@ import com.hohomalls.app.mapper.ItemMapper;
 import com.hohomalls.app.service.ItemService;
 import com.hohomalls.core.enumeration.Role;
 import com.hohomalls.core.exception.InvalidTokenException;
+import com.hohomalls.data.service.CounterService;
 import com.hohomalls.data.util.DocUtil;
 import com.hohomalls.web.aop.HasAnyRoles;
 import com.hohomalls.web.service.TokenService;
@@ -39,6 +40,8 @@ public class ItemDataFetcher {
   private final ItemMapper itemMapper;
   private final ItemService itemService;
   private final TokenService tokenService;
+
+  private final CounterService counterService;
 
   @DgsMutation
   @HasAnyRoles({Role.ROLE_SELLER})
